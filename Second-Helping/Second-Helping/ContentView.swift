@@ -8,16 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isCustomer = false
+    @State private var isRestaurant = false
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if isCustomer {
+                CustomerView(isLoggedIn: $isCustomer)
+                    .transition(.slide)
+            } else if isRestaurant {
+                RestaurantView(isLoggedIn: $isRestaurant)
+                    .transition(.slide)
+            } else {
+                LoginView(isCustomer: $isCustomer, isRestaurant: $isRestaurant)
+                    .transition(.slide)
+            }
         }
-        .padding()
+        .animation(.easeInOut, value: isCustomer || isRestaurant)
     }
 }
+
 
 #Preview {
     ContentView()
