@@ -10,8 +10,12 @@ import SwiftUI
 struct SearchView: View {
     var body: some View {
         VStack {
-            Text("Search View")
-                .font(.largeTitle)
+            HStack {
+                Text("Search")
+                    .font(.largeTitle)
+                Spacer()
+            }
+            Spacer()
         }
         .padding()
     }

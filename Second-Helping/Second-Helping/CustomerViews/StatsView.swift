@@ -10,8 +10,12 @@ import SwiftUI
 struct StatsView: View {
     var body: some View {
         VStack {
-            Text("Stat View")
-                .font(.largeTitle)
+            HStack {
+                Text("Stats!")
+                    .font(.largeTitle)
+                Spacer()
+            }
+            Spacer()
         }
         .padding()
     }

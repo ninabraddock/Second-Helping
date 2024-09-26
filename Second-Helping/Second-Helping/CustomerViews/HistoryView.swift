@@ -10,8 +10,12 @@ import SwiftUI
 struct HistoryView: View {
     var body: some View {
         VStack {
-            Text("History View")
-                .font(.largeTitle)
+            HStack {
+                Text("Order History")
+                    .font(.largeTitle)
+                Spacer()
+            }
+            Spacer()
         }
         .padding()
     }

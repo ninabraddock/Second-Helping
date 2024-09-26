@@ -150,11 +150,11 @@
 			isa = PBXGroup;
 			children = (
 				0872A6B52CA4B274009814A5 /* CustomerView.swift */,
-				0872A6C92CA4CC5A009814A5 /* StatsView.swift */,
 				0872A6BF2CA4CAB4009814A5 /* SearchView.swift */,
 				0872A6C12CA4CAC7009814A5 /* FavoritesView.swift */,
 				0872A6BD2CA4CA64009814A5 /* LocationView.swift */,
 				0872A6C32CA4CAD6009814A5 /* HistoryView.swift */,
+				0872A6C92CA4CC5A009814A5 /* StatsView.swift */,
 			);
 			path = CustomerViews;
 			sourceTree = "<group>";
@@ -473,6 +473,7 @@
 				DEVELOPMENT_TEAM = 4W98FQRQBX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -502,6 +503,7 @@
 				DEVELOPMENT_TEAM = 4W98FQRQBX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -10,6 +10,7 @@ import SwiftUI
 struct CustomerView: View {
     // Setting this to false should cause the customer to "log out"
     @Binding var isLoggedIn: Bool
+    
     var body: some View {
         VStack {
             HStack {
