@@ -30,7 +30,17 @@ struct CustomerView: View {
             Spacer()
             
             TabView {
-                SearchView()
+                SearchView(
+                    image: Image("waterworks"),
+                    quantity: 3,
+                    name: "Waterworks",
+                    bagType: "Mystery",
+                    rangePickUpTime: "5:30 pm - 6:00 pm",
+                    ranking: 4.3,
+                    distance: 0.3,
+                    price: 15.00,
+                    btnHandler: nil
+                )
                     .tabItem() {
                         Image(systemName: "magnifyingglass")
                         Text("Search")
