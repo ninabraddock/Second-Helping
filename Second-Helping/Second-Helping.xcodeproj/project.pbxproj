@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0864020B2CAC254F00291E53 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0864020A2CAC254F00291E53 /* ProductCard.swift */; };
 		0872A68C2CA309C4009814A5 /* Second_HelpingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A68B2CA309C4009814A5 /* Second_HelpingApp.swift */; };
 		0872A68E2CA309C4009814A5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A68D2CA309C4009814A5 /* ContentView.swift */; };
 		0872A6902CA309C6009814A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0872A68F2CA309C6009814A5 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0864020A2CAC254F00291E53 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
 		0872A6882CA309C4009814A5 /* Second-Helping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Second-Helping.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0872A68B2CA309C4009814A5 /* Second_HelpingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Second_HelpingApp.swift; sourceTree = "<group>"; };
 		0872A68D2CA309C4009814A5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				0872A6BD2CA4CA64009814A5 /* LocationView.swift */,
 				0872A6C32CA4CAD6009814A5 /* HistoryView.swift */,
 				0872A6C92CA4CC5A009814A5 /* StatsView.swift */,
+				0864020A2CAC254F00291E53 /* ProductCard.swift */,
 			);
 			path = CustomerViews;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0864020B2CAC254F00291E53 /* ProductCard.swift in Sources */,
 				0872A68E2CA309C4009814A5 /* ContentView.swift in Sources */,
 				0872A68C2CA309C4009814A5 /* Second_HelpingApp.swift in Sources */,
 				0872A6B62CA4B274009814A5 /* CustomerView.swift in Sources */,
