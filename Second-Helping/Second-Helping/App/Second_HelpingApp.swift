@@ -10,6 +10,7 @@ import Firebase
 
 @main
 struct Second_HelpingApp: App {
+    @StateObject var viewModel = AuthViewModel()
     init() {
         FirebaseApp.configure()
     }
@@ -17,6 +18,7 @@ struct Second_HelpingApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(viewModel)
         }
     }
 }

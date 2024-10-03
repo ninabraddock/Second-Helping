@@ -11,24 +11,35 @@ struct ContentView: View {
     @State private var isCustomer = false
     @State private var isRestaurant = false
     
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
-        VStack {
-            if isCustomer {
-                CustomerView(isLoggedIn: $isCustomer)
-                    .transition(.slide)
-            } else if isRestaurant {
-                RestaurantView(isLoggedIn: $isRestaurant)
-                    .transition(.slide)
+        Group {
+            if viewModel.userSession != nil {
+                ProfileView()
             } else {
                 LoginView(isCustomer: $isCustomer, isRestaurant: $isRestaurant)
-                    .transition(.slide)
             }
         }
-        .animation(.easeInOut, value: isCustomer || isRestaurant)
+        
+//        VStack {
+//            if isCustomer {
+//                CustomerView(isLoggedIn: $isCustomer)
+//                    .transition(.slide)
+//            } else if isRestaurant {
+//                RestaurantView(isLoggedIn: $isRestaurant)
+//                    .transition(.slide)
+//            } else {
+//                LoginView(isCustomer: $isCustomer, isRestaurant: $isRestaurant)
+//                    .transition(.slide)
+//            }
+//        }
+//        .animation(.easeInOut, value: isCustomer || isRestaurant)
     }
 }
 
 
 #Preview {
     ContentView()
+        .environmentObject(AuthViewModel())
 }
