@@ -125,6 +125,6 @@ extension LoginView: AuthenticationFormProtocol {
 
 #Preview {
     LoginView()
-//        .environmentObject(AuthViewModel())
+        .environmentObject(AuthViewModel())
 //    LoginView(isCustomer: .constant(false), isRestaurant: .constant(false))
 }

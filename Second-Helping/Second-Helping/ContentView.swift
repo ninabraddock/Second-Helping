@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isCustomer = false
-    @State private var isRestaurant = false
+//    @State private var isCustomer = false
+//    @State private var isRestaurant = false
     
     @EnvironmentObject var viewModel: AuthViewModel
     
