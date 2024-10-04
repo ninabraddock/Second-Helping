@@ -18,7 +18,8 @@ struct ContentView: View {
             if viewModel.userSession != nil {
                 ProfileView()
             } else {
-                LoginView(isCustomer: $isCustomer, isRestaurant: $isRestaurant)
+                LoginView()
+//                LoginView(isCustomer: $isCustomer, isRestaurant: $isRestaurant)
             }
         }
         

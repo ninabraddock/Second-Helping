@@ -5,8 +5,8 @@ struct LoginView: View {
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
     
-    @Binding var isCustomer: Bool
-    @Binding var isRestaurant: Bool
+//    @Binding var isCustomer: Bool
+//    @Binding var isRestaurant: Bool
     
     var body: some View {
         NavigationStack {
@@ -49,6 +49,9 @@ struct LoginView: View {
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                 }
                 .background(Color(.systemBlue))
+                .disabled(!formIsValid)
+                // grayout btn
+                .opacity(formIsValid ? 1 : 0.5)
                 .cornerRadius(10)
                 .padding(.top, 24)
                 
@@ -67,49 +70,61 @@ struct LoginView: View {
                     .font(.system(size: 14))
                 }
                 
-                
-                
-                
-                
-                
-                Text("Second Helping")
-                    .font(.largeTitle)
-                    .padding()
-                
-                Spacer()
-                
-                Button(action: {
-                    isCustomer = true
-                }) {
-                    Text("Customer Login")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 200, height: 50)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
-                .padding(.bottom, 5)
-                
-                Button(action: {
-                    isRestaurant = true
-                }) {
-                    Text("Restaurant Login")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 200, height: 50)
-                        .background(Color.green)
-                        .cornerRadius(10)
-                }
-                .padding(.bottom)
+//                Text("Second Helping")
+//                    .font(.largeTitle)
+//                    .padding()
+//                
+//                Spacer()
+//                
+//                Button(action: {
+//                    isCustomer = true
+//                }) {
+//                    Text("Customer Login")
+//                        .font(.headline)
+//                        .foregroundColor(.white)
+//                        .padding()
+//                        .frame(width: 200, height: 50)
+//                        .background(Color.blue)
+//                        .cornerRadius(10)
+//                }
+//                .padding(.bottom, 5)
+//                
+//                Button(action: {
+//                    isRestaurant = true
+//                }) {
+//                    Text("Restaurant Login")
+//                        .font(.headline)
+//                        .foregroundColor(.white)
+//                        .padding()
+//                        .frame(width: 200, height: 50)
+//                        .background(Color.green)
+//                        .cornerRadius(10)
+//                }
+//                .padding(.bottom)
                 
             }
         }
     }
 }
 
+// MARK - AuthenticationFormProtocol
+
+extension LoginView: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count >= 5
+        // TODO: add additional requirements
+//        && !email.encode(to: String.self).isEmpty
+//        && !phone.encode(to: String.self).isEmpty
+//        && !fullname.isEmpty
+//        && !username.isEmpty
+    }
+}
 
 #Preview {
-    LoginView(isCustomer: .constant(false), isRestaurant: .constant(false))
+    LoginView()
+//        .environmentObject(AuthViewModel())
+//    LoginView(isCustomer: .constant(false), isRestaurant: .constant(false))
 }
