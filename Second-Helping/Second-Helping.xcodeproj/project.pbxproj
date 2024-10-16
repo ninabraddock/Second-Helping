@@ -22,6 +22,9 @@
 		0872A6C22CA4CAC7009814A5 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A6C12CA4CAC7009814A5 /* FavoritesView.swift */; };
 		0872A6C42CA4CAD6009814A5 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A6C32CA4CAD6009814A5 /* HistoryView.swift */; };
 		0872A6CA2CA4CC5A009814A5 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A6C92CA4CC5A009814A5 /* StatsView.swift */; };
+		08A09B9C2CBE9A4500F8A3C3 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */; };
+		08A09B9E2CBE9AF200F8A3C3 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9D2CBE9AF200F8A3C3 /* AuthViewModel.swift */; };
+		08A09BA02CBE9CA400F8A3C3 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */; };
 		565307C62CAEE92E00457193 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565307C42CAEE92E00457193 /* AppDelegate.swift */; };
 		565307C72CAEE92E00457193 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 565307C52CAEE92E00457193 /* GoogleService-Info.plist */; };
 		56A6004A2CAEE5D3008BE4BC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 56A600492CAEE5D3008BE4BC /* FirebaseAnalytics */; };
@@ -34,7 +37,6 @@
 		56A600582CAEE5D3008BE4BC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 56A600572CAEE5D3008BE4BC /* FirebaseStorage */; };
 		DDFC70662CAF3E78007A506A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70652CAF3E78007A506A /* LoginView.swift */; };
 		DDFC70682CAF3E93007A506A /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70672CAF3E93007A506A /* RegistrationView.swift */; };
-		DDFC706C2CAF3F0D007A506A /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC706B2CAF3F0D007A506A /* AuthViewModel.swift */; };
 		DDFC70722CAF5777007A506A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70702CAF5777007A506A /* User.swift */; };
 		DDFC70752CAF577C007A506A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70732CAF577C007A506A /* ProfileView.swift */; };
 		DDFC70792CAF5780007A506A /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70762CAF5780007A506A /* InputView.swift */; };
@@ -79,11 +81,13 @@
 		0872A6C12CA4CAC7009814A5 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		0872A6C32CA4CAD6009814A5 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		0872A6C92CA4CC5A009814A5 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
+		08A09B9D2CBE9AF200F8A3C3 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthViewModel.swift; path = "Second-Helping/Authentication/ViewModel/AuthViewModel.swift"; sourceTree = SOURCE_ROOT; };
+		08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		565307C42CAEE92E00457193 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		565307C52CAEE92E00457193 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DDFC70652CAF3E78007A506A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DDFC70672CAF3E93007A506A /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
-		DDFC706B2CAF3F0D007A506A /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		DDFC70702CAF5777007A506A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DDFC70732CAF577C007A506A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		DDFC70762CAF5780007A506A /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 				0872A6C82CA4CB50009814A5 /* RestaurantViews */,
 				0872A68F2CA309C6009814A5 /* Assets.xcassets */,
 				0872A6912CA309C6009814A5 /* Preview Content */,
+				08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */,
+				08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */,
 			);
 			path = "Second-Helping";
 			sourceTree = "<group>";
@@ -232,7 +238,7 @@
 		DDFC706A2CAF3EDB007A506A /* ViewModel  */ = {
 			isa = PBXGroup;
 			children = (
-				DDFC706B2CAF3F0D007A506A /* AuthViewModel.swift */,
+				08A09B9D2CBE9AF200F8A3C3 /* AuthViewModel.swift */,
 			);
 			path = "ViewModel ";
 			sourceTree = "<group>";
@@ -404,18 +410,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08A09BA02CBE9CA400F8A3C3 /* Restaurant.swift in Sources */,
 				565307C62CAEE92E00457193 /* AppDelegate.swift in Sources */,
 				0864020B2CAC254F00291E53 /* ProductCard.swift in Sources */,
 				0872A68E2CA309C4009814A5 /* ContentView.swift in Sources */,
 				0872A68C2CA309C4009814A5 /* Second_HelpingApp.swift in Sources */,
 				DDFC70682CAF3E93007A506A /* RegistrationView.swift in Sources */,
 				0872A6B62CA4B274009814A5 /* CustomerView.swift in Sources */,
+				08A09B9E2CBE9AF200F8A3C3 /* AuthViewModel.swift in Sources */,
 				0872A6C02CA4CAB4009814A5 /* SearchView.swift in Sources */,
-				DDFC706C2CAF3F0D007A506A /* AuthViewModel.swift in Sources */,
 				0872A6C22CA4CAC7009814A5 /* FavoritesView.swift in Sources */,
 				DDFC70752CAF577C007A506A /* ProfileView.swift in Sources */,
 				DDFC70792CAF5780007A506A /* InputView.swift in Sources */,
 				DDFC707A2CAF5780007A506A /* SettingsRowView.swift in Sources */,
+				08A09B9C2CBE9A4500F8A3C3 /* RestaurantViewModel.swift in Sources */,
 				0872A6CA2CA4CC5A009814A5 /* StatsView.swift in Sources */,
 				0872A6BE2CA4CA64009814A5 /* LocationView.swift in Sources */,
 				DDFC70722CAF5777007A506A /* User.swift in Sources */,
