@@ -25,20 +25,28 @@ struct RestaurantView: View {
                 }
                 .padding()
             }
-            
-            Spacer()
-            
-            Text("Restaurant View")
-                .font(.largeTitle)
-            
-            Spacer()
-            
         }
         .padding()
+        
+        // TODO: add more views and tabs as needed
+        TabView {
+            CurrentOfferings()
+                .tabItem() {
+                    Image(systemName: "magnifyingglass")
+                    Text("Current Offering")
+                }
+            
+            AddMeal()
+                .tabItem() {
+                    Image(systemName: "star.fill")
+                    Text("Add Meal")
+                }
+        }
+        
     }
 }
 
 
 #Preview {
-    RestaurantView(isLoggedIn: .constant(true))
+    RestaurantView(isLoggedIn: .constant(true)).environmentObject(RestaurantViewModel())
 }

@@ -35,6 +35,8 @@
 		56A600542CAEE5D3008BE4BC /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 56A600532CAEE5D3008BE4BC /* FirebaseFunctions */; };
 		56A600562CAEE5D3008BE4BC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 56A600552CAEE5D3008BE4BC /* FirebaseMessaging */; };
 		56A600582CAEE5D3008BE4BC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 56A600572CAEE5D3008BE4BC /* FirebaseStorage */; };
+		56F1B4DE2CC1A15D004EA0D8 /* CurrentOfferings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F1B4DD2CC1A156004EA0D8 /* CurrentOfferings.swift */; };
+		56F1B4E02CC1A9F9004EA0D8 /* AddMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F1B4DF2CC1A9F1004EA0D8 /* AddMeal.swift */; };
 		DDFC70662CAF3E78007A506A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70652CAF3E78007A506A /* LoginView.swift */; };
 		DDFC70682CAF3E93007A506A /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70672CAF3E93007A506A /* RegistrationView.swift */; };
 		DDFC70722CAF5777007A506A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70702CAF5777007A506A /* User.swift */; };
@@ -86,6 +88,8 @@
 		08EA9D402CC1549E00016C6F /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		565307C42CAEE92E00457193 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		565307C52CAEE92E00457193 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		56F1B4DD2CC1A156004EA0D8 /* CurrentOfferings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentOfferings.swift; sourceTree = "<group>"; };
+		56F1B4DF2CC1A9F1004EA0D8 /* AddMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeal.swift; sourceTree = "<group>"; };
 		DDFC70652CAF3E78007A506A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DDFC70672CAF3E93007A506A /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		DDFC70702CAF5777007A506A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -212,6 +216,8 @@
 		0872A6C82CA4CB50009814A5 /* RestaurantViews */ = {
 			isa = PBXGroup;
 			children = (
+				56F1B4DF2CC1A9F1004EA0D8 /* AddMeal.swift */,
+				56F1B4DD2CC1A156004EA0D8 /* CurrentOfferings.swift */,
 				0872A6B72CA4B281009814A5 /* RestaurantView.swift */,
 			);
 			path = RestaurantViews;
@@ -340,7 +346,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					0872A6872CA309C4009814A5 = {
 						CreatedOnToolsVersion = 15.4;
@@ -418,7 +424,9 @@
 				DDFC70682CAF3E93007A506A /* RegistrationView.swift in Sources */,
 				0872A6B62CA4B274009814A5 /* CustomerView.swift in Sources */,
 				0872A6C02CA4CAB4009814A5 /* SearchView.swift in Sources */,
+				56F1B4E02CC1A9F9004EA0D8 /* AddMeal.swift in Sources */,
 				0872A6C22CA4CAC7009814A5 /* FavoritesView.swift in Sources */,
+				56F1B4DE2CC1A15D004EA0D8 /* CurrentOfferings.swift in Sources */,
 				DDFC70752CAF577C007A506A /* ProfileView.swift in Sources */,
 				DDFC70792CAF5780007A506A /* InputView.swift in Sources */,
 				DDFC707A2CAF5780007A506A /* SettingsRowView.swift in Sources */,

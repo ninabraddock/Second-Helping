@@ -64,5 +64,5 @@ struct CustomerView: View {
 
 
 #Preview {
-    CustomerView(isLoggedIn: .constant(true))
+    CustomerView(isLoggedIn: .constant(true)).environmentObject(RestaurantViewModel())
 }

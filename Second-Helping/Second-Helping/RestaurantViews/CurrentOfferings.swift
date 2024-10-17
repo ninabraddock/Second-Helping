@@ -1,22 +1,32 @@
 //
-//  SearchView.swift
+//  CurrentOfferings.swift
 //  Second-Helping
 //
-//  Created by Nathan Blanchard on 9/25/24.
+//  Created by Charlie Corriero  on 10/17/24.
 //
 
-import SwiftUI
 
-struct SearchView: View {
+import SwiftUI
+import FirebaseAuth
+
+struct CurrentOfferings: View {
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    
+    var currentRestaurant: Restaurant? {
+        return restaurantViewModel.restaurants.first { $0.name == "Waterworks" }// TODO: Change this to grab the restaurants name from the login
+    }
     
     var body: some View {
         let customGreen = Color(hex: "#4f7942")
         VStack {
-            Text("Browse food options")
+            Text("Waterwork's Current Offerings") //TODO: Change this to show the name of the currently logged in restaurant
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(customGreen)
+                .padding([.top], 40)
+            
+            Spacer()
+            
             // Section for Dinner
             HStack{
                 Text("Dinner")
@@ -31,7 +41,9 @@ struct SearchView: View {
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
-                    ForEach(restaurantViewModel.restaurants) { restaurant in
+                    
+                    
+                    if let restaurant = currentRestaurant {
                         let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" }
                         ForEach(dinnerMeals) { meal in
                             ProductCard(
@@ -45,7 +57,6 @@ struct SearchView: View {
                                 price: meal.price,
                                 btnHandler: nil
                             )
-                            
                         }
                     }
                 }
@@ -65,9 +76,9 @@ struct SearchView: View {
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
-                    ForEach(restaurantViewModel.restaurants) { restaurant in
-                        let dinnerMeals = restaurant.meals.filter { $0.type == "Lunch" }
-                        ForEach(dinnerMeals) { meal in
+                    if let restaurant = currentRestaurant{
+                        let lunchMeals = restaurant.meals.filter { $0.type == "Lunch" }
+                        ForEach(lunchMeals) { meal in
                             ProductCard(
                                 image: Image("waterworks"), // replace with image
                                 quantity: Int(meal.quantity),
@@ -83,6 +94,7 @@ struct SearchView: View {
                     }
                 }
             }
+            Spacer()
         }
         .onAppear {
             Task {
@@ -92,8 +104,10 @@ struct SearchView: View {
     }
 }
 
+
+
 #Preview {
-    SearchView().environmentObject(RestaurantViewModel())
+    CurrentOfferings().environmentObject(RestaurantViewModel())
 }
 
 
