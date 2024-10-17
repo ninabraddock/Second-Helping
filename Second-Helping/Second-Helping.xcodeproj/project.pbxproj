@@ -23,8 +23,8 @@
 		0872A6C42CA4CAD6009814A5 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A6C32CA4CAD6009814A5 /* HistoryView.swift */; };
 		0872A6CA2CA4CC5A009814A5 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A6C92CA4CC5A009814A5 /* StatsView.swift */; };
 		08A09B9C2CBE9A4500F8A3C3 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */; };
-		08A09B9E2CBE9AF200F8A3C3 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9D2CBE9AF200F8A3C3 /* AuthViewModel.swift */; };
 		08A09BA02CBE9CA400F8A3C3 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */; };
+		08EA9D422CC1549F00016C6F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA9D402CC1549E00016C6F /* AuthViewModel.swift */; };
 		565307C62CAEE92E00457193 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565307C42CAEE92E00457193 /* AppDelegate.swift */; };
 		565307C72CAEE92E00457193 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 565307C52CAEE92E00457193 /* GoogleService-Info.plist */; };
 		56A6004A2CAEE5D3008BE4BC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 56A600492CAEE5D3008BE4BC /* FirebaseAnalytics */; };
@@ -82,8 +82,8 @@
 		0872A6C32CA4CAD6009814A5 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		0872A6C92CA4CC5A009814A5 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
-		08A09B9D2CBE9AF200F8A3C3 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthViewModel.swift; path = "Second-Helping/Authentication/ViewModel/AuthViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		08EA9D402CC1549E00016C6F /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		565307C42CAEE92E00457193 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		565307C52CAEE92E00457193 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DDFC70652CAF3E78007A506A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -217,11 +217,19 @@
 			path = RestaurantViews;
 			sourceTree = "<group>";
 		};
+		08EA9D412CC1549E00016C6F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				08EA9D402CC1549E00016C6F /* AuthViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		DDFC70642CAF3E66007A506A /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				08EA9D412CC1549E00016C6F /* ViewModel */,
 				DDFC70692CAF3EC7007A506A /* View */,
-				DDFC706A2CAF3EDB007A506A /* ViewModel  */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -233,14 +241,6 @@
 				DDFC70672CAF3E93007A506A /* RegistrationView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		DDFC706A2CAF3EDB007A506A /* ViewModel  */ = {
-			isa = PBXGroup;
-			children = (
-				08A09B9D2CBE9AF200F8A3C3 /* AuthViewModel.swift */,
-			);
-			path = "ViewModel ";
 			sourceTree = "<group>";
 		};
 		DDFC706F2CAF574D007A506A /* App */ = {
@@ -417,7 +417,6 @@
 				0872A68C2CA309C4009814A5 /* Second_HelpingApp.swift in Sources */,
 				DDFC70682CAF3E93007A506A /* RegistrationView.swift in Sources */,
 				0872A6B62CA4B274009814A5 /* CustomerView.swift in Sources */,
-				08A09B9E2CBE9AF200F8A3C3 /* AuthViewModel.swift in Sources */,
 				0872A6C02CA4CAB4009814A5 /* SearchView.swift in Sources */,
 				0872A6C22CA4CAC7009814A5 /* FavoritesView.swift in Sources */,
 				DDFC70752CAF577C007A506A /* ProfileView.swift in Sources */,
@@ -427,6 +426,7 @@
 				0872A6CA2CA4CC5A009814A5 /* StatsView.swift in Sources */,
 				0872A6BE2CA4CA64009814A5 /* LocationView.swift in Sources */,
 				DDFC70722CAF5777007A506A /* User.swift in Sources */,
+				08EA9D422CC1549F00016C6F /* AuthViewModel.swift in Sources */,
 				0872A6C42CA4CAD6009814A5 /* HistoryView.swift in Sources */,
 				DDFC70662CAF3E78007A506A /* LoginView.swift in Sources */,
 				0872A6B82CA4B281009814A5 /* RestaurantView.swift in Sources */,

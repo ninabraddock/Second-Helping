@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
-        if viewModel.userSession == nil {
+        if authViewModel.userSession == nil {
             LoginView()
         } else {
-            if let user = viewModel.currentUser {
+            if let user = authViewModel.currentUser {
                 List {
                     Section {
                         HStack {
@@ -54,7 +54,7 @@ struct ProfileView: View {
                     
                     Section("Account"){
                         Button {
-                            viewModel.signOut()
+                            authViewModel.signOut()
                         } label: {
                             SettingsRowView(imageName: "arrow.left.circle.fill",
                                             title: "Sign Out",
@@ -63,7 +63,7 @@ struct ProfileView: View {
                         
                         Button {
                             print("Delete account..")
-    //                        viewModel.deleteAccount()
+    //                        authViewModel.deleteAccount()
                         } label: {
                             SettingsRowView(imageName: "xmark.circle.fill",
                                             title: "Delete Account",
@@ -73,7 +73,7 @@ struct ProfileView: View {
                 }
             }
         }
-//        if let user = viewModel.currentUser {
+//        if let user = authViewModel.currentUser {
             
 //        }
     }

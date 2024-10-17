@@ -11,11 +11,11 @@ struct ContentView: View {
 //    @State private var isCustomer = false
 //    @State private var isRestaurant = false
     
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         Group {
-            if viewModel.userSession != nil {
+            if authViewModel.userSession != nil {
                 ProfileView()
             } else {
                 LoginView()

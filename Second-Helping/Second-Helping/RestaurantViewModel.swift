@@ -27,8 +27,6 @@ class RestaurantViewModel: ObservableObject {
         do {
             let snapshot = try await firestore.collection("restaurants").getDocuments()
             self.restaurants = snapshot.documents.compactMap { document in
-                let data = document.data()
-//                print("Fetched document data: \(data)") // Log fetched document data
                 // Attempt to decode the restaurant
                 do {
                     var restaurant = try document.data(as: Restaurant.self)

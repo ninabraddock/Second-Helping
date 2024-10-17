@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @StateObject private var restaurantViewModel = RestaurantViewModel()
+    @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     
     var body: some View {
         let customGreen = Color(hex: "#4f7942")

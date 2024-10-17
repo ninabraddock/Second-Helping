@@ -3,7 +3,7 @@ import SwiftUI
 struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
 //    @Binding var isCustomer: Bool
 //    @Binding var isRestaurant: Bool
@@ -37,7 +37,7 @@ struct LoginView: View {
                 // Sign in button
                 Button {
                     Task {
-                        try await viewModel.signIn(withEmail: email, password: password)
+                        try await authViewModel.signIn(withEmail: email, password: password)
                     }
                 } label: {
                     HStack {
