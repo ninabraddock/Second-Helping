@@ -1,0 +1,5 @@
+# Ignore GoogleService-Info.plist
+GoogleService-Info.plist
+
+# Ignore macOS system files
+.DS_Store
