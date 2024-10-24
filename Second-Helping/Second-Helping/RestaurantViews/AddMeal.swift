@@ -52,8 +52,8 @@ struct AddMeal: View {
                     .keyboardType(.decimalPad)
             }
             
-            // Pickup Time Section
-            Section(header: Text("Pickup Time")) {
+            // Pickup Start Time Section
+            Section(header: Text("Pickup Start Time")) {
                 HStack{
                     Picker("Time", selection: $pickupStartHour) {
                         ForEach(1..<13) { hour in
@@ -67,7 +67,29 @@ struct AddMeal: View {
                     
                     Picker("",selection: $pickupStartMin) {
                         ForEach(1..<60) { minute in
-                            Text("\(minute)")
+                            Text(String(format: "%02d", minute))
+                        }
+                    }
+                    .pickerStyle(WheelPickerStyle())
+                }
+            }
+            
+            // Pickup End Time Section
+            Section(header: Text("Pickup End Time")) {
+                HStack{
+                    Picker("Time", selection: $pickupEndHour) {
+                        ForEach(1..<13) { hour in
+                            Text("\(hour)")
+                        }
+                    }
+                    .pickerStyle(WheelPickerStyle())
+                    
+                    
+                    Text(":")
+                    
+                    Picker("",selection: $pickupEndMin) {
+                        ForEach(1..<60) { minute in
+                            Text(String(format: "%02d", minute))
                         }
                     }
                     .pickerStyle(WheelPickerStyle())
@@ -85,7 +107,7 @@ struct AddMeal: View {
             
         } //end form
         
-        let isValid = formValid(price: price, quantity: quantity, startTime: pickupStartHour, endTime: pickupEndHour)
+        let isValid = formValid(price: price, quantity: quantity, pickupStartHour: pickupStartHour, pickupEndHour: pickupEndHour)
         
         Button {
             //addMeal() // Call the addMeal function when the button is pressed
@@ -107,7 +129,29 @@ struct AddMeal: View {
     }
 }
 
-func formValid(price: String, quantity: String, startTime: Int, endTime: Int) -> Bool {
+func addNewMeal(quantity: String, bagType: String, pickupStartHour: Int, pickupStartMin: Int, pickupEndMin: Int, pickupEndHour: Int, ranking: Double, distance: Double, price: String) {
+    // ask jason if we can use code from online for images
+    
+    let pickupRange: String = "\(pickupStartHour):\(pickupStartMin):\(pickupEndHour):\(pickupEndMin)"
+    
+    ProductCard(
+        image: Image("theGriffin"),
+        quantity: Int(quantity)!,
+        name: "The Griffin", // get the name from the login info
+        bagType: bagType,
+        rangePickUpTime: pickupRange,
+        ranking: ranking,
+        distance: distance,
+        price: Double(price)!,
+        btnHandler: nil
+    )
+    
+    // adding a meal to a restaurant
+    
+}
+
+
+func formValid(price: String, quantity: String, pickupStartHour: Int, pickupEndHour: Int) -> Bool {
 
     // price validation
     if let firstCharacter = price.first {
@@ -138,12 +182,10 @@ func formValid(price: String, quantity: String, startTime: Int, endTime: Int) ->
     }
     
     //Time validation
-    
+    if pickupStartHour > pickupEndHour {
+        return false
+    }
     
     return true
     
-}
-
-#Preview {
-    AddMeal().environmentObject(RestaurantViewModel())
 }
