@@ -189,3 +189,9 @@ func formValid(price: String, quantity: String, pickupStartHour: Int, pickupEndH
     return true
     
 }
+
+
+#Preview {
+    AddMeal().environmentObject(RestaurantViewModel())
+}
+
