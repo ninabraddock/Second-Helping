@@ -12,19 +12,19 @@ struct RestaurantView: View {
     @Binding var isLoggedIn: Bool
     var body: some View {
         VStack {
-            HStack {
-                
-                Spacer()
-                
-                Button(action: {
-                    isLoggedIn = false
-                }) {
-                    Text("Logout")
-                        .font(.headline)
-                        .foregroundColor(Color.red)
-                }
-                .padding()
-            }
+//            HStack {
+//                
+//                Spacer()
+//                
+//                Button(action: {
+//                    isLoggedIn = false
+//                }) {
+//                    Text("Logout")
+//                        .font(.headline)
+//                        .foregroundColor(Color.red)
+//                }
+//                .padding()
+//            }
         }
         .padding()
         
@@ -40,6 +40,16 @@ struct RestaurantView: View {
                 .tabItem() {
                     Image(systemName: "star.fill")
                     Text("Add Meal")
+                }
+            ActiveOrders()
+                .tabItem() {
+                    Image(systemName: "checklist")
+                    Text("Active Orders")
+                }
+            PastOrders()
+                .tabItem() {
+                    Image(systemName: "archieve")
+                    Text("Past Orders")
                 }
         }
         
