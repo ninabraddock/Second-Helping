@@ -48,7 +48,7 @@ struct RestaurantView: View {
                 }
             PastOrders()
                 .tabItem() {
-                    Image(systemName: "archieve")
+                    Image(systemName: "clock")
                     Text("Past Orders")
                 }
         }

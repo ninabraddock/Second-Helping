@@ -69,6 +69,7 @@ struct ActiveOrders: View {
                     .background(Color(UIColor.lightGray))
             }
             .padding([.leading, .trailing], 25)
+//            .border(Color.black, width: 3)
         }
         Spacer()
     }
