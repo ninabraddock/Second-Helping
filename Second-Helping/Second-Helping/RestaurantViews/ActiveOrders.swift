@@ -1,36 +1,26 @@
 //
-//  HistoryView.swift
+//  ActiveOrders.swift
 //  Second-Helping
 //
-//  Created by Nathan Blanchard on 9/25/24.
+//  Created by Nina Braddock on 10/28/24.
 //
 
 import SwiftUI
 
-struct HistoryView: View {
-    @State private var selectedQuantity: Int = 0
+struct ActiveOrders: View {
+    @State private var selectedQuantity = 0
+    
     var body: some View {
         VStack{
-            Text("Order History")
+            Text("Active Orders")
                 .font(.largeTitle)
                 .padding([.bottom, .top], 20)
 //            Spacer()
             
             // top -> bottom, new -> old
             VStack(alignment: .leading, spacing: 0){
-                HStack {
-                    Text("Restaurant Name")
-                        .font(.title3)
-                    
-                    Spacer()
-                    
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star")
-                }
-                
+                Text("Customer Name")
+                    .font(.title3)
                 HStack{
                     Text("Type of Bag")
                     Spacer()
@@ -56,18 +46,8 @@ struct HistoryView: View {
             
             // second customer
             VStack(alignment: .leading, spacing: 0){
-                HStack {
-                    Text("Restaurant Name")
-                        .font(.title3)
-                    
-                    Spacer()
-                    
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.leadinghalf.fill")
-                    Image(systemName: "star")
-                }
+                Text("Customer Name")
+                    .font(.title3)
                 HStack{
                     Text("Type of Bag")
                     Spacer()
@@ -96,5 +76,5 @@ struct HistoryView: View {
 }
 
 #Preview {
-    HistoryView()
+    ActiveOrders()
 }

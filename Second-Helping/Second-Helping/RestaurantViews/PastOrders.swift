@@ -1,17 +1,35 @@
 //
-//  HistoryView.swift
+//  PastOrders.swift
 //  Second-Helping
 //
-//  Created by Nathan Blanchard on 9/25/24.
+//  Created by Nina Braddock on 10/28/24.
 //
 
 import SwiftUI
 
-struct HistoryView: View {
-    @State private var selectedQuantity: Int = 0
+struct iOSCheckboxToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button(action: {
+            configuration.isOn.toggle()
+        }, label: {
+            HStack {
+                // 3
+                Image(systemName: configuration.isOn ? "checkmark.square" : "x.square.fill")
+
+                configuration.label
+            }
+        })
+    }
+}
+
+
+struct PastOrders: View {
+    @State private var selectedQuantity = 0
+    @State private var hasPickedUp = true
+    
     var body: some View {
         VStack{
-            Text("Order History")
+            Text("Past Orders")
                 .font(.largeTitle)
                 .padding([.bottom, .top], 20)
 //            Spacer()
@@ -19,17 +37,20 @@ struct HistoryView: View {
             // top -> bottom, new -> old
             VStack(alignment: .leading, spacing: 0){
                 HStack {
-                    Text("Restaurant Name")
-                        .font(.title3)
+                    // TODO: replace -> unique to each order
+                    Toggle(isOn: $hasPickedUp){
+                        Text("Customer Name")
+                            .font(.title3)
+                    }
+                        .toggleStyle(iOSCheckboxToggleStyle())
+                        .foregroundStyle(.black)
                     
                     Spacer()
                     
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star")
+                    // TODO: Time picked up
+                    Text("2:00 pm")
                 }
+                
                 
                 HStack{
                     Text("Type of Bag")
@@ -57,17 +78,19 @@ struct HistoryView: View {
             // second customer
             VStack(alignment: .leading, spacing: 0){
                 HStack {
-                    Text("Restaurant Name")
-                        .font(.title3)
+                    // TODO: replace -> unique to each order
+                    Toggle(isOn: $hasPickedUp){
+                        Text("Customer Name")
+                            .font(.title3)
+                    }
+                        .toggleStyle(iOSCheckboxToggleStyle())
+                        .foregroundStyle(.black)
                     
                     Spacer()
                     
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.leadinghalf.fill")
-                    Image(systemName: "star")
+                    Text("Pick Up Time: _____")
                 }
+                
                 HStack{
                     Text("Type of Bag")
                     Spacer()
@@ -89,12 +112,11 @@ struct HistoryView: View {
                     .background(Color(UIColor.lightGray))
             }
             .padding([.leading, .trailing], 25)
-//            .border(Color.black, width: 3)
         }
         Spacer()
     }
 }
 
 #Preview {
-    HistoryView()
+    PastOrders()
 }

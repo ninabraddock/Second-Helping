@@ -37,6 +37,8 @@
 		56A600582CAEE5D3008BE4BC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 56A600572CAEE5D3008BE4BC /* FirebaseStorage */; };
 		56F1B4DE2CC1A15D004EA0D8 /* CurrentOfferings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F1B4DD2CC1A156004EA0D8 /* CurrentOfferings.swift */; };
 		56F1B4E02CC1A9F9004EA0D8 /* AddMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F1B4DF2CC1A9F1004EA0D8 /* AddMeal.swift */; };
+		DD3B53572CD0307800C84143 /* ActiveOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3B53562CD0307800C84143 /* ActiveOrders.swift */; };
+		DD7980642CD043AF0049BDBD /* PastOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7980632CD043AF0049BDBD /* PastOrders.swift */; };
 		DDFC70662CAF3E78007A506A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70652CAF3E78007A506A /* LoginView.swift */; };
 		DDFC70682CAF3E93007A506A /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70672CAF3E93007A506A /* RegistrationView.swift */; };
 		DDFC70722CAF5777007A506A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70702CAF5777007A506A /* User.swift */; };
@@ -90,6 +92,8 @@
 		565307C52CAEE92E00457193 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		56F1B4DD2CC1A156004EA0D8 /* CurrentOfferings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentOfferings.swift; sourceTree = "<group>"; };
 		56F1B4DF2CC1A9F1004EA0D8 /* AddMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeal.swift; sourceTree = "<group>"; };
+		DD3B53562CD0307800C84143 /* ActiveOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveOrders.swift; sourceTree = "<group>"; };
+		DD7980632CD043AF0049BDBD /* PastOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastOrders.swift; sourceTree = "<group>"; };
 		DDFC70652CAF3E78007A506A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DDFC70672CAF3E93007A506A /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		DDFC70702CAF5777007A506A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 				56F1B4DF2CC1A9F1004EA0D8 /* AddMeal.swift */,
 				56F1B4DD2CC1A156004EA0D8 /* CurrentOfferings.swift */,
 				0872A6B72CA4B281009814A5 /* RestaurantView.swift */,
+				DD3B53562CD0307800C84143 /* ActiveOrders.swift */,
+				DD7980632CD043AF0049BDBD /* PastOrders.swift */,
 			);
 			path = RestaurantViews;
 			sourceTree = "<group>";
@@ -434,8 +440,10 @@
 				0872A6CA2CA4CC5A009814A5 /* StatsView.swift in Sources */,
 				0872A6BE2CA4CA64009814A5 /* LocationView.swift in Sources */,
 				DDFC70722CAF5777007A506A /* User.swift in Sources */,
+				DD7980642CD043AF0049BDBD /* PastOrders.swift in Sources */,
 				08EA9D422CC1549F00016C6F /* AuthViewModel.swift in Sources */,
 				0872A6C42CA4CAD6009814A5 /* HistoryView.swift in Sources */,
+				DD3B53572CD0307800C84143 /* ActiveOrders.swift in Sources */,
 				DDFC70662CAF3E78007A506A /* LoginView.swift in Sources */,
 				0872A6B82CA4B281009814A5 /* RestaurantView.swift in Sources */,
 			);
