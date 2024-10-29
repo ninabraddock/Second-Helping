@@ -8,18 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-//    @State private var isCustomer = true
+    @State private var isCustomer = true
 //    @State private var isRestaurant = false
     
     @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         Group {
+            /**
             if authViewModel.userSession != nil {
                 ProfileView()
             } else {
                 LoginView()
                 //                LoginView(isCustomer: $isCustomer, isRestaurant: $isRestaurant)
+            }
+             */
+            if isCustomer {
+                CustomerView(isLoggedIn: $isCustomer)
+            } else {
+                LoginView(isLoggedIn: $isCustomer)
             }
         }
         

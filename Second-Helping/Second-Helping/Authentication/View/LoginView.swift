@@ -4,6 +4,8 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var authViewModel: AuthViewModel
+    @Binding var isLoggedIn: Bool
+    @State var incorrectInfo = false
     
 //    @Binding var isCustomer: Bool
 //    @Binding var isRestaurant: Bool
@@ -37,7 +39,12 @@ struct LoginView: View {
                 // Sign in button
                 Button {
                     Task {
-                        try await authViewModel.signIn(withEmail: email, password: password)
+                        incorrectInfo = try await authViewModel.signIn(withEmail: email, password: password)
+                        if !incorrectInfo {
+                            isLoggedIn = true
+                        } else {
+                            incorrectInfo = true
+                        }
                     }
                 } label: {
                     HStack {
@@ -55,6 +62,9 @@ struct LoginView: View {
                 .cornerRadius(10)
                 .padding(.top, 24)
                 
+                if incorrectInfo {
+                    Text("The username and password cannot be found.").foregroundColor(.red)
+                }
                 Spacer()
                 
                 //sign up button
@@ -124,7 +134,7 @@ extension LoginView: AuthenticationFormProtocol {
 }
 
 #Preview {
-    LoginView()
+    LoginView(isLoggedIn: .constant(true))
         .environmentObject(AuthViewModel())
 //    LoginView(isCustomer: .constant(false), isRestaurant: .constant(false))
 }
