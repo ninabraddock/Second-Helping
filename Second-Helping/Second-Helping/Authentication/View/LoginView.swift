@@ -22,7 +22,7 @@ struct LoginView: View {
                 VStack(spacing: 24){
                     InputView(text: $email,
                               title: "Email Address",
-                              placeholder: "name@emaple.com")
+                              placeholder: "name@example.com")
                     // emails don't start with caps
                     .autocapitalization(.none)
                     
@@ -139,8 +139,6 @@ extension LoginView: AuthenticationFormProtocol {
         // TODO: add additional requirements
 //        && !email.encode(to: String.self).isEmpty
 //        && !phone.encode(to: String.self).isEmpty
-//        && !fullname.isEmpty
-//        && !username.isEmpty
     }
 }
 

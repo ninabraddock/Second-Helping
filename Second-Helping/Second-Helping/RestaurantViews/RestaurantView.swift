@@ -12,19 +12,19 @@ struct RestaurantView: View {
     @Binding var isLoggedIn: Bool
     var body: some View {
         VStack {
-//            HStack {
-//                
-//                Spacer()
-//                
-//                Button(action: {
-//                    isLoggedIn = false
-//                }) {
-//                    Text("Logout")
-//                        .font(.headline)
-//                        .foregroundColor(Color.red)
-//                }
-//                .padding()
-//            }
+            HStack {
+                
+                Spacer()
+                
+                Button(action: {
+                    isLoggedIn = false
+                }) {
+                    Text("Logout")
+                        .font(.headline)
+                        .foregroundColor(Color.red)
+                }
+                .padding()
+            }
         }
         .padding()
         
