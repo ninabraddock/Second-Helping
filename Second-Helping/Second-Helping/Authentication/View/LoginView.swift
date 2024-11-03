@@ -34,8 +34,6 @@ struct LoginView: View {
                 .padding(.horizontal)
                 .padding(.top, 12)
                 
-                // TODO: forgot password option
-                
                 // Sign in button
                 Button {
                     Task {
@@ -75,6 +73,19 @@ struct LoginView: View {
                     HStack(spacing: 3){
                         Text("Don't have an account?")
                         Text("Sign Up")
+                            .fontWeight(.bold)
+                    }
+                    .font(.system(size: 14))
+                }
+                
+                //forgot password button
+                NavigationLink {
+                    ForgotPasswordView()
+                        .navigationBarBackButtonHidden(true)
+                } label: {
+                    HStack(spacing: 3){
+                        Text("Forgot your password?")
+                        Text("Click Here")
                             .fontWeight(.bold)
                     }
                     .font(.system(size: 14))

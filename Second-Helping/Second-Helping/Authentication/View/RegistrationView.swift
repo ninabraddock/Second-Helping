@@ -119,5 +119,5 @@ extension RegistrationView: AuthenticationFormProtocol {
 }
 
 #Preview {
-    RegistrationView()
+    RegistrationView().environmentObject(AuthViewModel())
 }

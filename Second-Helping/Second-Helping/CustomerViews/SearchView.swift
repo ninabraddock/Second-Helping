@@ -104,8 +104,8 @@ struct SearchView: View {
                     ForEach(restaurantViewModel.restaurants) { restaurant in
                         let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" }
                         
-                        var restLat = restaurant.latitude
-                        var restLong = restaurant.longitude
+                        let restLat = restaurant.latitude
+                        let restLong = restaurant.longitude
                         var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
 
                         ForEach(dinnerMeals) { meal in

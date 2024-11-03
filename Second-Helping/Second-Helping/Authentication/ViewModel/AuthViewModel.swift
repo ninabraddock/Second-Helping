@@ -38,6 +38,17 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func sendPasswordReset(email: String) async -> (succcess: Bool, message: String?) {
+        
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            return (true, "Password reset email sent successfully.")
+        } catch {
+            return (false, "Error sending password reset email: \(error.localizedDescription)")
+        }
+        
+    }
+    
     func createUser (withEmail email: String, password: String, fullname: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)

@@ -25,6 +25,7 @@
 		08A09B9C2CBE9A4500F8A3C3 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */; };
 		08A09BA02CBE9CA400F8A3C3 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */; };
 		08EA9D422CC1549F00016C6F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA9D402CC1549E00016C6F /* AuthViewModel.swift */; };
+		5620A8852CD7EDF800798FFF /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5620A8842CD7EDEE00798FFF /* ForgotPasswordView.swift */; };
 		565307C62CAEE92E00457193 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565307C42CAEE92E00457193 /* AppDelegate.swift */; };
 		565307C72CAEE92E00457193 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 565307C52CAEE92E00457193 /* GoogleService-Info.plist */; };
 		56A6004A2CAEE5D3008BE4BC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 56A600492CAEE5D3008BE4BC /* FirebaseAnalytics */; };
@@ -92,6 +93,7 @@
 		08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		08EA9D402CC1549E00016C6F /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		5620A8842CD7EDEE00798FFF /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		565307C42CAEE92E00457193 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		565307C52CAEE92E00457193 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		56F1B4DD2CC1A156004EA0D8 /* CurrentOfferingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentOfferingsView.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 		DDFC70692CAF3EC7007A506A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5620A8842CD7EDEE00798FFF /* ForgotPasswordView.swift */,
 				DDFC70652CAF3E78007A506A /* LoginView.swift */,
 				DDFC70672CAF3E93007A506A /* RegistrationView.swift */,
 			);
@@ -464,6 +467,7 @@
 				0872A6CA2CA4CC5A009814A5 /* StatsView.swift in Sources */,
 				0872A6BE2CA4CA64009814A5 /* LocationView.swift in Sources */,
 				DDFC70722CAF5777007A506A /* User.swift in Sources */,
+				5620A8852CD7EDF800798FFF /* ForgotPasswordView.swift in Sources */,
 				DD7980642CD043AF0049BDBD /* PastOrdersView.swift in Sources */,
 				08EA9D422CC1549F00016C6F /* AuthViewModel.swift in Sources */,
 				0872A6C42CA4CAD6009814A5 /* HistoryView.swift in Sources */,
