@@ -5,10 +5,9 @@ struct LoginView: View {
     @State private var password = ""
     @EnvironmentObject var authViewModel: AuthViewModel
     @Binding var isLoggedIn: Bool
+    @Binding var isCustomer: Bool
+    @Binding var isRestaurant: Bool
     @State var incorrectInfo = false
-    
-//    @Binding var isCustomer: Bool
-//    @Binding var isRestaurant: Bool
     
     var body: some View {
         NavigationStack {
@@ -65,6 +64,36 @@ struct LoginView: View {
                 }
                 Spacer()
                 
+                HStack {
+                    Button(action: {
+                        isCustomer = true
+                        isRestaurant = false
+                    }) {
+                        Text("Customer Login")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .opacity(isCustomer ? 1 : 0.5)
+                            .padding()
+                            .frame(width: 150, height: 75)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    } .padding(.bottom, 5)
+                    
+                    Button(action: {
+                        isCustomer = false
+                        isRestaurant = true
+                    }) {
+                        Text("Restaurant Login")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .opacity(isRestaurant ? 1 : 0.5)
+                            .padding()
+                            .frame(width: 150, height: 75)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    } .padding(.bottom, 5)
+                }
+                
                 //sign up button
                 NavigationLink {
                     RegistrationView()
@@ -90,39 +119,6 @@ struct LoginView: View {
                     }
                     .font(.system(size: 14))
                 }
-                
-//                Text("Second Helping")
-//                    .font(.largeTitle)
-//                    .padding()
-//                
-//                Spacer()
-//                
-//                Button(action: {
-//                    isCustomer = true
-//                }) {
-//                    Text("Customer Login")
-//                        .font(.headline)
-//                        .foregroundColor(.white)
-//                        .padding()
-//                        .frame(width: 200, height: 50)
-//                        .background(Color.blue)
-//                        .cornerRadius(10)
-//                }
-//                .padding(.bottom, 5)
-//                
-//                Button(action: {
-//                    isRestaurant = true
-//                }) {
-//                    Text("Restaurant Login")
-//                        .font(.headline)
-//                        .foregroundColor(.white)
-//                        .padding()
-//                        .frame(width: 200, height: 50)
-//                        .background(Color.green)
-//                        .cornerRadius(10)
-//                }
-//                .padding(.bottom)
-                
             }
         }
     }
@@ -143,7 +139,7 @@ extension LoginView: AuthenticationFormProtocol {
 }
 
 #Preview {
-    LoginView(isLoggedIn: .constant(true))
+    LoginView(isLoggedIn: .constant(true), isCustomer: .constant(false), isRestaurant: .constant(false))
         .environmentObject(AuthViewModel())
-//    LoginView(isCustomer: .constant(false), isRestaurant: .constant(false))
+
 }

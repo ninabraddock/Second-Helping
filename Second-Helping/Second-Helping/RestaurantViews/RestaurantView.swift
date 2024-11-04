@@ -10,14 +10,17 @@ import SwiftUI
 struct RestaurantView: View {
     // Setting this to false should cause the restaurant to "log out"
     @Binding var isLoggedIn: Bool
+    @Binding var isRestaurant: Bool
+    
     var body: some View {
         VStack {
             HStack {
-                
                 Spacer()
                 
                 Button(action: {
                     isLoggedIn = false
+                    isRestaurant = false
+                    isRestaurant = true
                 }) {
                     Text("Logout")
                         .font(.headline)
@@ -58,5 +61,5 @@ struct RestaurantView: View {
 
 
 #Preview {
-    RestaurantView(isLoggedIn: .constant(true)).environmentObject(RestaurantViewModel())
+    RestaurantView(isLoggedIn: .constant(true), isRestaurant: .constant(true)).environmentObject(RestaurantViewModel())
 }

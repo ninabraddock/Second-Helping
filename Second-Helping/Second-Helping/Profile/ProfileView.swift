@@ -12,7 +12,7 @@ struct ProfileView: View {
     
     var body: some View {
         if authViewModel.userSession == nil {
-            LoginView(isLoggedIn: .constant(true))
+            LoginView(isLoggedIn: .constant(true), isCustomer: .constant(true), isRestaurant: .constant(false))
         } else {
             if let user = authViewModel.currentUser {
                 List {
