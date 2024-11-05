@@ -134,6 +134,7 @@ struct ProductCard: View {
                 HStack {
                     // All doubles, round 1 decimal point
                     Image(systemName: "star.square.fill")
+                        .foregroundStyle(.yellow)
                     Text(String(format: "%.1f", self.ranking))
                     Divider().frame(height: 20)
                     Text(String(format: "%.1f", self.distance))

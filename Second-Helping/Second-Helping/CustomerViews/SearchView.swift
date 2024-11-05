@@ -63,6 +63,11 @@ struct SearchView: View {
     @State var userLong: Double?
     @State var distance: Double?
     
+    // State for displaying the detail view
+    @State private var selectedMeal: Meal?
+    @State private var selectedRestaurant: Restaurant?
+    @State private var showMealDetail = false
+    
     var body: some View {
         let customGreen = Color(hex: "#4f7942")
         VStack {
@@ -109,17 +114,25 @@ struct SearchView: View {
                         var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
 
                         ForEach(dinnerMeals) { meal in
-                            ProductCard(
-                                image: Image("waterworks"), // replace with image
-                                quantity: Int(meal.quantity),
-                                name: restaurant.name,
-                                bagType: meal.bagType,
-                                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                ranking: restaurant.meanRating,
-                                distance: distanceToRest,
-                                price: meal.price,
-                                btnHandler: nil
-                            )
+                            Button {
+                                // Set the selected meal, restaurant and show the detail sheet
+                                selectedMeal = meal
+                                selectedRestaurant = restaurant
+                                showMealDetail = true
+                            } label: {
+                                ProductCard(
+                                    image: Image("waterworks"), // replace with image
+                                    quantity: Int(meal.quantity),
+                                    name: restaurant.name,
+                                    bagType: meal.bagType,
+                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                    ranking: restaurant.meanRating,
+                                    distance: distanceToRest,
+                                    price: meal.price,
+                                    btnHandler: nil
+                                )
+                            }
+                            .foregroundStyle(.black)
                             
                         }
                     }
@@ -143,17 +156,25 @@ struct SearchView: View {
                     ForEach(restaurantViewModel.restaurants) { restaurant in
                         let dinnerMeals = restaurant.meals.filter { $0.type == "Lunch" }
                         ForEach(dinnerMeals) { meal in
-                            ProductCard(
-                                image: Image("waterworks"), // replace with image
-                                quantity: Int(meal.quantity),
-                                name: restaurant.name,
-                                bagType: meal.bagType,
-                                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                ranking: restaurant.meanRating,
-                                distance: 0.3, // replace with distance calculation
-                                price: meal.price,
-                                btnHandler: nil
-                            )
+                            Button {
+                                // Set the selected meal, restaurant and show the detail sheet
+                                selectedMeal = meal
+                                selectedRestaurant = restaurant
+                                showMealDetail = true
+                            } label: {
+                                ProductCard(
+                                    image: Image("waterworks"), // replace with image
+                                    quantity: Int(meal.quantity),
+                                    name: restaurant.name,
+                                    bagType: meal.bagType,
+                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                    ranking: restaurant.meanRating,
+                                    distance: 0.3, // replace with distance calculation
+                                    price: meal.price,
+                                    btnHandler: nil
+                                )
+                            }
+                            .foregroundStyle(.black)
                         }
                     }
                 }
@@ -162,6 +183,11 @@ struct SearchView: View {
         .onAppear {
             Task {
                 await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
+            }
+        }
+        .sheet(isPresented: $showMealDetail) {
+            if let meal = selectedMeal {
+                MealDetailSheet(meal: meal)
             }
         }
     }
