@@ -38,11 +38,22 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func createUser (withEmail email: String, password: String, fullname: String) async throws {
+    func sendPasswordReset(email: String) async -> (succcess: Bool, message: String?) {
+        
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            return (true, "Password reset email sent successfully.")
+        } catch {
+            return (false, "Error sending password reset email: \(error.localizedDescription)")
+        }
+        
+    }
+    
+    func createUser (withEmail email: String, password: String, fullname: String, isCustomer: Bool) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
-            let user = User(id: result.user.uid, fullName: fullname, email: email)
+            let user = User(id: result.user.uid, fullName: fullname, email: email, isCustomer: isCustomer)
             let encoder = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
             await fetchUser()

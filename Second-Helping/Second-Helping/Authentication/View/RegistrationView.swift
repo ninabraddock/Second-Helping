@@ -12,6 +12,7 @@ struct RegistrationView: View {
     @State private var fullName = ""
     @State private var password = ""
     @State private var confirmPassword = ""
+    @State private var isCustomer = true
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var authViewModel: AuthViewModel
     
@@ -63,10 +64,17 @@ struct RegistrationView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             
+            Picker("User Type", selection: $isCustomer) {
+                Text("Customer").tag(true)
+                Text("Restaurant").tag(false)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+            
             // Sign in button
             Button {
                 Task {
-                    try await authViewModel.createUser(withEmail: email, password: password, fullname: fullName)
+                    try await authViewModel.createUser(withEmail: email, password: password, fullname: fullName, isCustomer: isCustomer)
                 }
             } label: {
                 HStack {
@@ -119,5 +127,5 @@ extension RegistrationView: AuthenticationFormProtocol {
 }
 
 #Preview {
-    RegistrationView()
+    RegistrationView().environmentObject(AuthViewModel())
 }
