@@ -24,7 +24,7 @@ struct ContentView: View {
             }
              */
             if isCustomer {
-                CustomerView(isLoggedIn: $isCustomer)
+                RestaurantView(isLoggedIn: $isCustomer)
             } else {
                 LoginView(isLoggedIn: $isCustomer)
             }
