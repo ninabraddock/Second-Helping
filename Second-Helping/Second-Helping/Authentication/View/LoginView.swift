@@ -38,6 +38,9 @@ struct LoginView: View {
                     Task {
                         incorrectInfo = try await authViewModel.signIn(withEmail: email, password: password)
                         if !incorrectInfo {
+                            if !isCustomer {
+                                isRestaurant = true
+                            }
                             isLoggedIn = true
                         } else {
                             incorrectInfo = true
@@ -62,37 +65,16 @@ struct LoginView: View {
                 if incorrectInfo {
                     Text("The username and password cannot be found.").foregroundColor(.red)
                 }
+                
                 Spacer()
                 
-                HStack {
-                    Button(action: {
-                        isCustomer = true
-                        isRestaurant = false
-                    }) {
-                        Text("Customer Login")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .opacity(isCustomer ? 1 : 0.5)
-                            .padding()
-                            .frame(width: 150, height: 75)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    } .padding(.bottom, 5)
-                    
-                    Button(action: {
-                        isCustomer = false
-                        isRestaurant = true
-                    }) {
-                        Text("Restaurant Login")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .opacity(isRestaurant ? 1 : 0.5)
-                            .padding()
-                            .frame(width: 150, height: 75)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    } .padding(.bottom, 5)
-                }
+                Picker("User Type", selection: $isCustomer) {
+                    Text("Customer").tag(true)
+                    Text("Restaurant").tag(false)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding()
+                
                 
                 //sign up button
                 NavigationLink {
