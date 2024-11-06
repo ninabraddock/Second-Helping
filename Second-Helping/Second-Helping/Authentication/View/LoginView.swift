@@ -15,10 +15,21 @@ struct LoginView: View {
                 Image("logo")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 100, height: 120)
-                    .padding(.vertical, 32)
+                    .frame(width: 100, height: 100)
+                    .padding(.top, 16)
                 
-                VStack(spacing: 24){
+                Text("Second Helping")
+                    .font(.largeTitle)
+                    .padding(.bottom, 16)
+                
+                Picker("User Type", selection: $isCustomer) {
+                    Text("Customer").tag(true)
+                    Text("Restaurant").tag(false)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding([.bottom, .horizontal])
+                
+                VStack(spacing: 20){
                     InputView(text: $email,
                               title: "Email Address",
                               placeholder: "name@example.com")
@@ -32,6 +43,12 @@ struct LoginView: View {
                 }
                 .padding(.horizontal)
                 .padding(.top, 12)
+                
+                if incorrectInfo {
+                    Text("The username and password cannot be found.").foregroundColor(.red)
+                }
+                
+                Spacer()
                 
                 // Sign in button
                 Button {
@@ -60,34 +77,7 @@ struct LoginView: View {
                 // grayout btn
                 .opacity(formIsValid ? 1 : 0.5)
                 .cornerRadius(10)
-                .padding(.top, 24)
-                
-                if incorrectInfo {
-                    Text("The username and password cannot be found.").foregroundColor(.red)
-                }
-                
-                Spacer()
-                
-                Picker("User Type", selection: $isCustomer) {
-                    Text("Customer").tag(true)
-                    Text("Restaurant").tag(false)
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding()
-                
-                
-                //sign up button
-                NavigationLink {
-                    RegistrationView()
-                        .navigationBarBackButtonHidden(true)
-                } label: {
-                    HStack(spacing: 3){
-                        Text("Don't have an account?")
-                        Text("Sign Up")
-                            .fontWeight(.bold)
-                    }
-                    .font(.system(size: 14))
-                }
+                .padding(.bottom, 16)
                 
                 //forgot password button
                 NavigationLink {
@@ -101,6 +91,22 @@ struct LoginView: View {
                     }
                     .font(.system(size: 14))
                 }
+                .padding(.bottom, 32)
+                
+                //sign up button
+                NavigationLink {
+                    RegistrationView()
+                        .navigationBarBackButtonHidden(true)
+                } label: {
+                    HStack(spacing: 3){
+                        Text("Don't have an account?")
+                        Text("Sign Up")
+                            .fontWeight(.bold)
+                    }
+                    .font(.system(size: 14))
+                }
+                .padding(.bottom, 16)
+                
             }
         }
     }

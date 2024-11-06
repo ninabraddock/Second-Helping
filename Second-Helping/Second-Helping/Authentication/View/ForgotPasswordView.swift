@@ -18,8 +18,12 @@ struct ForgotPasswordView: View {
             Image("logo")
                 .resizable()
                 .scaledToFill()
-                .frame(width: 100, height: 120)
-                .padding(.vertical, 32)
+                .frame(width: 100, height: 100)
+                .padding(.top, 16)
+            
+            Text("Second Helping")
+                .font(.largeTitle)
+                .padding(.bottom, 32)
             
             VStack(spacing: 24){
                 InputView(text: $email,
@@ -76,6 +80,7 @@ struct ForgotPasswordView: View {
                 }
                 .font(.system(size: 14))
             }
+            .padding(.bottom, 16)
         }
     }
 

@@ -21,19 +21,37 @@ struct RegistrationView: View {
             Image("logo")
                 .resizable()
                 .scaledToFill()
-                .frame(width: 100, height: 120)
-                .padding(.vertical, 32)
+                .frame(width: 100, height: 100)
+                .padding(.top, 16)
             
-            VStack(spacing: 24){
+            Text("Second Helping")
+                .font(.largeTitle)
+                .padding(.bottom, 16)
+            
+            VStack(spacing: 20){
+                
+                Picker("User Type", selection: $isCustomer) {
+                    Text("Customer").tag(true)
+                    Text("Restaurant").tag(false)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding([.bottom, .horizontal])
+                
                 InputView(text: $email,
                           title: "Email Address",
                           placeholder: "name@emaple.com")
                 // emails don't start with caps
                 .autocapitalization(.none)
                 
-                InputView(text: $fullName,
-                          title: "Full Name",
-                          placeholder: "Enter your password")
+                if isCustomer {
+                    InputView(text: $fullName,
+                              title: "Full Name",
+                              placeholder: "Enter your full name")
+                } else {
+                    InputView(text: $fullName,
+                              title: "Restaurant Name",
+                              placeholder: "Enter restaurant name")
+                }
                 
                 InputView(text: $password,
                           title: "Password",
@@ -64,12 +82,7 @@ struct RegistrationView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             
-            Picker("User Type", selection: $isCustomer) {
-                Text("Customer").tag(true)
-                Text("Restaurant").tag(false)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
+            Spacer()
             
             // Sign in button
             Button {
@@ -90,7 +103,7 @@ struct RegistrationView: View {
             // grayout btn
             .opacity(formIsValid ? 1 : 0.5)
             .cornerRadius(10)
-            .padding(.top, 24)
+            .padding(.bottom, 16)
             
             Spacer()
             
@@ -104,6 +117,7 @@ struct RegistrationView: View {
                 }
                 .font(.system(size: 14))
             }
+            .padding(.bottom, 16)
         }
     }
 }
