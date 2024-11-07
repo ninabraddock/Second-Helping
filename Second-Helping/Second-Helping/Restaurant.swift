@@ -10,6 +10,7 @@ import Foundation
 
 struct Restaurant: Identifiable, Codable {
     var id: String?
+    var address: String
     var latitude: Double
     var longitude: Double
     var name: String

@@ -22,11 +22,13 @@ struct AddMeal: View {
     var enteredPriceFormatted: Double {
         return (Double(enteredPrice) ?? 0) / 100
     }
+    
+    @State private var enteredQuantity = ""
     @State private var startTime = Date()
     @State private var endTime = Date()
     
-    var bagTypes = ["Mystery Bag", "Meal Prep"]
-    var mealTypes = ["Lunch", "Dinner"]
+    var bagTypes = ["--select bag--", "Mystery Bag", "Meal Prep"]
+    var mealTypes = ["--select meal--", "Lunch", "Dinner"]
     
     // Formatter for inputing price
     private let priceFormatter: NumberFormatter = {
@@ -84,8 +86,16 @@ struct AddMeal: View {
             
             // Quantity Section
             Section(header: Text("Quantity")) {
-                TextField("Enter Quantity", value: $newMeal.quantity, formatter: quantityFormatter)
+                TextField("Enter Quantity", text: $enteredQuantity)
                     .keyboardType(.numberPad)
+                    .onChange(of: enteredQuantity) {
+                        // Update newMeal.quantity only if enteredQuantity is a valid number
+                        if let quantity = Int(enteredQuantity), quantity > 0 {
+                            newMeal.quantity = quantity
+                        } else {
+                            newMeal.quantity = 0 // Reset if invalid input
+                        }
+                    }
             }
             
             // Pickup Start Time Section
@@ -153,17 +163,7 @@ struct AddMeal: View {
             print("Could not update restaurant with error \(error.localizedDescription)")
         }
     } else {
-//        print("Error accessing current restaurant")
-        let defaultRestaurant = restaurantHandler.restaurants.first { $0.name == "Waterworks" }
-        if let curRestaurant = defaultRestaurant {
-            var updatedRestaurant = curRestaurant
-            updatedRestaurant.meals.append(newMeal)
-            do {
-                try await restaurantHandler.updateRestaurant(updatedRestaurant)
-            } catch {
-                print("Could not update restaurant with error \(error.localizedDescription)")
-            }
-        }
+        print("Error accessing current restaurant")
     }
     
 }
@@ -180,11 +180,6 @@ func formValid(newMeal: Meal, pickupStartTime: Date, pickupEndTime: Date) -> Boo
     }
     
     if newMeal.quantity <= 0 {
-        return false
-    }
-    
-    //Time validation
-    if pickupStartTime >= pickupEndTime {
         return false
     }
     

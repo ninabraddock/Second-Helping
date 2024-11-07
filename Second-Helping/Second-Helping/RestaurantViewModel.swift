@@ -42,6 +42,21 @@ class RestaurantViewModel: ObservableObject {
 //                restaurant?.id = document.documentID  // Set the document ID manually
 //                return restaurant
             }
+            // Keep our same current restaurant
+            if let curRestaurant = currentRestaurant {
+                if let id = curRestaurant.id {
+                    await fetchRestaurant(withID: id)
+                } else {
+                    // We don't have an id for that restaurant, lets try to find a restaurant with that name
+                    let restName = curRestaurant.name
+                    for restaurant in restaurants {
+                        if restaurant.name == restName {
+                            currentRestaurant = restaurant
+                        }
+                    }
+                    
+                }
+            }
             print("RESTAURANTS FETCHED")
         } catch {
             print("Debug: failed to fetch restaurants with error \(error.localizedDescription)")
@@ -61,18 +76,26 @@ class RestaurantViewModel: ObservableObject {
     }
     
     // Add a new restaurant
-    func addRestaurant(_ restaurant: Restaurant) async throws {
+    func addRestaurant(_ restaurant: Restaurant) async throws -> Bool {
         do {
-            let encoder = try Firestore.Encoder().encode(restaurant)
+            await fetchRestaurants()
+            for r in restaurants {
+                if r.name == restaurant.name {
+                    print("Restaurant name already in use")
+                    return false
+                }
+            }
             // Generate a new document ID
             let documentRef = firestore.collection("restaurants").document()
             var restaurantWithID = restaurant
             restaurantWithID.id = documentRef.documentID  // Set the document ID before saving
+            let encoder = try Firestore.Encoder().encode(restaurantWithID)
             try await documentRef.setData(encoder)
             await fetchRestaurants()
+            return true
         } catch {
             print("Debug: failed to add restaurant with error \(error.localizedDescription)")
-            throw error
+            return false
         }
     }
     

@@ -4,10 +4,12 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     @Binding var isLoggedIn: Bool
     @Binding var isCustomer: Bool
     @Binding var isRestaurant: Bool
     @State var incorrectInfo = false
+    @State var errorMessage = ""
     
     var body: some View {
         NavigationStack {
@@ -44,11 +46,12 @@ struct LoginView: View {
                 .padding(.horizontal)
                 .padding(.top, 12)
                 
-                if incorrectInfo {
-                    Text("The username and password cannot be found.").foregroundColor(.red)
-                }
-                
                 Spacer()
+                
+                if incorrectInfo {
+                    Text(errorMessage)
+                        .foregroundStyle(.red)
+                }
                 
                 // Sign in button
                 Button {
@@ -56,11 +59,59 @@ struct LoginView: View {
                         incorrectInfo = try await authViewModel.signIn(withEmail: email, password: password)
                         if !incorrectInfo {
                             if !isCustomer {
-                                isRestaurant = true
+                                // We have a restaurant user
+                                if let curUser = authViewModel.currentUser {
+                                    if !curUser.isCustomer {
+                                        // Let's try to figure out which restaurant they belong to
+                                        for restaurant in restaurantViewModel.restaurants {
+                                            if restaurant.name == authViewModel.currentUser?.fullName {
+                                                restaurantViewModel.currentRestaurant = restaurant
+                                            }
+                                        }
+                                        if restaurantViewModel.currentRestaurant == nil {
+                                            incorrectInfo = true
+                                            errorMessage = "No restaurant associated with account"
+                                        }
+                                    } else {
+                                        // Customer is trying to log in as a restaurant
+                                        incorrectInfo = true
+                                        errorMessage = "Incorrect account type"
+                                        authViewModel.signOut()
+                                    }
+                                } else {
+                                    incorrectInfo = true
+                                    errorMessage = "Error accessing account"
+                                    authViewModel.signOut()
+                                }
+                                if !incorrectInfo {
+                                    if let _ = restaurantViewModel.currentRestaurant {
+                                        isRestaurant = true
+                                        isLoggedIn = true
+                                    } else {
+                                        incorrectInfo = true
+                                        errorMessage = "Error accessing restaurant"
+                                        authViewModel.signOut()
+                                    }
+                                }
+                            } else {
+                                if let curUser = authViewModel.currentUser {
+                                    if curUser.isCustomer {
+                                        isLoggedIn = true
+                                    } else {
+                                        // Restaurant is trying to log in as a customer
+                                        incorrectInfo = true
+                                        errorMessage = "Incorrect account type"
+                                        authViewModel.signOut()
+                                    }
+                                } else {
+                                    incorrectInfo = true
+                                    errorMessage = "Error accessing account"
+                                    authViewModel.signOut()
+                                }
                             }
-                            isLoggedIn = true
                         } else {
                             incorrectInfo = true
+                            errorMessage = "Incorrect login information"
                         }
                     }
                 } label: {
@@ -129,5 +180,6 @@ extension LoginView: AuthenticationFormProtocol {
 #Preview {
     LoginView(isLoggedIn: .constant(true), isCustomer: .constant(false), isRestaurant: .constant(false))
         .environmentObject(AuthViewModel())
+        .environmentObject(RestaurantViewModel())
 
 }

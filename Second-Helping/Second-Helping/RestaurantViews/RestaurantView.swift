@@ -11,6 +11,7 @@ struct RestaurantView: View {
     // Setting this to false should cause the restaurant to "log out"
     @Binding var isLoggedIn: Bool
     @Binding var isRestaurant: Bool
+    @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     
     var body: some View {
         ZStack {
@@ -24,6 +25,7 @@ struct RestaurantView: View {
                     Spacer()
                     
                     Button(action: {
+                        restaurantViewModel.currentRestaurant = nil
                         isLoggedIn = false
                         isRestaurant = false
                     }) {

@@ -49,7 +49,7 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func createUser (withEmail email: String, password: String, fullname: String, isCustomer: Bool) async throws {
+    func createUser (withEmail email: String, password: String, fullname: String, isCustomer: Bool) async throws -> Bool {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
@@ -57,8 +57,10 @@ class AuthViewModel: ObservableObject {
             let encoder = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
             await fetchUser()
+            return true
         } catch {
             print("debug:failed to create user with error\(error.localizedDescription)")
+            return false
         }
     }
     
@@ -75,9 +77,36 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func deleteAccount() {
-        
+    func deleteAccount(email: String, password: String) async -> Bool {
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            let user = result.user
+            print("Debug: User signed in successfully for deletion.")
+            
+            do {
+                try await Firestore.firestore().collection("users").document(user.uid).delete()
+                print("Debug: User data deleted from Firestore.")
+            } catch {
+                print("Debug: Failed to delete user data from Firestore with error \(error.localizedDescription)")
+                return false
+            }
+            
+            do {
+                try await user.delete()
+                self.userSession = nil
+                self.currentUser = nil
+                print("Debug: User account deleted from Firebase Authentication.")
+                return true
+            } catch {
+                print("Debug: Failed to delete user from Firebase Authentication with error \(error.localizedDescription)")
+                return false
+            }
+        } catch {
+            print("Debug: Failed to sign in for account deletion with error \(error.localizedDescription)")
+            return false
+        }
     }
+
     
     func fetchUser() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
