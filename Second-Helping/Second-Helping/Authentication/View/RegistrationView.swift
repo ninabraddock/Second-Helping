@@ -27,6 +27,7 @@ struct RegistrationView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    @EnvironmentObject var loadingState: LoadingState
     
     // Address validation
     @State private var isAddressValid: Bool? = nil
@@ -175,12 +176,14 @@ struct RegistrationView: View {
                 // Sign in button
                 Button {
                     Task {
+                        loadingState.isLoading = true
                         showError = false
                         if isCustomer {
                             registrationStatus = await registerCustomer()
                         } else {
                             registrationStatus = await registerRestaurant()
                         }
+                        loadingState.isLoading = false
                         if registrationStatus {
                             // Return to login on successful registration
                             dismiss()

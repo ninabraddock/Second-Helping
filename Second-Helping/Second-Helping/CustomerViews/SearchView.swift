@@ -70,124 +70,128 @@ struct SearchView: View {
     
     var body: some View {
         let customGreen = Color(hex: "#4f7942")
-        VStack {
-            Text("Browse food options")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(customGreen)
-            
-            if let location = locationManager.location {
-                Text("Successfully found location")
-                    .onAppear {
-                        userLat = location.latitude
-                        userLong = location.longitude
-                    }
-                Text("Longitude: \(String(describing: userLong))")
-                Text("Latitude: \(String(describing: userLat))")
-            }
-            
-            LocationButton {
-                locationManager.requestLocation()
-            }
-            .frame(height: 44)
-            .padding()
-            
-            // Section for Dinner
-            HStack{
-                Text("Dinner")
-                    .underline()
-                    .font(.title2)
-                    .padding()
-                Spacer()
-                NavigationLink(destination: StatsView()) {
-                    Text("See All")
-                        .padding()
+        ScrollView {
+            VStack {
+                Text("Browse food options")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(customGreen)
+                
+                if let location = locationManager.location {
+                    Text("Successfully found location")
+                        .onAppear {
+                            userLat = location.latitude
+                            userLong = location.longitude
+                        }
+                    Text("Longitude: \(String(describing: userLong))")
+                    Text("Latitude: \(String(describing: userLat))")
                 }
-            }
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    ForEach(restaurantViewModel.restaurants) { restaurant in
-                        let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" }
-                        
-                        let restLat = restaurant.latitude
-                        let restLong = restaurant.longitude
-                        var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
-
-                        ForEach(dinnerMeals) { meal in
-                            Button {
-                                // Set the selected meal, restaurant and show the detail sheet
-                                selectedMeal = meal
-                                selectedRestaurant = restaurant
-                                showMealDetail = true
-                            } label: {
-                                ProductCard(
-                                    image: Image("waterworks"), // replace with image
-                                    quantity: Int(meal.quantity),
-                                    name: restaurant.name,
-                                    bagType: meal.bagType,
-                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                    ranking: restaurant.meanRating,
-                                    distance: distanceToRest,
-                                    price: meal.price,
-                                    btnHandler: nil
-                                )
-                            }
-                            .foregroundStyle(.black)
+                
+                LocationButton {
+                    locationManager.requestLocation()
+                }
+                .frame(height: 44)
+                .padding()
+                
+                // Section for Dinner
+                HStack{
+                    Text("Dinner")
+                        .underline()
+                        .font(.title2)
+                        .padding()
+                    Spacer()
+                    NavigationLink(destination: StatsView()) {
+                        Text("See All")
+                            .padding()
+                    }
+                }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(restaurantViewModel.restaurants) { restaurant in
+                            let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" }
                             
-                        }
-                    }
-                }
-            }
-
-            // Section for Lunch
-            HStack{
-                Text("Lunch")
-                    .underline()
-                    .font(.title2)
-                    .padding()
-                Spacer()
-                NavigationLink(destination: StatsView()) {
-                    Text("See All")
-                        .padding()
-                }
-            }
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    ForEach(restaurantViewModel.restaurants) { restaurant in
-                        let dinnerMeals = restaurant.meals.filter { $0.type == "Lunch" }
-                        ForEach(dinnerMeals) { meal in
-                            Button {
-                                // Set the selected meal, restaurant and show the detail sheet
-                                selectedMeal = meal
-                                selectedRestaurant = restaurant
-                                showMealDetail = true
-                            } label: {
-                                ProductCard(
-                                    image: Image("waterworks"), // replace with image
-                                    quantity: Int(meal.quantity),
-                                    name: restaurant.name,
-                                    bagType: meal.bagType,
-                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                    ranking: restaurant.meanRating,
-                                    distance: 0.3, // replace with distance calculation
-                                    price: meal.price,
-                                    btnHandler: nil
-                                )
+                            let restLat = restaurant.latitude
+                            let restLong = restaurant.longitude
+                            var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
+                            
+                            ForEach(dinnerMeals) { meal in
+                                Button {
+                                    // Set the selected meal, restaurant and show the detail sheet
+                                    selectedMeal = meal
+                                    selectedRestaurant = restaurant
+                                    showMealDetail = true
+                                } label: {
+                                    ProductCard(
+                                        image: Image("waterworks"), // replace with image
+                                        quantity: Int(meal.quantity),
+                                        name: restaurant.name,
+                                        bagType: meal.bagType,
+                                        rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                        ranking: restaurant.meanRating,
+                                        distance: distanceToRest,
+                                        price: meal.price,
+                                        btnHandler: nil
+                                    )
+                                }
+                                .frame(width: 240, height: 200)
+                                .foregroundStyle(.black)
+                                
                             }
-                            .foregroundStyle(.black)
+                        }
+                    }
+                }
+                
+                // Section for Lunch
+                HStack{
+                    Text("Lunch")
+                        .underline()
+                        .font(.title2)
+                        .padding()
+                    Spacer()
+                    NavigationLink(destination: StatsView()) {
+                        Text("See All")
+                            .padding()
+                    }
+                }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(restaurantViewModel.restaurants) { restaurant in
+                            let dinnerMeals = restaurant.meals.filter { $0.type == "Lunch" }
+                            ForEach(dinnerMeals) { meal in
+                                Button {
+                                    // Set the selected meal, restaurant and show the detail sheet
+                                    selectedMeal = meal
+                                    selectedRestaurant = restaurant
+                                    showMealDetail = true
+                                } label: {
+                                    ProductCard(
+                                        image: Image("waterworks"), // replace with image
+                                        quantity: Int(meal.quantity),
+                                        name: restaurant.name,
+                                        bagType: meal.bagType,
+                                        rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                        ranking: restaurant.meanRating,
+                                        distance: 0.3, // replace with distance calculation
+                                        price: meal.price,
+                                        btnHandler: nil
+                                    )
+                                }
+                                .frame(width: 240, height: 200)
+                                .foregroundStyle(.black)
+                            }
                         }
                     }
                 }
             }
-        }
-        .onAppear {
-            Task {
-                await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
+            .onAppear {
+                Task {
+                    await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
+                }
             }
-        }
-        .sheet(isPresented: $showMealDetail) {
-            if let meal = selectedMeal {
-                MealDetailSheet(meal: meal)
+            .sheet(isPresented: $showMealDetail) {
+                if let meal = selectedMeal {
+                    MealDetailSheet(meal: meal)
+                }
             }
         }
     }

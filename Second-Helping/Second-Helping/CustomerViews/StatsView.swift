@@ -10,30 +10,6 @@ import WebKit
 
 let theme_color = Color("main_color_theme")
 
-struct GifImageView: UIViewRepresentable {
-    private let name: String
-    init(_ name: String) {
-        self.name = name
-    }
-    
-    func makeUIView(context: Context) -> WKWebView {
-        let webview = WKWebView()
-        if let url = Bundle.main.url(forResource: name, withExtension: "gif") {
-            do {
-                let data = try Data(contentsOf: url)
-                webview.load(data, mimeType: "image/gif", characterEncodingName: "UTF-8", baseURL: url.deletingLastPathComponent())
-            } catch {
-                print("Error loading GIF: \(error)")
-            }
-        }
-        return webview
-    }
-    
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        uiView.reload()
-    }
-}
-
 
 struct StatsView: View {
     var body: some View {

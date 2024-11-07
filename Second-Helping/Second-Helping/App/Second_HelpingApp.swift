@@ -8,10 +8,15 @@
 import SwiftUI
 import Firebase
 
+class LoadingState: ObservableObject {
+    @Published var isLoading: Bool = false
+}
+
 @main
 struct Second_HelpingApp: App {
     @StateObject var authViewModel = AuthViewModel()
     @StateObject var restaurantViewModel = RestaurantViewModel()
+    @StateObject var loadingState = LoadingState()
     @State var isLoggedIn = false
     @State var isCustomer = true
     @State var isRestaurant = false
@@ -25,6 +30,7 @@ struct Second_HelpingApp: App {
             ContentView(isLoggedIn: $isLoggedIn, isCustomer: $isCustomer, isRestaurant: $isRestaurant)
                 .environmentObject(authViewModel)
                 .environmentObject(restaurantViewModel)
+                .environmentObject(loadingState)
         }
     }
 }

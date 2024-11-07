@@ -82,7 +82,7 @@ struct ProductCard: View {
                             let imagePosition = CGSize(width: 2300, height: 120)
                             let quantityPosition = CGSize(width: 200, height: 16)
                             let namePosition = CGSize(width: 1150, height: 100)
-                            let heartPostion = CGSize(width: 2100, height: 20)
+                            let heartPosition = CGSize(width: 2000, height: 20)
                             
                             Text("\(self.quantity)")
                                 .font(.system(size: 16, weight: .medium))
@@ -112,10 +112,10 @@ struct ProductCard: View {
                             // Favorite a bag
                             Image(systemName: "heart.square.fill")
                                 .foregroundColor(.white.opacity(1.0))
-                                .font(.system(size: 30))
+                                .font(.system(size: 35))
                                 .position(
-                                    x: heartPostion.width / imagePosition.width * geometry.size.width,
-                                    y: heartPostion.height / imagePosition.height * geometry.size.height
+                                    x: heartPosition.width / imagePosition.width * geometry.size.width,
+                                    y: heartPosition.height / imagePosition.height * geometry.size.height
                                 )
                         }
                     )

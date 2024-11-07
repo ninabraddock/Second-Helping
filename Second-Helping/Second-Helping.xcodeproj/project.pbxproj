@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		084E81542CDD186200F46F5A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084E81532CDD186200F46F5A /* LoadingView.swift */; };
+		084E81582CDD193E00F46F5A /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084E81572CDD193E00F46F5A /* loading.gif */; };
+		084E815A2CDD19B700F46F5A /* GifImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084E81592CDD19B700F46F5A /* GifImageView.swift */; };
 		0864020B2CAC254F00291E53 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0864020A2CAC254F00291E53 /* ProductCard.swift */; };
 		0872A68C2CA309C4009814A5 /* Second_HelpingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A68B2CA309C4009814A5 /* Second_HelpingApp.swift */; };
 		0872A68E2CA309C4009814A5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A68D2CA309C4009814A5 /* ContentView.swift */; };
@@ -73,6 +76,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		084E81532CDD186200F46F5A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		084E81572CDD193E00F46F5A /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
+		084E81592CDD19B700F46F5A /* GifImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifImageView.swift; sourceTree = "<group>"; };
 		0864020A2CAC254F00291E53 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
 		0872A6882CA309C4009814A5 /* Second-Helping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Second-Helping.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0872A68B2CA309C4009814A5 /* Second_HelpingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Second_HelpingApp.swift; sourceTree = "<group>"; };
@@ -149,6 +155,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		084E81552CDD18FC00F46F5A /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				084E81562CDD191300F46F5A /* gifs */,
+				084E81532CDD186200F46F5A /* LoadingView.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
+		084E81562CDD191300F46F5A /* gifs */ = {
+			isa = PBXGroup;
+			children = (
+				084E81572CDD193E00F46F5A /* loading.gif */,
+			);
+			path = gifs;
+			sourceTree = "<group>";
+		};
 		0872A67F2CA309C4009814A5 = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +209,8 @@
 				0872A6912CA309C6009814A5 /* Preview Content */,
 				08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */,
 				08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */,
+				084E81552CDD18FC00F46F5A /* Loading */,
+				084E81592CDD19B700F46F5A /* GifImageView.swift */,
 			);
 			path = "Second-Helping";
 			sourceTree = "<group>";
@@ -427,6 +452,7 @@
 				DD59B1852CD68CEA003189F9 /* CO2.gif in Resources */,
 				0872A6932CA309C6009814A5 /* Preview Assets.xcassets in Resources */,
 				0872A6902CA309C6009814A5 /* Assets.xcassets in Resources */,
+				084E81582CDD193E00F46F5A /* loading.gif in Resources */,
 				565307C72CAEE92E00457193 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +486,7 @@
 				0899B4202CDA787D0076013C /* MealDetailSheet.swift in Sources */,
 				DDFC70682CAF3E93007A506A /* RegistrationView.swift in Sources */,
 				0872A6B62CA4B274009814A5 /* CustomerView.swift in Sources */,
+				084E81542CDD186200F46F5A /* LoadingView.swift in Sources */,
 				0872A6C02CA4CAB4009814A5 /* SearchView.swift in Sources */,
 				56F1B4E02CC1A9F9004EA0D8 /* AddMealView.swift in Sources */,
 				0872A6C22CA4CAC7009814A5 /* FavoritesView.swift in Sources */,
@@ -476,6 +503,7 @@
 				08EA9D422CC1549F00016C6F /* AuthViewModel.swift in Sources */,
 				0872A6C42CA4CAD6009814A5 /* HistoryView.swift in Sources */,
 				DD3B53572CD0307800C84143 /* ActiveOrdersView.swift in Sources */,
+				084E815A2CDD19B700F46F5A /* GifImageView.swift in Sources */,
 				DDFC70662CAF3E78007A506A /* LoginView.swift in Sources */,
 				0872A6B82CA4B281009814A5 /* RestaurantView.swift in Sources */,
 			);
