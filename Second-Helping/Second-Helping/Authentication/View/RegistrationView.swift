@@ -270,7 +270,8 @@ struct RegistrationView: View {
             name: fullName,
             phoneNumber: phoneNumber,
             meals: [],
-            reviews: []
+            reviews: [],
+            completedOrders: []
         )
         
         do {

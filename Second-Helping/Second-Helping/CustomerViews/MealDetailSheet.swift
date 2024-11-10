@@ -24,5 +24,5 @@ struct MealDetailSheet: View {
 }
 
 #Preview {
-    MealDetailSheet(meal: Meal(bagType: "Mystery Bag", price: 5.00, quantity: 5, rangePickUpTime: PickUpTime(start:"9:00 PM", end:"10:30 PM"), type: "Dinner"))
+    MealDetailSheet(meal: Meal(bagType: "Mystery Bag", price: 5.00, quantity: 5, rangePickUpTime: PickUpTime(start:"9:00 PM", end:"10:30 PM"), type: "Dinner", restaurantFrom: "Placeholder restaurant"))
 }
