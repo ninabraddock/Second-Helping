@@ -117,7 +117,7 @@ class AuthViewModel: ObservableObject {
     }
     
     // for testing the historyView
-    func addCompletedMeal() {
+    func addDummyCompletedMeal() {
         
         guard var user = currentUser else {
                     print("No current user found.")
@@ -144,6 +144,10 @@ class AuthViewModel: ObservableObject {
                         print("Failed to add fake meal to Firestore: \(error.localizedDescription)")
                     }
                 }
+        
+    }
+    
+    func completeOrder(order: Meal, from: Restaurant) {
         
     }
     

@@ -41,7 +41,7 @@ struct HistoryView: View {
         // Testing: Uncomment to show button that adds a meal to completedMeals
     
 //        Button(action: {
-//            authViewModel.addCompletedMeal()  // Call the function to add a fake meal
+//            authViewModel.addDummyCompletedMeal()  // Call the function to add a fake meal
 //                    }) {
 //                        Text("Add Fake Meal")
 //                            .padding()
