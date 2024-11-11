@@ -114,12 +114,13 @@ struct LocationView: View {
                     name: name,
                     phoneNumber: phoneNumber,
                     meals: [],
-                    reviews: []
+                    reviews: [],
+                    completedOrders: []
                 )
                 
                 print("\(name) address: \(address)")
 
-                // don't adda again
+                // don't add again
                 if !visitedAddresses.contains(address) {
                     locations.removeAll() { $0.id == id}
                     locations.append(restaurant)
@@ -163,7 +164,8 @@ struct LocationView: View {
                     name: name,
                     phoneNumber: phoneNumber,
                     meals: [],
-                    reviews: []
+                    reviews: [],
+                    completedOrders: []
                 )
 
                 switch diff.type {
