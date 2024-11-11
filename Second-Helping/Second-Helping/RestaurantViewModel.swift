@@ -122,4 +122,14 @@ class RestaurantViewModel: ObservableObject {
             throw error
         }
     }
+    
+    func fetchCurrentRestaurant(uid: String) async {
+        do {
+            let document = try await firestore.collection("restaurants").document(uid).getDocument()
+            let restaurant = try document.data(as: Restaurant.self)
+            self.currentRestaurant = restaurant
+        } catch {
+            print("Error fetching current restaurant: \(error.localizedDescription)")
+        }
+    }
 }

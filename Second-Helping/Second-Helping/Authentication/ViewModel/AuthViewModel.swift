@@ -53,7 +53,7 @@ class AuthViewModel: ObservableObject {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
-            let user = User(id: result.user.uid, fullName: fullname, email: email, isCustomer: isCustomer)
+            let user = User(id: result.user.uid, fullName: fullname, email: email, isCustomer: isCustomer, completedOrders: [])
             let encoder = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
             await fetchUser()
@@ -115,5 +115,42 @@ class AuthViewModel: ObservableObject {
         
 //        print("Debug: current user is \(String(describing: self.currentUser))")
     }
+    
+    // for testing the historyView
+    func addDummyCompletedMeal() {
+        
+        guard var user = currentUser else {
+                    print("No current user found.")
+                    return
+                }
+        
+        let fakeMeal = Meal(
+            bagType: "Test Bag",
+            price: 1.5,
+            quantity: 1,
+            rangePickUpTime: PickUpTime(start: "12:00", end: "12:00"),
+            type: "Dinner",
+            restaurantFrom: "Test Restaurant"
+            )
+        
+        user.completedOrders.append(fakeMeal)
+        self.currentUser = user
+        Task {
+                    do {
+                        let encoder = try Firestore.Encoder().encode(user)
+                        try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
+                        print("Fake meal added successfully.")
+                    } catch {
+                        print("Failed to add fake meal to Firestore: \(error.localizedDescription)")
+                    }
+                }
+        
+    }
+    
+    func completeOrder(order: Meal, from: Restaurant) {
+        
+    }
+    
+    
 }
   

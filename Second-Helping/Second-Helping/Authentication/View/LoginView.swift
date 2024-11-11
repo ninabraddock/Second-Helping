@@ -5,6 +5,7 @@ struct LoginView: View {
     @State private var password = ""
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    @EnvironmentObject var loadingState: LoadingState
     @Binding var isLoggedIn: Bool
     @Binding var isCustomer: Bool
     @Binding var isRestaurant: Bool
@@ -12,152 +13,157 @@ struct LoginView: View {
     @State var errorMessage = ""
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Image("logo")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 100, height: 100)
-                    .padding(.top, 16)
-                
-                Text("Second Helping")
-                    .font(.largeTitle)
-                    .padding(.bottom, 16)
-                
-                Picker("User Type", selection: $isCustomer) {
-                    Text("Customer").tag(true)
-                    Text("Restaurant").tag(false)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding([.bottom, .horizontal])
-                
-                VStack(spacing: 20){
-                    InputView(text: $email,
-                              title: "Email Address",
-                              placeholder: "name@example.com")
-                    // emails don't start with caps
-                    .autocapitalization(.none)
+        ZStack {
+            NavigationStack {
+                VStack {
+                    Image("logo")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 100, height: 100)
+                        .padding(.top, 16)
                     
-                    InputView(text: $password,
-                              title: "Password",
-                              placeholder: "Enter your password",
-                              isSecureField: true)
-                }
-                .padding(.horizontal)
-                .padding(.top, 12)
-                
-                Spacer()
-                
-                if incorrectInfo {
-                    Text(errorMessage)
-                        .foregroundStyle(.red)
-                }
-                
-                // Sign in button
-                Button {
-                    Task {
-                        incorrectInfo = try await authViewModel.signIn(withEmail: email, password: password)
-                        if !incorrectInfo {
-                            if !isCustomer {
-                                // We have a restaurant user
-                                if let curUser = authViewModel.currentUser {
-                                    if !curUser.isCustomer {
-                                        // Let's try to figure out which restaurant they belong to
-                                        for restaurant in restaurantViewModel.restaurants {
-                                            if restaurant.name == authViewModel.currentUser?.fullName {
-                                                restaurantViewModel.currentRestaurant = restaurant
+                    Text("Second Helping")
+                        .font(.largeTitle)
+                        .padding(.bottom, 16)
+                    
+                    Picker("User Type", selection: $isCustomer) {
+                        Text("Customer").tag(true)
+                        Text("Restaurant").tag(false)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding([.bottom, .horizontal])
+                    
+                    VStack(spacing: 20){
+                        InputView(text: $email,
+                                  title: "Email Address",
+                                  placeholder: "name@example.com")
+                        // emails don't start with caps
+                        .autocapitalization(.none)
+                        
+                        InputView(text: $password,
+                                  title: "Password",
+                                  placeholder: "Enter your password",
+                                  isSecureField: true)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 12)
+                    
+                    Spacer()
+                    
+                    if incorrectInfo {
+                        Text(errorMessage)
+                            .foregroundStyle(.red)
+                    }
+                    
+                    // Sign in button
+                    Button {
+                        Task {
+                            loadingState.isLoading = true
+                            incorrectInfo = try await authViewModel.signIn(withEmail: email, password: password)
+                            if !incorrectInfo {
+                                if !isCustomer {
+                                    // We have a restaurant user
+                                    if let curUser = authViewModel.currentUser {
+                                        if !curUser.isCustomer {
+                                            // Let's try to figure out which restaurant they belong to
+                                            for restaurant in restaurantViewModel.restaurants {
+                                                if restaurant.name == authViewModel.currentUser?.fullName {
+                                                    restaurantViewModel.currentRestaurant = restaurant
+                                                }
                                             }
-                                        }
-                                        if restaurantViewModel.currentRestaurant == nil {
+                                            if restaurantViewModel.currentRestaurant == nil {
+                                                incorrectInfo = true
+                                                errorMessage = "No restaurant associated with account"
+                                            }
+                                        } else {
+                                            // Customer is trying to log in as a restaurant
                                             incorrectInfo = true
-                                            errorMessage = "No restaurant associated with account"
+                                            errorMessage = "Incorrect account type"
+                                            authViewModel.signOut()
                                         }
                                     } else {
-                                        // Customer is trying to log in as a restaurant
                                         incorrectInfo = true
-                                        errorMessage = "Incorrect account type"
+                                        errorMessage = "Error accessing account"
                                         authViewModel.signOut()
                                     }
+                                    if !incorrectInfo {
+                                        if let _ = restaurantViewModel.currentRestaurant {
+                                            isRestaurant = true
+                                        } else {
+                                            incorrectInfo = true
+                                            errorMessage = "Error accessing restaurant"
+                                            authViewModel.signOut()
+                                        }
+                                    }
                                 } else {
-                                    incorrectInfo = true
-                                    errorMessage = "Error accessing account"
-                                    authViewModel.signOut()
-                                }
-                                if !incorrectInfo {
-                                    if let _ = restaurantViewModel.currentRestaurant {
-                                        isRestaurant = true
-                                        isLoggedIn = true
+                                    if let curUser = authViewModel.currentUser {
+                                        if !curUser.isCustomer {
+                                            // Restaurant is trying to log in as a customer
+                                            incorrectInfo = true
+                                            errorMessage = "Incorrect account type"
+                                            authViewModel.signOut()
+                                        }
                                     } else {
                                         incorrectInfo = true
-                                        errorMessage = "Error accessing restaurant"
+                                        errorMessage = "Error accessing account"
                                         authViewModel.signOut()
                                     }
                                 }
                             } else {
-                                if let curUser = authViewModel.currentUser {
-                                    if curUser.isCustomer {
-                                        isLoggedIn = true
-                                    } else {
-                                        // Restaurant is trying to log in as a customer
-                                        incorrectInfo = true
-                                        errorMessage = "Incorrect account type"
-                                        authViewModel.signOut()
-                                    }
-                                } else {
-                                    incorrectInfo = true
-                                    errorMessage = "Error accessing account"
-                                    authViewModel.signOut()
-                                }
+                                incorrectInfo = true
+                                errorMessage = "Incorrect login information"
                             }
-                        } else {
-                            incorrectInfo = true
-                            errorMessage = "Incorrect login information"
+                            loadingState.isLoading = false
+                            // Flip the log in bool to trigger the correct view
+                            if !incorrectInfo {
+                                isLoggedIn = true
+                            }
                         }
+                    } label: {
+                        HStack {
+                            Text("SIGN IN")
+                                .fontWeight(.semibold)
+                            Image(systemName: "arrow.right")
+                        }
+                        .foregroundStyle(.white)
+                        .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                     }
-                } label: {
-                    HStack {
-                        Text("SIGN IN")
-                            .fontWeight(.semibold)
-                        Image(systemName: "arrow.right")
+                    .background(Color(.systemBlue))
+                    .disabled(!formIsValid)
+                    // grayout btn
+                    .opacity(formIsValid ? 1 : 0.5)
+                    .cornerRadius(10)
+                    .padding(.bottom, 16)
+                    
+                    //forgot password button
+                    NavigationLink {
+                        ForgotPasswordView()
+                            .navigationBarBackButtonHidden(true)
+                    } label: {
+                        HStack(spacing: 3){
+                            Text("Forgot your password?")
+                            Text("Click Here")
+                                .fontWeight(.bold)
+                        }
+                        .font(.system(size: 14))
                     }
-                    .foregroundStyle(.white)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                    .padding(.bottom, 32)
+                    
+                    //sign up button
+                    NavigationLink {
+                        RegistrationView()
+                            .navigationBarBackButtonHidden(true)
+                    } label: {
+                        HStack(spacing: 3){
+                            Text("Don't have an account?")
+                            Text("Sign Up")
+                                .fontWeight(.bold)
+                        }
+                        .font(.system(size: 14))
+                    }
+                    .padding(.bottom, 16)
+                    
                 }
-                .background(Color(.systemBlue))
-                .disabled(!formIsValid)
-                // grayout btn
-                .opacity(formIsValid ? 1 : 0.5)
-                .cornerRadius(10)
-                .padding(.bottom, 16)
-                
-                //forgot password button
-                NavigationLink {
-                    ForgotPasswordView()
-                        .navigationBarBackButtonHidden(true)
-                } label: {
-                    HStack(spacing: 3){
-                        Text("Forgot your password?")
-                        Text("Click Here")
-                            .fontWeight(.bold)
-                    }
-                    .font(.system(size: 14))
-                }
-                .padding(.bottom, 32)
-                
-                //sign up button
-                NavigationLink {
-                    RegistrationView()
-                        .navigationBarBackButtonHidden(true)
-                } label: {
-                    HStack(spacing: 3){
-                        Text("Don't have an account?")
-                        Text("Sign Up")
-                            .fontWeight(.bold)
-                    }
-                    .font(.system(size: 14))
-                }
-                .padding(.bottom, 16)
-                
             }
         }
     }
@@ -181,5 +187,6 @@ extension LoginView: AuthenticationFormProtocol {
     LoginView(isLoggedIn: .constant(true), isCustomer: .constant(false), isRestaurant: .constant(false))
         .environmentObject(AuthViewModel())
         .environmentObject(RestaurantViewModel())
+        .environmentObject(LoadingState())
 
 }

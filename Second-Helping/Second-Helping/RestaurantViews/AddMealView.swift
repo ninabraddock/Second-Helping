@@ -15,9 +15,13 @@ import SwiftUI
 struct AddMeal: View {
     
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
+    @State private var restaurantName: String = ""
+
     // Form Variables
-    @State private var newMeal: Meal = Meal(bagType:"", price:0, quantity:0, rangePickUpTime: PickUpTime(start:"", end:""), type:"")
+    @State private var newMeal: Meal = Meal(bagType:"", price:0, quantity:0, rangePickUpTime: PickUpTime(start:"", end:""), type:"", restaurantFrom: "")
+    
     @State private var enteredPrice = ""
     var enteredPriceFormatted: Double {
         return (Double(enteredPrice) ?? 0) / 100
@@ -147,6 +151,17 @@ struct AddMeal: View {
             .cornerRadius(10)
             
         } //end form
+        .onAppear {
+            if let uid = authViewModel.userSession?.uid {
+                Task {
+                    await restaurantViewModel.fetchCurrentRestaurant(uid: uid)
+                    restaurantName = restaurantViewModel.currentRestaurant?.name ?? "Unknown Restaurant"
+                    newMeal.restaurantFrom = restaurantName 
+                }
+            } else {
+                print("Error: No user session available.")
+            }
+        }
 
     }
 }

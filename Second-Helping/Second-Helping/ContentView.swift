@@ -13,18 +13,25 @@ struct ContentView: View {
     @Binding var isRestaurant: Bool
     
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var loadingState: LoadingState
     
     var body: some View {
-        Group {
-            if isLoggedIn {
-                if isCustomer {
-                    CustomerView(isLoggedIn: $isLoggedIn, isCustomer: $isCustomer) .transition(.slide)
+        ZStack {
+            Group {
+                if isLoggedIn {
+                    if isCustomer {
+                        CustomerView(isLoggedIn: $isLoggedIn, isCustomer: $isCustomer) .transition(.slide)
+                    } else {
+                        // isRestaurant = true
+                        RestaurantView(isLoggedIn: $isLoggedIn, isRestaurant: $isRestaurant) .transition(.slide)
+                    }
                 } else {
-                    // isRestaurant = true
-                    RestaurantView(isLoggedIn: $isLoggedIn, isRestaurant: $isRestaurant) .transition(.slide)
+                    LoginView(isLoggedIn: $isLoggedIn, isCustomer: $isCustomer, isRestaurant: $isRestaurant) .transition(.slide)
                 }
-            } else {
-                LoginView(isLoggedIn: $isLoggedIn, isCustomer: $isCustomer, isRestaurant: $isRestaurant) .transition(.slide)
+            }
+            if loadingState.isLoading {
+                LoadingView()
+                    .edgesIgnoringSafeArea(.all)
             }
         }
     }
@@ -35,4 +42,5 @@ struct ContentView: View {
     ContentView(isLoggedIn: .constant(false), isCustomer: .constant(true), isRestaurant: .constant(false))
         .environmentObject(AuthViewModel())
         .environmentObject(RestaurantViewModel())
+        .environmentObject(LoadingState())
 }
