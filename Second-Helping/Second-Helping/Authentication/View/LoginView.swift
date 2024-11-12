@@ -23,13 +23,16 @@ struct LoginView: View {
                         .padding(.top, 16)
                     
                     Text("Second Helping")
-                        .font(.largeTitle)
-                        .padding(.bottom, 16)
+                        .font(.custom("StudyClash", size: 34))
+                        .padding(.bottom, 24)
                     
                     Picker("User Type", selection: $isCustomer) {
-                        Text("Customer").tag(true)
-                        Text("Restaurant").tag(false)
+                        Text("Customer")
+                            .tag(true)
+                        Text("Restaurant")
+                            .tag(false)
                     }
+                    .font(.custom("StudyClash", size: 18))
                     .pickerStyle(SegmentedPickerStyle())
                     .padding([.bottom, .horizontal])
                     
@@ -53,6 +56,7 @@ struct LoginView: View {
                     if incorrectInfo {
                         Text(errorMessage)
                             .foregroundStyle(.red)
+                            .font(.custom("StudyClash", size: 18))
                     }
                     
                     // Sign in button
@@ -122,6 +126,7 @@ struct LoginView: View {
                     } label: {
                         HStack {
                             Text("SIGN IN")
+                                .font(.custom("StudyClash", size: 24))
                                 .fontWeight(.semibold)
                             Image(systemName: "arrow.right")
                         }
@@ -145,7 +150,7 @@ struct LoginView: View {
                             Text("Click Here")
                                 .fontWeight(.bold)
                         }
-                        .font(.system(size: 14))
+                        .font(.custom("StudyClash", size: 18))
                     }
                     .padding(.bottom, 32)
                     
@@ -159,7 +164,7 @@ struct LoginView: View {
                             Text("Sign Up")
                                 .fontWeight(.bold)
                         }
-                        .font(.system(size: 14))
+                        .font(.custom("StudyClash", size: 18))
                     }
                     .padding(.bottom, 16)
                     

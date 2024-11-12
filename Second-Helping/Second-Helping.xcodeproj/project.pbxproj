@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		084E81542CDD186200F46F5A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084E81532CDD186200F46F5A /* LoadingView.swift */; };
-		084E81582CDD193E00F46F5A /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084E81572CDD193E00F46F5A /* loading.gif */; };
 		084E815A2CDD19B700F46F5A /* GifImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084E81592CDD19B700F46F5A /* GifImageView.swift */; };
 		0864020B2CAC254F00291E53 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0864020A2CAC254F00291E53 /* ProductCard.swift */; };
 		0872A68C2CA309C4009814A5 /* Second_HelpingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872A68B2CA309C4009814A5 /* Second_HelpingApp.swift */; };
@@ -29,6 +28,10 @@
 		08A09B9C2CBE9A4500F8A3C3 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */; };
 		08A09BA02CBE9CA400F8A3C3 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */; };
 		08EA9D422CC1549F00016C6F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA9D402CC1549E00016C6F /* AuthViewModel.swift */; };
+		08FC592C2CE3EBA7000A666A /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08FC592B2CE3EBA6000A666A /* loading.gif */; };
+		08FC59302CE3EC5F000A666A /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FC592F2CE3EC5F000A666A /* IntroView.swift */; };
+		08FC59322CE3EC72000A666A /* intro.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08FC59312CE3EC72000A666A /* intro.gif */; };
+		08FC59352CE3F0E6000A666A /* StudyClash.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08FC59342CE3F0E6000A666A /* StudyClash.otf */; };
 		5620A8852CD7EDF800798FFF /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5620A8842CD7EDEE00798FFF /* ForgotPasswordView.swift */; };
 		565307C62CAEE92E00457193 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565307C42CAEE92E00457193 /* AppDelegate.swift */; };
 		565307C72CAEE92E00457193 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 565307C52CAEE92E00457193 /* GoogleService-Info.plist */; };
@@ -77,7 +80,6 @@
 
 /* Begin PBXFileReference section */
 		084E81532CDD186200F46F5A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		084E81572CDD193E00F46F5A /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		084E81592CDD19B700F46F5A /* GifImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifImageView.swift; sourceTree = "<group>"; };
 		0864020A2CAC254F00291E53 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
 		0872A6882CA309C4009814A5 /* Second-Helping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Second-Helping.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +103,11 @@
 		08A09B9B2CBE9A4500F8A3C3 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		08A09B9F2CBE9CA400F8A3C3 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		08EA9D402CC1549E00016C6F /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		08FC592B2CE3EBA6000A666A /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
+		08FC592F2CE3EC5F000A666A /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
+		08FC59312CE3EC72000A666A /* intro.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = intro.gif; sourceTree = "<group>"; };
+		08FC59342CE3F0E6000A666A /* StudyClash.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = StudyClash.otf; sourceTree = "<group>"; };
+		08FC59362CE3F155000A666A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5620A8842CD7EDEE00798FFF /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		565307C42CAEE92E00457193 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		565307C52CAEE92E00457193 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -167,7 +174,7 @@
 		084E81562CDD191300F46F5A /* gifs */ = {
 			isa = PBXGroup;
 			children = (
-				084E81572CDD193E00F46F5A /* loading.gif */,
+				08FC592B2CE3EBA6000A666A /* loading.gif */,
 			);
 			path = gifs;
 			sourceTree = "<group>";
@@ -195,6 +202,9 @@
 		0872A68A2CA309C4009814A5 /* Second-Helping */ = {
 			isa = PBXGroup;
 			children = (
+				08FC59362CE3F155000A666A /* Info.plist */,
+				08FC59332CE3F0CC000A666A /* fonts */,
+				08FC592D2CE3EC36000A666A /* Intro */,
 				DDFC706F2CAF574D007A506A /* App */,
 				DDFC70642CAF3E66007A506A /* Authentication */,
 				DDFC70782CAF5780007A506A /* Components */,
@@ -274,6 +284,31 @@
 				08EA9D402CC1549E00016C6F /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		08FC592D2CE3EC36000A666A /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				08FC592E2CE3EC47000A666A /* gifs */,
+				08FC592F2CE3EC5F000A666A /* IntroView.swift */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
+		08FC592E2CE3EC47000A666A /* gifs */ = {
+			isa = PBXGroup;
+			children = (
+				08FC59312CE3EC72000A666A /* intro.gif */,
+			);
+			path = gifs;
+			sourceTree = "<group>";
+		};
+		08FC59332CE3F0CC000A666A /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				08FC59342CE3F0E6000A666A /* StudyClash.otf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 		DD59B1812CD68CEA003189F9 /* gifs */ = {
@@ -448,11 +483,13 @@
 			files = (
 				DD59B1822CD68CEA003189F9 /* money_gif.gif in Resources */,
 				DD59B1832CD68CEA003189F9 /* meal_saved.gif in Resources */,
+				08FC59322CE3EC72000A666A /* intro.gif in Resources */,
+				08FC592C2CE3EBA7000A666A /* loading.gif in Resources */,
+				08FC59352CE3F0E6000A666A /* StudyClash.otf in Resources */,
 				DD59B1842CD68CEA003189F9 /* food_saved.gif in Resources */,
 				DD59B1852CD68CEA003189F9 /* CO2.gif in Resources */,
 				0872A6932CA309C6009814A5 /* Preview Assets.xcassets in Resources */,
 				0872A6902CA309C6009814A5 /* Assets.xcassets in Resources */,
-				084E81582CDD193E00F46F5A /* loading.gif in Resources */,
 				565307C72CAEE92E00457193 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +538,7 @@
 				5620A8852CD7EDF800798FFF /* ForgotPasswordView.swift in Sources */,
 				DD7980642CD043AF0049BDBD /* PastOrdersView.swift in Sources */,
 				08EA9D422CC1549F00016C6F /* AuthViewModel.swift in Sources */,
+				08FC59302CE3EC5F000A666A /* IntroView.swift in Sources */,
 				0872A6C42CA4CAD6009814A5 /* HistoryView.swift in Sources */,
 				DD3B53572CD0307800C84143 /* ActiveOrdersView.swift in Sources */,
 				084E815A2CDD19B700F46F5A /* GifImageView.swift in Sources */,
@@ -672,6 +710,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Second-Helping/Info.plist";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -702,6 +741,7 @@
 				DEVELOPMENT_TEAM = 75FH434679;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Second-Helping/Info.plist";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

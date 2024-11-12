@@ -77,8 +77,8 @@ struct RegistrationView: View {
                     .padding(.top, 16)
                 
                 Text("Second Helping")
-                    .font(.largeTitle)
-                    .padding(.bottom, 16)
+                    .font(.custom("StudyClash", size: 34))
+                    .padding(.bottom, 24)
                 
                 VStack(spacing: 20){
                     
@@ -170,6 +170,7 @@ struct RegistrationView: View {
                 // Error message
                 if showError {
                     Text("Error registering account")
+                        .font(.custom("StudyClash", size: 18))
                         .foregroundStyle(.red)
                 }
                 
@@ -194,6 +195,7 @@ struct RegistrationView: View {
                 } label: {
                     HStack {
                         Text("SIGN UP")
+                            .font(.custom("StudyClash", size: 24))
                             .fontWeight(.semibold)
                         Image(systemName: "arrow.right")
                     }
@@ -216,7 +218,7 @@ struct RegistrationView: View {
                         Text("Sign In")
                             .fontWeight(.bold)
                     }
-                    .font(.system(size: 14))
+                    .font(.custom("StudyClash", size: 18))
                 }
                 .padding(.bottom, 16)
             }

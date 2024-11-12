@@ -22,8 +22,8 @@ struct ForgotPasswordView: View {
                 .padding(.top, 16)
             
             Text("Second Helping")
-                .font(.largeTitle)
-                .padding(.bottom, 32)
+                .font(.custom("StudyClash", size: 34))
+                .padding(.bottom, 24)
             
             VStack(spacing: 24){
                 InputView(text: $email,
@@ -49,6 +49,7 @@ struct ForgotPasswordView: View {
             } label: {
                 HStack {
                     Text("RESET PASSWORD")
+                        .font(.custom("StudyClash", size: 24))
                         .fontWeight(.semibold)
                     Image(systemName: "arrow.right")
                 }
@@ -78,7 +79,7 @@ struct ForgotPasswordView: View {
                     Text("Click Here")
                         .fontWeight(.bold)
                 }
-                .font(.system(size: 14))
+                .font(.custom("StudyClash", size: 18))
             }
             .padding(.bottom, 16)
         }

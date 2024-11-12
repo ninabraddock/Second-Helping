@@ -9,7 +9,25 @@ import SwiftUI
 
 struct IntroView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color("main_color_theme")
+            VStack {
+                GifImageView("intro")
+                    .frame(width:300, height: 200)
+                Text("Second Helping")
+                    .font(.custom("StudyClash", size: 52))
+                    .foregroundStyle(.white)
+            }
+            
+        }
+    }
+    init() {
+        for familyName in UIFont.familyNames {
+            print(familyName)
+            for fontName in UIFont.fontNames(forFamilyName: familyName) {
+                print("-- \(fontName)")
+            }
+        }
     }
 }
 
