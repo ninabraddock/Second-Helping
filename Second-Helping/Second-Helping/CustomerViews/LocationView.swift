@@ -53,14 +53,45 @@ struct LocationView: View {
     @State private var locations: [Restaurant] = []
     // to catch duplicate addresses
     @State private var visitedAddresses: Set<String> = []
+    @State private var selectedRestaurant: Restaurant?
 
     var body: some View {
-        Map(coordinateRegion: $region, annotationItems: locations) { location in
-            MapMarker(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), tint: .red)
-        }
-        .edgesIgnoringSafeArea(.all)
-        .onAppear {
-            startListeningToRestaurants()
+        ZStack{
+            Map(coordinateRegion: $region, annotationItems: locations) { location in
+                MapAnnotation(
+                    coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+                ) {
+                    Button(action: {
+                        selectedRestaurant = location
+                    }) {
+                        Image(systemName: "mappin.circle.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.red)
+                    }
+                }
+            }
+            .edgesIgnoringSafeArea(.all)
+            .onAppear {
+                startListeningToRestaurants()
+            }
+            
+            if let restaurant = selectedRestaurant {
+                VStack{
+                    Spacer()
+                    HStack{
+                        Text(restaurant.name)
+                            .font(.headline)
+                            .foregroundStyle(.white)
+                    }
+                    .padding()
+                    .frame(width: 200, height: 30)
+                    .background(Color.black)
+                    .cornerRadius(10)
+                    .padding(.bottom, 30)
+                }
+                .transition(.move(edge: .bottom))
+            }
         }
     }
 
