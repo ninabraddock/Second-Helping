@@ -132,4 +132,51 @@ class RestaurantViewModel: ObservableObject {
             print("Error fetching current restaurant: \(error.localizedDescription)")
         }
     }
+    
+    
+    func completeOrderForRestaurant(meal: Meal, restaurantArray: [Restaurant]) {
+        // filter to find the restaurant that the meal belongs to and save that in a variable
+        let filteredArray = restaurantArray.filter { $0.name == meal.restaurantFrom }
+        var restaurantVar = filteredArray[0]
+        
+        // create new meal with new quantity
+        var newMeal = meal
+        
+        // decrement the quantity
+        newMeal.quantity -= 1
+        
+        // if it was the last meal
+        if newMeal.quantity == 0 {
+            // remove the meal from the meals array
+            restaurantVar.meals.removeAll { $0.id == meal.id }
+        } else {
+            // remove the old meal and append the new one with updated quantity
+            restaurantVar.meals.removeAll { $0.id == meal.id }
+            restaurantVar.meals.append(newMeal)
+        }
+        
+        // add meal to completed orders
+        restaurantVar.completedOrders.append(meal)
+        
+        // update firebase not working
+        //updateRestaurant(restaurantVar)
+        self.currentRestaurant = restaurantVar
+        
+        Task {
+                do {
+                    // Use Firestore's Encoder to encode the updated restaurant object
+                    let encoder = try Firestore.Encoder().encode(restaurantVar)
+                    
+                    // If restaurant has an ID, update it in Firestore
+                    if let restaurantID = restaurantVar.id {
+                        try await firestore.collection("restaurants").document(restaurantID).setData(encoder, merge: true)
+                        print("Restaurant updated successfully in Firestore.")
+                    }
+                } catch {
+                    print("Failed to update restaurant in Firestore: \(error.localizedDescription)")
+                }
+            }
+        
+    }
+    
 }

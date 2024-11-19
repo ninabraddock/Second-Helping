@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct MealDetailSheet: View {
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var restaurantViewModel: RestaurantViewModel
     let meal: Meal
+    
+    
+    
     
     var body: some View {
         VStack(spacing: 20) {
@@ -19,7 +24,21 @@ struct MealDetailSheet: View {
             Text("Pick-Up Time: \(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)")
         }
         .padding()
+        .onAppear {
+                    Task {
+                        await restaurantViewModel.fetchRestaurants()
+                    }
+                }
         .presentationDetents([.medium, .large]) // Control the height of the sheet
+        
+
+        Button(action: {
+            // havent tested them yet
+            authViewModel.completeOrderForUser(meal: meal)
+            restaurantViewModel.completeOrderForRestaurant(meal: meal, restaurantArray: restaurantViewModel.restaurants)
+        }) {
+            Text("Complete Order")
+        }
     }
 }
 

@@ -156,7 +156,7 @@ struct AddMeal: View {
                 Task {
                     await restaurantViewModel.fetchCurrentRestaurant(uid: uid)
                     restaurantName = restaurantViewModel.currentRestaurant?.name ?? "Unknown Restaurant"
-                    newMeal.restaurantFrom = restaurantName 
+                    newMeal.restaurantFrom = restaurantName.filter {$0 != "\\"}
                 }
             } else {
                 print("Error: No user session available.")

@@ -70,7 +70,7 @@ class AuthViewModel: ObservableObject {
             try Auth.auth().signOut()
             // wipes out user session and takes us back to login screen
             self.userSession = nil
-            // wipes out curr data model 
+            // wipes out curr data model
             self.currentUser = nil
         } catch {
             print("Debug: failed to sign out with error \(error.localizedDescription)")
@@ -147,8 +147,22 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func completeOrder(order: Meal, from: Restaurant) {
-        
+    func completeOrderForUser(meal: Meal) {
+        guard var user = currentUser else {
+            print("No current user found.")
+            return
+        }
+        user.completedOrders.append(meal)
+        self.currentUser = user
+        Task {
+                    do {
+                        let encoder = try Firestore.Encoder().encode(user)
+                        try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
+                        print("Meal completed successfully.")
+                    } catch {
+                        print("Failed to compolete complete meal: \(error.localizedDescription)")
+                    }
+                }
     }
     
     
