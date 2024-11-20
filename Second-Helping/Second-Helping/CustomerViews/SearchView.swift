@@ -94,6 +94,20 @@ struct SearchView: View {
                 .frame(height: 44)
                 .padding()
                 
+                TextField("Search Bar", text: $searchBar)
+                    .font(.custom("StudyClash", size: 20))
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.horizontal, 15)
+                
+                if searchBar.count >= 1 {
+                    Text("Browse food options for " + searchBar + "...")
+                        .font(.custom("StudyClash", size: 18))
+                        .padding()
+                } else {
+                    Text(" ")
+                        .padding()
+                }
+                
                 // Section for Dinner
                 HStack{
                     Text("Dinner")
@@ -110,14 +124,19 @@ struct SearchView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         Spacer().padding(.leading, 1)
-                        ForEach(restaurantViewModel.restaurants) { restaurant in
-                            let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" }
+                        ForEach(restaurantViewModel.restaurants.filter
+                            { searchBar.isEmpty ||
+                            $0.name.localizedCaseInsensitiveContains(searchBar) ||
+                            $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }}) { restaurant in
+                            
+                            let lunchMeals = restaurant.meals.filter { $0.type == "Lunch" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
+                                                                       $0.type == "Lunch" && searchBar.isEmpty}
                             
                             let restLat = restaurant.latitude
                             let restLong = restaurant.longitude
                             var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
                             
-                            ForEach(dinnerMeals) { meal in
+                            ForEach(lunchMeals) { meal in
                                 Button {
                                     // Set the selected meal, restaurant and show the detail sheet
                                     selectedMeal = meal
@@ -161,8 +180,17 @@ struct SearchView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         Spacer().padding(.leading, 1)
-                        ForEach(restaurantViewModel.restaurants) { restaurant in
-                            let dinnerMeals = restaurant.meals.filter { $0.type == "Lunch" }
+                        ForEach(restaurantViewModel.restaurants.filter
+                            { searchBar.isEmpty ||
+                            $0.name.localizedCaseInsensitiveContains(searchBar) ||
+                            $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }}) { restaurant in
+                    
+                            let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
+                                                                        $0.type == "Dinner" && searchBar.isEmpty}
+                            let restLat = restaurant.latitude
+                            let restLong = restaurant.longitude
+                            var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
+                            
                             ForEach(dinnerMeals) { meal in
                                 Button {
                                     // Set the selected meal, restaurant and show the detail sheet
