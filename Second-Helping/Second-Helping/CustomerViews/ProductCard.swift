@@ -73,83 +73,82 @@ struct ProductCard: View {
     var body: some View {
         VStack (alignment: .leading){
             let customGreen = Color(hex: "#4f7942")
-            HStack {
-                self.image
-                    .resizable()
-                    .frame(maxWidth: 240, maxHeight: 130, alignment: .leading)
-                    .overlay(
-                        GeometryReader { geometry in
-                            let imagePosition = CGSize(width: 2300, height: 120)
-                            let quantityPosition = CGSize(width: 200, height: 16)
-                            let namePosition = CGSize(width: 1150, height: 100)
-                            let heartPosition = CGSize(width: 2000, height: 20)
-                            
-                            Text("\(self.quantity)")
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(customGreen)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 8)
-                                .background(Color.white)
-                                .cornerRadius(9, corners: [.bottomRight])
-                                .position(
-                                    x: quantityPosition.width / imagePosition.width * geometry.size.width,
-                                    y: quantityPosition.height / imagePosition.height * geometry.size.height
-                                )
-                            // Name of business
-                            Text(self.name)
-                                .kerning(/*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
-                                .foregroundColor(customGreen)
-                                .font(.custom("HelveticaNeue", size: 16))
-                                .fontWeight(.bold)
-                                .padding(5)
-                                .background(Color.white.opacity(1.0))
-                                .cornerRadius(7)
-                                .position(
-                                    x: namePosition.width / imagePosition.width * geometry.size.width,
-                                    y: namePosition.height / imagePosition.height * geometry.size.height
-                                )
-                            
-                            // Favorite a bag
-                            Image(systemName: "heart.square.fill")
-                                .foregroundColor(.white.opacity(1.0))
-                                .font(.system(size: 35))
-                                .position(
-                                    x: heartPosition.width / imagePosition.width * geometry.size.width,
-                                    y: heartPosition.height / imagePosition.height * geometry.size.height
-                                )
-                        }
-                    )
-            }
+            
+            self.image
+                .resizable()
+                .frame(maxWidth: 240, maxHeight: 150, alignment: .leading)
+                .overlay(
+                    GeometryReader { geometry in
+                        let imagePosition = CGSize(width: 2300, height: 120)
+                        let quantityPosition = CGSize(width: 200, height: 16)
+                        let namePosition = CGSize(width: 1150, height: 100)
+                        let heartPosition = CGSize(width: 2000, height: 20)
+                        
+                        Text("\(self.quantity)")
+                            .font(.custom("StudyClash", size: 18))
+                            .foregroundColor(customGreen)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 6)
+                            .offset(x:0, y:6)
+                            .background(Color.white)
+                            .cornerRadius(9, corners: [.bottomRight])
+                            .position(
+                                x: quantityPosition.width / imagePosition.width * geometry.size.width,
+                                y: quantityPosition.height / imagePosition.height * geometry.size.height
+                            )
+                        // Name of business
+                        Text(self.name)
+                            .kerning(/*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                            .foregroundColor(customGreen)
+                            .font(.custom("StudyClash", size: 20))
+                            .fontWeight(.bold)
+                            .padding(5)
+                            .background(Color.white.opacity(1.0))
+                            .cornerRadius(7)
+                            .position(
+                                x: namePosition.width / imagePosition.width * geometry.size.width,
+                                y: namePosition.height / imagePosition.height * geometry.size.height
+                            )
+                        
+                        // Favorite a bag
+                        Image(systemName: "heart.square.fill")
+                            .foregroundColor(.white.opacity(1.0))
+                            .font(.system(size: 35))
+                            .position(
+                                x: heartPosition.width / imagePosition.width * geometry.size.width,
+                                y: heartPosition.height / imagePosition.height * geometry.size.height
+                            )
+                    }
+                )
             
             // Bottom of product card
-            VStack (alignment: .leading) {
-                Text(self.bagType)
-                    .font(.system(size: 18, weight: .heavy))
-                    .padding(.bottom, 1)
-                    
-                Text(self.rangePickUpTime)
-                    .font(.custom("Hiragino-Sans", size: 14))
-                    .padding(.bottom, 5)
-                
-                HStack {
-                    // All doubles, round 1 decimal point
-                    Image(systemName: "star.square.fill")
-                        .foregroundStyle(.yellow)
-                    Text(String(format: "%.1f", self.ranking))
-                    Divider().frame(height: 20)
-                    Text(String(format: "%.1f", self.distance))
-                        Spacer()
-                    Text(String(format: "$%.2f", self.price))
-                }
-                .font(.system(size: 14))
+            Text(self.bagType)
+                .font(.custom("StudyClash", size: 24))
+                .padding(.horizontal, 8)
+            
+            Text(self.rangePickUpTime)
+                .font(.custom("StudyClash", size: 16))
+                .padding(.horizontal, 8)
+            
+            HStack {
+                // All doubles, round 1 decimal point
+                Image(systemName: "star.square.fill")
+                    .foregroundStyle(.yellow)
+                Text(String(format: "%.1f", self.ranking))
+                    .font(.custom("StudyClash", size: 16))
+                Divider().frame(height: 16)
+                Text(String(format: "%.1f", self.distance))
+                    .font(.custom("StudyClash", size: 16))
+                    Spacer()
+                Text(String(format: "$%.2f", self.price))
+                    .font(.custom("StudyClash", size: 16))
             }
-            .padding([.horizontal, .bottom], 8)
+            .padding(.bottom, 8)
+            .padding(.horizontal, 8)
         }
         .background(Color.white)
         .cornerRadius(15)
         .shadow(color: Color.black.opacity(0.2), radius: 7, x: 0, y: 2)
-        .padding()
-//        .background(Color.blue)
     }
 }
 

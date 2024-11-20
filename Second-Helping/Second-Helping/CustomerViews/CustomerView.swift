@@ -22,7 +22,7 @@ struct CustomerView: View {
                     isCustomer = true
                 }) {
                     Text("Logout")
-                        .font(.headline)
+                        .font(.custom("StudyClash", size: 24))
                         .foregroundColor(Color.red)
                 }
                 .padding()

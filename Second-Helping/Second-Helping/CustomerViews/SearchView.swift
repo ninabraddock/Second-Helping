@@ -73,8 +73,7 @@ struct SearchView: View {
         ScrollView {
             VStack {
                 Text("Browse food options")
-                    .font(.title)
-                    .fontWeight(.bold)
+                    .font(.custom("StudyClash", size: 40))
                     .foregroundColor(customGreen)
                 
                 if let location = locationManager.location {
@@ -96,17 +95,19 @@ struct SearchView: View {
                 // Section for Dinner
                 HStack{
                     Text("Dinner")
+                        .font(.custom("StudyClash", size: 24))
                         .underline()
-                        .font(.title2)
                         .padding()
                     Spacer()
                     NavigationLink(destination: StatsView()) {
                         Text("See All")
+                            .font(.custom("StudyClash", size: 18))
                             .padding()
                     }
                 }
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
+                        Spacer().padding(.leading, 1)
                         ForEach(restaurantViewModel.restaurants) { restaurant in
                             let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" }
                             
@@ -133,8 +134,9 @@ struct SearchView: View {
                                         btnHandler: nil
                                     )
                                 }
-                                .frame(width: 240, height: 200)
+                                .frame(width: 185, height: 160)
                                 .foregroundStyle(.black)
+                                .padding(.vertical, 6)
                                 
                             }
                         }
@@ -144,17 +146,19 @@ struct SearchView: View {
                 // Section for Lunch
                 HStack{
                     Text("Lunch")
+                        .font(.custom("StudyClash", size: 24))
                         .underline()
-                        .font(.title2)
                         .padding()
                     Spacer()
                     NavigationLink(destination: StatsView()) {
                         Text("See All")
+                            .font(.custom("StudyClash", size: 18))
                             .padding()
                     }
                 }
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
+                        Spacer().padding(.leading, 1)
                         ForEach(restaurantViewModel.restaurants) { restaurant in
                             let dinnerMeals = restaurant.meals.filter { $0.type == "Lunch" }
                             ForEach(dinnerMeals) { meal in
@@ -176,8 +180,9 @@ struct SearchView: View {
                                         btnHandler: nil
                                     )
                                 }
-                                .frame(width: 240, height: 200)
+                                .frame(width: 185, height: 160)
                                 .foregroundStyle(.black)
+                                .padding(.vertical, 6)
                             }
                         }
                     }
