@@ -54,7 +54,7 @@ struct RestaurantView: View {
                             Image(systemName: "checklist")
                             Text("Active Orders")
                         }
-                    PastOrders()
+                    PastOrdersView()
                         .tabItem() {
                             Image(systemName: "clock")
                             Text("Past Orders")

@@ -67,10 +67,12 @@ struct SearchView: View {
     @State private var selectedMeal: Meal?
     @State private var selectedRestaurant: Restaurant?
     @State private var showMealDetail = false
+    @State private var searchBar = ""
     
     var body: some View {
         let customGreen = Color(hex: "#4f7942")
         ScrollView {
+            
             VStack {
                 Text("Browse food options")
                     .font(.custom("StudyClash", size: 40))

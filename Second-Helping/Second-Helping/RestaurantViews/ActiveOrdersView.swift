@@ -71,7 +71,6 @@ struct ActiveOrders: View {
             .padding([.leading, .trailing], 25)
 //            .border(Color.black, width: 3)
         }
-        Spacer()
     }
 }
 
