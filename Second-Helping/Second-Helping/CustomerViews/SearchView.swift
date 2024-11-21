@@ -121,7 +121,7 @@ struct SearchView: View {
                         .padding()
                 }
                 
-                // Section for Dinner
+                // Section for Lunch
                 HStack{
                     Text("Lunch")
                         .font(.custom("StudyClash", size: 24))
@@ -194,7 +194,6 @@ struct SearchView: View {
                             }
                             Spacer().padding(.trailing, 1)
                         }
-                        .padding(.top, 2)
                     }
                     .frame(height: 200)
                     .scrollIndicators(.visible)
@@ -204,7 +203,7 @@ struct SearchView: View {
                         .stroke(Color.customGreen, lineWidth: 2)
                 )
                 
-                // Section for Lunch
+                // Section for Dinner
                 HStack{
                     Text("Dinner")
                         .font(.custom("StudyClash", size: 24))

@@ -13,81 +13,135 @@ struct CurrentOfferings: View {
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     
     var body: some View {
-        let customGreen = Color(hex: "#4f7942")
         if let currentRestaurant = restaurantViewModel.currentRestaurant {
             ScrollView {
                 VStack {
                     Text("Current Offerings at \(currentRestaurant.name)")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(customGreen)
+                        .font(.custom("StudyClash", size: 40))
+                        .foregroundColor(Color.customGreen)
                         .padding([.top], 40)
                     
                     Spacer()
                     
-                    // Section for Dinner
-                    HStack{
-                        Text("Dinner")
-                            .underline()
-                            .font(.title2)
-                            .padding()
-                        Spacer()
-                        NavigationLink(destination: StatsView()) {
-                            Text("See All")
-                                .padding()
-                        }
-                    }
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            let dinnerMeals = currentRestaurant.meals.filter { $0.type == "Dinner" }
-                            ForEach(dinnerMeals) { meal in
-                                ProductCard(
-                                    image: Image("waterworks"), // replace with image
-                                    quantity: Int(meal.quantity),
-                                    name: currentRestaurant.name,
-                                    bagType: meal.bagType,
-                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                    ranking: currentRestaurant.meanRating,
-                                    distance: 0.3, // replace with distance calculation
-                                    price: meal.price,
-                                    btnHandler: nil
-                                )
-                                .frame(width: 240, height: 200)
-                            }
-                        }
-                    }
-                    
                     // Section for Lunch
                     HStack{
                         Text("Lunch")
+                            .font(.custom("StudyClash", size: 24))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.customGreen.opacity(0.3))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(Color.customGreen, lineWidth: 2)
+                                    )
+                            )
+                            .foregroundColor(Color.customGreen)
+                            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 4)
                             .underline()
-                            .font(.title2)
-                            .padding()
                         Spacer()
                         NavigationLink(destination: StatsView()) {
                             Text("See All")
-                                .padding()
+                                .font(.custom("StudyClash", size: 18))
+                                .foregroundColor(Color.gray)
                         }
                     }
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            let lunchMeals = currentRestaurant.meals.filter { $0.type == "Lunch" }
-                            ForEach(lunchMeals) { meal in
-                                ProductCard(
-                                    image: Image("waterworks"), // replace with image
-                                    quantity: Int(meal.quantity),
-                                    name: currentRestaurant.name,
-                                    bagType: meal.bagType,
-                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                    ranking: currentRestaurant.meanRating,
-                                    distance: 0.3, // replace with distance calculation
-                                    price: meal.price,
-                                    btnHandler: nil
-                                )
-                                .frame(width: 240, height: 200)
+                    .padding(.horizontal, 15)
+                    ZStack {
+                        Color(Color.customGreen)
+                            .opacity(0.3)
+                            .cornerRadius(10)
+                        ScrollView(.horizontal, showsIndicators: true) {
+                            HStack {
+                                Spacer().padding(.leading, 1)
+                                let lunchMeals = currentRestaurant.meals.filter { $0.type == "Lunch" }
+                                ForEach(lunchMeals) { meal in
+                                    ProductCard(
+                                        image: Image("waterworks"), // replace with image
+                                        quantity: Int(meal.quantity),
+                                        name: currentRestaurant.name,
+                                        bagType: meal.bagType,
+                                        rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                        ranking: currentRestaurant.meanRating,
+                                        distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
+                                        price: meal.price,
+                                        btnHandler: nil
+                                    )
+                                    .frame(width: 185, height: 160)
+                                    .foregroundStyle(.black)
+                                }
+                                Spacer().padding(.trailing, 1)
                             }
                         }
+                        .frame(height: 200)
+                        .scrollIndicators(.visible)
                     }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.customGreen, lineWidth: 2)
+                    )
+                    
+                    // Section for Dinner
+                    HStack{
+                        Text("Dinner")
+                            .font(.custom("StudyClash", size: 24))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.customGreen.opacity(0.3))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(Color.customGreen, lineWidth: 2)
+                                    )
+                            )
+                            .foregroundColor(Color.customGreen)
+                            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 4)
+                            .underline()
+                        Spacer()
+                        NavigationLink(destination: StatsView()) {
+                            Text("See All")
+                                .font(.custom("StudyClash", size: 18))
+                                .foregroundColor(Color.gray)
+                        }
+                    }
+                    .padding(.horizontal, 15)
+                    .padding(.top)
+                    
+                    ZStack {
+                        Color(Color.customGreen)
+                            .opacity(0.3)
+                            .cornerRadius(10)
+                        ScrollView(.horizontal, showsIndicators: true) {
+                            HStack {
+                                Spacer().padding(.leading, 1)
+                                let dinnerMeals = currentRestaurant.meals.filter { $0.type == "Dinner" }
+                                ForEach(dinnerMeals) { meal in
+                                    ProductCard(
+                                        image: Image("waterworks"), // replace with image
+                                        quantity: Int(meal.quantity),
+                                        name: currentRestaurant.name,
+                                        bagType: meal.bagType,
+                                        rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                        ranking: currentRestaurant.meanRating,
+                                        distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
+                                        price: meal.price,
+                                        btnHandler: nil
+                                    )
+                                    .frame(width: 185, height: 160)
+                                    .foregroundStyle(.black)
+                                }
+                                Spacer().padding(.trailing, 1)
+                            }
+                        }
+                        .frame(height: 200)
+                        .scrollIndicators(.visible)
+                    }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.customGreen, lineWidth: 2)
+                    )
                     
                     Spacer()
                 }
