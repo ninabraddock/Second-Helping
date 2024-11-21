@@ -98,7 +98,7 @@ struct SearchView: View {
 //                .frame(height: 44)
 //                .padding()
                 
-                TextField("Search Restaurants/Meal Types", text: $searchBar)
+                TextField("Search restaurants/meal types...", text: $searchBar)
                     .font(.custom("StudyClash", size: 20))
                     .padding(10)
                     .background(Color.customGray)
@@ -159,8 +159,9 @@ struct SearchView: View {
                                 $0.name.localizedCaseInsensitiveContains(searchBar) ||
                                 $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }}) { restaurant in
                                     
-                                let lunchMeals = restaurant.meals.filter { $0.type == "Lunch" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
-                                    $0.type == "Lunch" && searchBar.isEmpty}
+                                let lunchMeals = restaurant.meals.filter { $0.type == "Lunch" && searchBar.isEmpty ||
+                                    $0.type == "Lunch" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
+                                    $0.type == "Lunch" && restaurant.name.localizedCaseInsensitiveContains(searchBar)}
                                 
                                 let restLat = restaurant.latitude
                                 let restLong = restaurant.longitude
@@ -242,8 +243,9 @@ struct SearchView: View {
                                 $0.name.localizedCaseInsensitiveContains(searchBar) ||
                                 $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }}) { restaurant in
                                     
-                                let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
-                                    $0.type == "Dinner" && searchBar.isEmpty}
+                                let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" && searchBar.isEmpty ||
+                                    $0.type == "Dinner" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
+                                    $0.type == "Dinner" && restaurant.name.localizedCaseInsensitiveContains(searchBar)}
                                 let restLat = restaurant.latitude
                                 let restLong = restaurant.longitude
                                 var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)

@@ -14,7 +14,7 @@ struct CustomerView: View {
     @Binding var isCustomer: Bool
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 Text("Second Helping")
                     .font(.custom("StudyClash", size: 28))
@@ -30,7 +30,8 @@ struct CustomerView: View {
                     Text("Logout")
                         .font(.custom("StudyClash", size: 24))
                         .foregroundColor(Color.red)
-                        .padding(6)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 4)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(Color.red.opacity(0.3))
@@ -42,6 +43,8 @@ struct CustomerView: View {
                 }
                 .padding([.horizontal, .top])
             }
+            .padding(.bottom, 12)
+            .background(Color.customGreen.opacity(0.3))
             
             ZStack(alignment: .top) {
                 TabView {
@@ -78,7 +81,10 @@ struct CustomerView: View {
                 }
                 
                 SquigglyDividerTopBG()
-                    .fill(.white)
+                    .fill(Color.white)
+                    .frame(height: 10)
+                SquigglyDividerTopBG()
+                    .fill(Color.customGreen.opacity(0.3))
                     .frame(height: 10)
                 SquigglyDivider()
                     .stroke(Color.customGreen, lineWidth: 3)
