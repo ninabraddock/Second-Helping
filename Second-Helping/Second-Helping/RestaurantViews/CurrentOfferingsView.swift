@@ -20,9 +20,14 @@ struct CurrentOfferings: View {
                     Text("Current Offerings at \(currentRestaurant.name)")
                         .font(.custom("StudyClash", size: 40))
                         .foregroundColor(Color.customGreen)
-                        .padding([.top], 40)
+                        .padding(.top, 20)
                     
-                    Spacer()
+                    
+                    // Divider
+                    Rectangle()
+                        .fill(.black)
+                        .frame(height: 1)
+                        .padding(.top)
                     
                     // Section for Lunch
                     HStack{
@@ -82,6 +87,13 @@ struct CurrentOfferings: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.customGreen, lineWidth: 2)
                     )
+                    
+                    
+                    // Divider
+                    Rectangle()
+                        .fill(.black)
+                        .frame(height: 1)
+                        .padding(.top)
                     
                     // Section for Dinner
                     HStack{

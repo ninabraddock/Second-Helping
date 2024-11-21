@@ -82,6 +82,7 @@ struct SearchView: View {
                 Text("Browse food options")
                     .font(.custom("StudyClash", size: 40))
                     .foregroundColor(Color.customGreen)
+                    .padding(.top, 20)
                 
 //                if let location = locationManager.location {
 //                    Text("Successfully found location")
@@ -121,6 +122,12 @@ struct SearchView: View {
                         .foregroundColor(.customGreen)
                         .padding()
                 }
+                
+                
+                // Divider
+                Rectangle()
+                    .fill(.black)
+                    .frame(height: 1)
                 
                 // Section for Lunch
                 HStack{
@@ -204,6 +211,13 @@ struct SearchView: View {
                         .stroke(Color.customGreen, lineWidth: 2)
                 )
                 
+                
+                // Divider
+                Rectangle()
+                    .fill(.black)
+                    .frame(height: 1)
+                    .padding(.top)
+                
                 // Section for Dinner
                 HStack{
                     Text("Dinner")
@@ -229,7 +243,6 @@ struct SearchView: View {
                     }
                 }
                 .padding(.horizontal, 15)
-                .padding(.top)
                 
                 ZStack {
                     Color(Color.customGreen)
@@ -284,7 +297,6 @@ struct SearchView: View {
                         .stroke(Color.customGreen, lineWidth: 2)
                 )
             }
-            .padding(.top)
             .onAppear {
                 Task {
                     await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
