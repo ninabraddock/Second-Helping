@@ -63,6 +63,7 @@ extension Color {
 
 struct SearchView: View {
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    @EnvironmentObject var loadingState: LoadingState
     @StateObject var locationManager = LocationManager()
     @State var userLat: Double?
     @State var userLong: Double?
@@ -295,12 +296,19 @@ struct SearchView: View {
                 }
             }
         }
+        .refreshable {
+            Task {
+                loadingState.isLoading = true
+                await restaurantViewModel.fetchRestaurants()
+                loadingState.isLoading = false
+            }
+        }
         .background(.white)
     }
 }
 
 #Preview {
-    SearchView().environmentObject(RestaurantViewModel())
+    SearchView().environmentObject(RestaurantViewModel()).environmentObject(LoadingState())
 }
 
 

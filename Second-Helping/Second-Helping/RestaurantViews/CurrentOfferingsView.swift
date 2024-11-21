@@ -11,6 +11,7 @@ import FirebaseAuth
 
 struct CurrentOfferings: View {
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    @EnvironmentObject var loadingState: LoadingState
     
     var body: some View {
         if let currentRestaurant = restaurantViewModel.currentRestaurant {
@@ -151,6 +152,13 @@ struct CurrentOfferings: View {
                     }
                 }
             }
+            .refreshable {
+                Task {
+                    loadingState.isLoading = true
+                    await restaurantViewModel.fetchRestaurants()
+                    loadingState.isLoading = false
+                }
+            }
         }
     }
 }
@@ -158,7 +166,7 @@ struct CurrentOfferings: View {
 
 
 #Preview {
-    CurrentOfferings().environmentObject(RestaurantViewModel())
+    CurrentOfferings().environmentObject(RestaurantViewModel()).environmentObject(LoadingState())
 }
 
 
