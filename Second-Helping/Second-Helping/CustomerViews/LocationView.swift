@@ -5,45 +5,16 @@
 //  Created by Nathan Blanchard on 9/25/24.
 //
 
-//import SwiftUI
-//import MapKit
-//
-//// In the future this will pull locations from some database
-//extension CLLocationCoordinate2D {
-//    static let trattoriaCoordinate = CLLocationCoordinate2D(latitude: 44.475460, longitude: -73.213821)
-//    static let phoCoordinate = CLLocationCoordinate2D(latitude: 44.488918, longitude: -73.207169)
-//    static let kountyCoordinate = CLLocationCoordinate2D(latitude: 44.475780, longitude: -73.212967)
-//    static let cortijoCoordinate = CLLocationCoordinate2D(latitude: 44.478120, longitude: -73.212010)
-//    static let givenCoordinate = CLLocationCoordinate2D(latitude: 44.479010, longitude: -73.193770)
-//    static let waterworksCoordinate = CLLocationCoordinate2D(latitude: 44.490238, longitude: -73.184059)
-//}
-//
-//struct LocationView: View {
-//
-//    var body: some View {
-//        ZStack {
-//            // In the future when there are more locations, use a for loop to make the map
-//            // Need to get and show user location
-//            // Need to make it so that you can click on these locations 
-//            Map {
-//                Marker("Trattoria Deli", systemImage: "fork.knife", coordinate: .trattoriaCoordinate)
-//                Marker("Pho Hong", systemImage: "fork.knife", coordinate: .phoCoordinate)
-//                Marker("Kountry Kart Deli", systemImage: "fork.knife", coordinate: .kountyCoordinate)
-//                Marker("El Cortijo Taqueria", systemImage: "fork.knife", coordinate: .cortijoCoordinate)
-//                Marker("The Given Bistro", systemImage: "fork.knife", coordinate: .givenCoordinate)
-//                Marker("Waterworks Food + Drink", systemImage: "fork.knife", coordinate: .waterworksCoordinate)
-//            }
-//            .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .including([])))
-//        }
-//    }
-//}
-
 
 import SwiftUI
 import MapKit
 import FirebaseFirestore
 
 struct LocationView: View {
+    let border_color = Color("border_map_pin")
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
+    
     // set window
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 44.4759, longitude: -73.2121),
@@ -64,10 +35,28 @@ struct LocationView: View {
                     Button(action: {
                         selectedRestaurant = location
                     }) {
-                        Image(systemName: "mappin.circle.fill")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.red)
+                        ZStack {
+                            // border
+                            Image(systemName: "drop.fill")
+                                .resizable()
+                                .frame(width: 23, height: 31)
+                                .rotationEffect(.degrees(180))
+                                .foregroundColor(border_color)
+                            
+                            // frame/main part
+                            Image(systemName: "drop.fill")
+                                .resizable()
+                                .frame(width: 22, height: 30)
+                                .rotationEffect(.degrees(180))
+                                .foregroundColor(.red)
+                            
+                            // inner circle
+                            Image(systemName: "circle.fill")
+                                .resizable()
+                                .frame(width: 10, height: 10)
+                                .offset(y: -4)
+                                .foregroundColor(.white)
+                        }
                     }
                 }
             }
@@ -85,7 +74,7 @@ struct LocationView: View {
                             .foregroundStyle(.white)
                     }
                     .padding()
-                    .frame(width: 200, height: 30)
+                    .frame(width: screenWidth/4 * 3, height: screenHeight/6)
                     .background(Color.black)
                     .cornerRadius(10)
                     .padding(.bottom, 30)
