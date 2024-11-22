@@ -19,7 +19,7 @@ struct SquigglyDivider: Shape {
 
         for x in stride(from: rect.minX-2, to: rect.maxX+2, by: 1) {
             let relativeX = x - rect.minX-2
-            let yOffset = amplitude * sin(relativeX / frequency)
+            let yOffset = -amplitude * sin(relativeX / frequency)
             
             curX = x
             curY = rect.midY + yOffset
@@ -48,7 +48,7 @@ struct SquigglyDividerTopBG: Shape {
 
         for x in stride(from: rect.minX-2, to: rect.maxX+2, by: 1) {
             let relativeX = x - rect.minX-2
-            let yOffset = amplitude * sin(relativeX / frequency)
+            let yOffset = -amplitude * sin(relativeX / frequency)
             
             curX = x
             curY = rect.midY + yOffset
