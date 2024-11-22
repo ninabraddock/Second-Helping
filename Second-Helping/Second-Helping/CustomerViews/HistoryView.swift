@@ -32,31 +32,14 @@ func ratingToStars(rating: Double) -> [Image] {
 struct HistoryView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @State private var selectedQuantity: Int = 0
-    
-
 
     var body: some View {
-        
-        
-        // Testing: Uncomment to show button that adds a meal to completedMeals
-    
-//        Button(action: {
-//            authViewModel.addDummyCompletedMeal()  // Call the function to add a fake meal
-//                    }) {
-//                        Text("Add Fake Meal")
-//                            .padding()
-//                            .background(Color.blue)
-//                            .foregroundColor(.white)
-//                            .cornerRadius(10)
-//                    }
-        
-        // End Teting
-        
-        
+
         VStack {
             Text("Order History")
                 .font(.largeTitle)
                 .padding([.bottom, .top], 20)
+            
             
             // Check if currentUser exists
             if let currentUser = authViewModel.currentUser {

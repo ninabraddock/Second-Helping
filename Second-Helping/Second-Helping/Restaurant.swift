@@ -18,6 +18,7 @@ struct Restaurant: Identifiable, Codable {
     var meals: [Meal]
     var reviews: [Review]
     var completedOrders: [Meal]
+    var activeOrders: [Meal]
     
     var meanRating: Double {
         guard !reviews.isEmpty else { return 0.0 }
@@ -35,6 +36,7 @@ struct Meal: Identifiable, Codable {
     var rangePickUpTime: PickUpTime
     var type: String
     var restaurantFrom: String
+    var mealOrderUser: String
 }
 
 struct PickUpTime: Codable {

@@ -49,7 +49,7 @@ struct RestaurantView: View {
                             Image(systemName: "star.fill")
                             Text("Add Meal")
                         }
-                    ActiveOrders()
+                    ActiveOrdersView()
                         .tabItem() {
                             Image(systemName: "checklist")
                             Text("Active Orders")

@@ -146,7 +146,8 @@ struct LocationView: View {
                     phoneNumber: phoneNumber,
                     meals: [],
                     reviews: [],
-                    completedOrders: []
+                    completedOrders: [],
+                    activeOrders: []
                 )
                 
                 print("\(name) address: \(address)")
@@ -196,7 +197,8 @@ struct LocationView: View {
                     phoneNumber: phoneNumber,
                     meals: [],
                     reviews: [],
-                    completedOrders: []
+                    completedOrders: [],
+                    activeOrders: []
                 )
 
                 switch diff.type {

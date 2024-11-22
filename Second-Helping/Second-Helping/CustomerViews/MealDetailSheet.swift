@@ -11,7 +11,8 @@ struct MealDetailSheet: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var restaurantViewModel: RestaurantViewModel
     let meal: Meal
-    
+    @State private var quantity = 0
+
     
     
     
@@ -31,17 +32,24 @@ struct MealDetailSheet: View {
                 }
         .presentationDetents([.medium, .large]) // Control the height of the sheet
         
-
+        // stepper for picking quantity
+        Stepper("Quantity: \(quantity)", value: $quantity, in: 1...meal.quantity)
+        
+        
         Button(action: {
-            // havent tested them yet
-            authViewModel.completeOrderForUser(meal: meal)
-            restaurantViewModel.completeOrderForRestaurant(meal: meal, restaurantArray: restaurantViewModel.restaurants)
+            if let currentUser = authViewModel.currentUser {
+                print(currentUser.fullName)
+                restaurantViewModel.addToActiveOrders(meal: meal, restaurantArray: restaurantViewModel.restaurants, quantity: quantity, mealOrderUser: currentUser.fullName
+                )
+            } else {
+                print("No current user available")
+            }
         }) {
-            Text("Complete Order")
+            Text("Order")
         }
     }
 }
 
 #Preview {
-    MealDetailSheet(meal: Meal(bagType: "Mystery Bag", price: 5.00, quantity: 5, rangePickUpTime: PickUpTime(start:"9:00 PM", end:"10:30 PM"), type: "Dinner", restaurantFrom: "Placeholder restaurant"))
+    MealDetailSheet(meal: Meal(bagType: "Mystery Bag", price: 5.00, quantity: 5, rangePickUpTime: PickUpTime(start:"9:00 PM", end:"10:30 PM"), type: "Dinner", restaurantFrom: "Placeholder restaurant", mealOrderUser: "Placeholder User"))
 }

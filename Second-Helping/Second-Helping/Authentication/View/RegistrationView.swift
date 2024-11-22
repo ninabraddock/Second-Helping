@@ -273,7 +273,8 @@ struct RegistrationView: View {
             phoneNumber: phoneNumber,
             meals: [],
             reviews: [],
-            completedOrders: []
+            completedOrders: [],
+            activeOrders: []
         )
         
         do {

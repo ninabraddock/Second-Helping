@@ -17,6 +17,9 @@ protocol AuthenticationFormProtocol {
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
+    @Published var users: [User] = []
+    
+    private let firestore = Firestore.firestore()
     
     init() {
         self.userSession = Auth.auth().currentUser
@@ -106,7 +109,6 @@ class AuthViewModel: ObservableObject {
             return false
         }
     }
-
     
     func fetchUser() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -115,6 +117,62 @@ class AuthViewModel: ObservableObject {
         
 //        print("Debug: current user is \(String(describing: self.currentUser))")
     }
+    
+    // Fetch a specific restaurant by ID
+    func fetchUser(withID id: String) async {
+        do {
+            let document = try await firestore.collection("users").document(id).getDocument()
+            var user = try? document.data(as: User.self)
+            user?.id = document.documentID  // Set the document ID manually
+            self.currentUser = user
+        } catch {
+            print("Debug: failed to fetch user with error \(error.localizedDescription)")
+        }
+    }
+    
+    // Fetch all users
+    
+    func fetchUsers() async {
+        print("FETCHING USERS")
+        do {
+            let snapshot = try await firestore.collection("users").getDocuments()
+            self.users = snapshot.documents.compactMap { document in
+                // Attempt to decode the restaurant
+                do {
+                    var user = try document.data(as: User.self)
+                    user.id = document.documentID // Set the document ID
+                    print("Decoded user: \(String(describing: user))")
+                    return user
+                } catch {
+                    // Print the error details
+                    print("Error decoding user: \(error)")
+                    return nil // Return nil if decoding fails
+                }
+
+            }
+            // Keep our same current restaurant
+            if let curUser =  currentUser {
+                if !curUser.id.isEmpty {
+                    await fetchUser(withID: curUser.id)
+                } else {
+                    // We don't have an id for that restaurant, lets try to find a restaurant with that name
+                    let userName = curUser.fullName
+                    for user in users {
+                        if user.fullName == userName {
+                            currentUser = user
+                        }
+                    }
+                    
+                }
+            }
+            print("USERS FETCHED")
+        } catch {
+            print("Debug: failed to fetch users with error \(error.localizedDescription)")
+        }
+    }
+
+    
+
     
     // for testing the historyView
     func addDummyCompletedMeal() {
@@ -130,7 +188,8 @@ class AuthViewModel: ObservableObject {
             quantity: 1,
             rangePickUpTime: PickUpTime(start: "12:00", end: "12:00"),
             type: "Dinner",
-            restaurantFrom: "Test Restaurant"
+            restaurantFrom: "Test Restaurant",
+            mealOrderUser: ""
             )
         
         user.completedOrders.append(fakeMeal)
@@ -147,22 +206,28 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func completeOrderForUser(meal: Meal) {
-        guard var user = currentUser else {
-            print("No current user found.")
-            return
-        }
-        user.completedOrders.append(meal)
-        self.currentUser = user
+    func completeOrderForUser(meal: Meal, userArray: [User]) {
+        let filteredArray = userArray.filter { $0.fullName == meal.mealOrderUser }
+        print("TESTING USER NAME: \(meal.mealOrderUser)")
+        print("TESTING USER ARRAY: \(userArray)")
+        var userVar = filteredArray[0]
+        
+        userVar.completedOrders.append(meal)
+        self.currentUser = userVar
         Task {
                     do {
-                        let encoder = try Firestore.Encoder().encode(user)
-                        try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
+                        let encoder = try Firestore.Encoder().encode(userVar)
+                        try await Firestore.firestore().collection("users").document(userVar.id).setData(encoder)
                         print("Meal completed successfully.")
                     } catch {
                         print("Failed to compolete complete meal: \(error.localizedDescription)")
                     }
                 }
+    }
+    
+    func testFetchUsers() async{
+        await fetchUsers()
+        print(users)
     }
     
     

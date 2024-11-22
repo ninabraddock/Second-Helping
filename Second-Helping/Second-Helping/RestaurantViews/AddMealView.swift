@@ -20,7 +20,7 @@ struct AddMeal: View {
     @State private var restaurantName: String = ""
 
     // Form Variables
-    @State private var newMeal: Meal = Meal(bagType:"", price:0, quantity:0, rangePickUpTime: PickUpTime(start:"", end:""), type:"", restaurantFrom: "")
+    @State private var newMeal: Meal = Meal(bagType:"", price:0, quantity:0, rangePickUpTime: PickUpTime(start:"", end:""), type:"", restaurantFrom: "", mealOrderUser: "")
     
     @State private var enteredPrice = ""
     var enteredPriceFormatted: Double {
