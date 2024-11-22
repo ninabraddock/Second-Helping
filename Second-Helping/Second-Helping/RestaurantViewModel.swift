@@ -144,14 +144,12 @@ class RestaurantViewModel: ObservableObject {
         var replaceMeal = meal
         
         // decrement the quantity
-        newMeal.quantity -= quantity
+        newMeal.quantity = quantity
         replaceMeal.quantity -= quantity
         
         // update meal order user
-        //not working???
         newMeal.mealOrderUser = mealOrderUser
-        print("TESTING ADDTOACTIVE ORDER MEALRODERUSER: \(mealOrderUser)")
-        print("TESTING NEWMEAL.MEALORDERUSER: \(newMeal.mealOrderUser)")
+
         // if it was the last meal
         if replaceMeal.quantity == 0 {
             // remove the meal from the meals array
@@ -164,7 +162,6 @@ class RestaurantViewModel: ObservableObject {
         
         // add meal to active orders
         restaurantVar.activeOrders.append(newMeal)
-        print("TESTING RESTAURANTVAR.ACTIVEORDERS: \(restaurantVar.activeOrders)")
         
         //updateRestaurant(restaurantVar)
         self.currentRestaurant = restaurantVar
