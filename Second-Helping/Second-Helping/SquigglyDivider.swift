@@ -13,13 +13,13 @@ struct SquigglyDivider: Shape {
         let amplitude: CGFloat = 6
         let frequency: CGFloat = 20
         
-        var curX = rect.minX
+        var curX = rect.minX-2
         var curY = rect.midY
         path.move(to: CGPoint(x: curX, y: curY))
 
-        for x in stride(from: rect.minX, to: rect.maxX, by: 1) {
-            let relativeX = x - rect.minX
-            let yOffset = amplitude * sin(relativeX / frequency)
+        for x in stride(from: rect.minX-2, to: rect.maxX+2, by: 1) {
+            let relativeX = x - rect.minX-2
+            let yOffset = -amplitude * sin(relativeX / frequency)
             
             curX = x
             curY = rect.midY + yOffset
@@ -36,19 +36,19 @@ struct SquigglyDividerTopBG: Shape {
         let amplitude: CGFloat = 6
         let frequency: CGFloat = 20
         
-        var curX = rect.maxX
+        var curX = rect.maxX+2
         var curY = rect.minY - 3
         path.move(to: CGPoint(x: curX, y: curY))
 
-        curX = rect.minX
+        curX = rect.minX-2
         path.addLine(to: CGPoint(x: curX, y: curY))
         
         curY = rect.midY
         path.addLine(to: CGPoint(x: curX, y: curY))
 
-        for x in stride(from: rect.minX, to: rect.maxX, by: 1) {
-            let relativeX = x - rect.minX
-            let yOffset = amplitude * sin(relativeX / frequency)
+        for x in stride(from: rect.minX-2, to: rect.maxX+2, by: 1) {
+            let relativeX = x - rect.minX-2
+            let yOffset = -amplitude * sin(relativeX / frequency)
             
             curX = x
             curY = rect.midY + yOffset

@@ -14,29 +14,39 @@ struct RestaurantView: View {
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     
     var body: some View {
-        ZStack {
-            // Background color
-            Color(.lightGray)
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                
-                HStack {
-                    Spacer()
-                    
-                    Button(action: {
-                        restaurantViewModel.currentRestaurant = nil
-                        isLoggedIn = false
-                        isRestaurant = false
-                    }) {
-                        Text("Logout")
-                            .font(.headline)
-                            .foregroundColor(Color.red)
-                    }
-                    .padding()
+        VStack(spacing: 0) {
+            HStack {
+                Text("Second Helping")
+                    .font(.custom("StudyClash", size: 28))
+                    .underline()
+                    .foregroundColor(Color.customGreen)
+                    .padding([.horizontal, .top])
+                Spacer()
+                Button(action: {
+                    restaurantViewModel.currentRestaurant = nil
+                    isLoggedIn = false
+                    isRestaurant = false
+                }) {
+                    Text("Logout")
+                        .font(.custom("StudyClash", size: 24))
+                        .foregroundColor(Color.red)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.red.opacity(0.3))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color.red, lineWidth: 2)
+                                )
+                        )
                 }
+                .padding([.horizontal, .top])
+            }
+            .padding(.bottom, 12)
+            .background(Color.customGreen.opacity(0.3))
                 
-                // TODO: add more views and tabs as needed
+            ZStack(alignment: .top) {
                 TabView {
                     CurrentOfferings()
                         .tabItem() {
@@ -60,10 +70,18 @@ struct RestaurantView: View {
                             Text("Past Orders")
                         }
                 }
-                .onAppear() {
-                    UITabBar.appearance().backgroundColor = .lightGray
-                }
+                
+                SquigglyDividerTopBG()
+                    .fill(Color.white)
+                    .frame(height: 10)
+                SquigglyDividerTopBG()
+                    .fill(Color.customGreen.opacity(0.3))
+                    .frame(height: 10)
+                SquigglyDivider()
+                    .stroke(Color.customGreen, lineWidth: 3)
+                    .frame(height: 10)
             }
+            .edgesIgnoringSafeArea(.top)
         }
         
     }

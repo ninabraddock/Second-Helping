@@ -1,0 +1,91 @@
+//
+//  SeeAllView.swift
+//  Second-Helping
+//
+//  Created by Nathan Blanchard on 11/21/24.
+//
+
+import SwiftUI
+
+struct SeeAllView: View {
+    var restaurants: [Restaurant]
+    var isLunch: Bool
+    @Binding var searchBar: String
+    
+    private let columns = [
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ]
+    
+    var body: some View {
+        ScrollView {
+            VStack {
+                Text(isLunch ? "Lunch Options" : "Dinner Options")
+                    .font(.custom("StudyClash", size: 30))
+                    .foregroundColor(Color.customGreen)
+                
+                TextField("Search restaurants/meal types...", text: $searchBar)
+                    .font(.custom("StudyClash", size: 20))
+                    .padding(10)
+                    .background(Color.customGray)
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.customGreen, lineWidth: 2)
+                    )
+                    .padding(.horizontal, 15)
+                
+                if searchBar.count >= 1 {
+                    Text("Showing dinner options for \"" + searchBar + "\"...")
+                        .font(.custom("StudyClash", size: 18))
+                        .foregroundColor(.customGreen)
+                        .padding()
+                } else {
+                    Text("Showing all dinner options...")
+                        .font(.custom("StudyClash", size: 18))
+                        .foregroundColor(.customGreen)
+                        .padding()
+                }
+                
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach(filteredRestaurants) { restaurant in
+                        ForEach(filteredMeals(for: restaurant)) { meal in
+                            ProductCard(
+                                image: Image("waterworks"), // replace with image
+                                quantity: Int(meal.quantity),
+                                name: restaurant.name,
+                                bagType: meal.bagType,
+                                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                ranking: restaurant.meanRating,
+                                distance: distanceTo(userLong: nil, userLat: nil, restLat: restaurant.latitude, restLong: restaurant.longitude),
+                                price: meal.price,
+                                btnHandler: nil
+                            )
+                            .frame(width: 185, height: 160)
+                            .foregroundStyle(.black)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 10)
+    }
+
+    private var filteredRestaurants: [Restaurant] {
+        restaurants.filter { searchBar.isEmpty ||
+            $0.name.localizedCaseInsensitiveContains(searchBar) ||
+            $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }
+        }
+    }
+    
+    private func filteredMeals(for restaurant: Restaurant) -> [Meal] {
+        restaurant.meals.filter { meal in
+            meal.type == (isLunch ? "Lunch" : "Dinner") &&
+            (searchBar.isEmpty || meal.bagType.localizedCaseInsensitiveContains(searchBar) || restaurant.name.localizedCaseInsensitiveContains(searchBar))
+        }
+    }
+}
+
+#Preview {
+    SeeAllView(restaurants: [], isLunch: true, searchBar: .constant(""))
+}
