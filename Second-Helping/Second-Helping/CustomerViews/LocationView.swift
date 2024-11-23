@@ -69,6 +69,7 @@ struct LocationView: View {
         }
         .sheet(item: $selectedRestaurant) { restaurant in
             RestaurantDetailSheetView(restaurant: restaurant)
+                .presentationDragIndicator(.visible)
         }
     }
 }
@@ -82,17 +83,20 @@ struct RestaurantDetailSheetView: View {
     @State private var selectedRestaurant: Restaurant?
     @State private var showMealDetail = false
     
+    
     var body: some View {
         VStack {
             Text("Current Offerings at \(restaurant.name)")
                 .font(.custom("StudyClash", size: 40))
                 .foregroundColor(Color.customGreen)
+                .padding(.top, 40)
+                .multilineTextAlignment(.center)
             
             // Divider
             Rectangle()
-                .fill(.black)
+                .fill(Color.customGreen)
                 .frame(height: 1)
-                .padding(.top)
+                .padding(.horizontal, 15)
             
             // Section for Lunch
             HStack{
@@ -165,9 +169,10 @@ struct RestaurantDetailSheetView: View {
             
             // Divider
             Rectangle()
-                .fill(.black)
+                .fill(Color.customGreen)
                 .frame(height: 1)
                 .padding(.top)
+                .padding(.horizontal, 15)
             
             // Section for Dinner
             HStack{
