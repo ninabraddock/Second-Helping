@@ -66,26 +66,190 @@ struct LocationView: View {
                     await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
                 }
             }
+        }
+        .sheet(item: $selectedRestaurant) { restaurant in
+            RestaurantDetailSheetView(restaurant: restaurant)
+        }
+    }
+}
+
+
+struct RestaurantDetailSheetView: View {
+    var restaurant: Restaurant
+    
+    // State for displaying the detail view
+    @State private var selectedMeal: Meal?
+    @State private var selectedRestaurant: Restaurant?
+    @State private var showMealDetail = false
+    
+    var body: some View {
+        VStack {
+            Text("Current Offerings at \(restaurant.name)")
+                .font(.custom("StudyClash", size: 40))
+                .foregroundColor(Color.customGreen)
             
-            if let restaurant = selectedRestaurant {
-                VStack{
-                    Spacer()
-                    HStack{
-                        Text(restaurant.name)
-                            .font(.headline)
-                            .foregroundStyle(.white)
-                    }
-                    .padding()
-                    .frame(width: screenWidth/4 * 3, height: screenHeight/6)
-                    .background(Color.black)
+            // Divider
+            Rectangle()
+                .fill(.black)
+                .frame(height: 1)
+                .padding(.top)
+            
+            // Section for Lunch
+            HStack{
+                Text("Lunch")
+                    .font(.custom("StudyClash", size: 24))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.customGreen.opacity(0.3))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.customGreen, lineWidth: 2)
+                            )
+                    )
+                    .foregroundColor(Color.customGreen)
+                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 4)
+                    .underline()
+                Spacer()
+            }
+            .padding(.horizontal, 15)
+            
+            ZStack {
+                Color(Color.customGreen)
+                    .opacity(0.3)
                     .cornerRadius(10)
-                    .padding(.bottom, 30)
+                ScrollView(.horizontal, showsIndicators: true) {
+                    HStack {
+                        Spacer().padding(.leading, 1)
+                        let lunchMeals = restaurant.meals.filter { $0.type == "Lunch" }
+                        if lunchMeals.isEmpty {
+                            EmptyProductCard()
+                                .frame(width: 185, height: 160)
+                                .foregroundStyle(.black)
+                        } else {
+                            ForEach(lunchMeals) { meal in
+                                Button {
+                                    // Set the selected meal, restaurant and show the detail sheet
+                                    selectedMeal = meal
+                                    selectedRestaurant = restaurant
+                                    showMealDetail = true
+                                } label: {
+                                    ProductCard(
+                                        image: Image("waterworks"), // replace with image
+                                        quantity: Int(meal.quantity),
+                                        name: restaurant.name,
+                                        bagType: meal.bagType,
+                                        rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                        ranking: restaurant.meanRating,
+                                        distance: 0.0, // Setting to 0 because this is the current restaurant
+                                        price: meal.price,
+                                        btnHandler: nil
+                                    )
+                                }
+                                .frame(width: 185, height: 160)
+                                .foregroundStyle(.black)
+                            }
+                        }
+                        Spacer().padding(.trailing, 1)
+                    }
                 }
-                .transition(.move(edge: .bottom))
+                .frame(height: 200)
+                .scrollIndicators(.visible)
+            }
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.customGreen, lineWidth: 2)
+            )
+            .padding(.horizontal, 15)
+            
+            // Divider
+            Rectangle()
+                .fill(.black)
+                .frame(height: 1)
+                .padding(.top)
+            
+            // Section for Dinner
+            HStack{
+                Text("Dinner")
+                    .font(.custom("StudyClash", size: 24))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.customGreen.opacity(0.3))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.customGreen, lineWidth: 2)
+                            )
+                    )
+                    .foregroundColor(Color.customGreen)
+                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 4)
+                    .underline()
+                Spacer()
+            }
+            .padding(.horizontal, 15)
+            .padding(.top)
+            
+            ZStack {
+                Color(Color.customGreen)
+                    .opacity(0.3)
+                    .cornerRadius(10)
+                ScrollView(.horizontal, showsIndicators: true) {
+                    HStack {
+                        Spacer().padding(.leading, 1)
+                        let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" }
+                        if dinnerMeals.isEmpty {
+                            EmptyProductCard()
+                                .frame(width: 185, height: 160)
+                                .foregroundStyle(.black)
+                        } else {
+                            ForEach(dinnerMeals) { meal in
+                                Button {
+                                    // Set the selected meal, restaurant and show the detail sheet
+                                    selectedMeal = meal
+                                    selectedRestaurant = restaurant
+                                    showMealDetail = true
+                                } label: {
+                                    ProductCard(
+                                        image: Image("waterworks"), // replace with image
+                                        quantity: Int(meal.quantity),
+                                        name: restaurant.name,
+                                        bagType: meal.bagType,
+                                        rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                        ranking: restaurant.meanRating,
+                                        distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
+                                        price: meal.price,
+                                        btnHandler: nil
+                                    )
+                                }
+                                .frame(width: 185, height: 160)
+                                .foregroundStyle(.black)
+                            }
+                        }
+                        Spacer().padding(.trailing, 1)
+                    }
+                }
+                .frame(height: 200)
+                .scrollIndicators(.visible)
+            }
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.customGreen, lineWidth: 2)
+            )
+            .padding(.horizontal, 15)
+            
+            Spacer()
+        }
+        .background(Color.white)
+        .sheet(isPresented: $showMealDetail) {
+            if let meal = selectedMeal {
+                MealDetailSheet(meal: meal)
             }
         }
     }
 }
+
 
 
 #Preview {

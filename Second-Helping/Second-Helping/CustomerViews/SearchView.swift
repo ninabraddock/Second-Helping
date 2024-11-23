@@ -73,6 +73,7 @@ struct SearchView: View {
     @State private var selectedMeal: Meal?
     @State private var selectedRestaurant: Restaurant?
     @State private var showMealDetail = false
+    
     @State private var searchBar = ""
     
     var body: some View {
@@ -126,8 +127,9 @@ struct SearchView: View {
                     
                     // Divider
                     Rectangle()
-                        .fill(.black)
+                        .fill(Color.customGreen)
                         .frame(height: 1)
+                        .padding(.horizontal, 15)
                     
                     // Section for Lunch
                     HStack{
@@ -150,6 +152,7 @@ struct SearchView: View {
                         NavigationLink(destination: SeeAllView(
                             restaurants: restaurantViewModel.restaurants,
                             isLunch: true,
+                            isRestaurant: false,
                             searchBar: $searchBar
                         )) {
                             Text("See All")
@@ -166,15 +169,24 @@ struct SearchView: View {
                         ScrollView(.horizontal, showsIndicators: true) {
                             HStack {
                                 Spacer().padding(.leading, 1)
-                                ForEach(restaurantViewModel.restaurants.filter
-                                        { searchBar.isEmpty ||
+                                let filteredRestaurants = restaurantViewModel.restaurants.filter
+                                    { (searchBar.isEmpty ||
                                     $0.name.localizedCaseInsensitiveContains(searchBar) ||
-                                    $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }}) { restaurant in
-                                        
+                                    $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }) &&
+                                    $0.meals.contains { $0.type == "Lunch"}}
+                                
+                                if filteredRestaurants.isEmpty {
+                                    EmptyProductCard()
+                                        .frame(width: 185, height: 160)
+                                        .foregroundStyle(.black)
+                                } else {
+                                    var isEmpty = false
+                                    ForEach(filteredRestaurants) { restaurant in
                                         let lunchMeals = restaurant.meals.filter { $0.type == "Lunch" && searchBar.isEmpty ||
                                             $0.type == "Lunch" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
                                             $0.type == "Lunch" && restaurant.name.localizedCaseInsensitiveContains(searchBar)}
-                                        
+                                
+                                            
                                         let restLat = restaurant.latitude
                                         let restLong = restaurant.longitude
                                         var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
@@ -204,6 +216,7 @@ struct SearchView: View {
                                             
                                         }
                                     }
+                                }
                                 Spacer().padding(.trailing, 1)
                             }
                         }
@@ -214,13 +227,15 @@ struct SearchView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.customGreen, lineWidth: 2)
                     )
+                    .padding(.horizontal, 15)
                     
                     
                     // Divider
                     Rectangle()
-                        .fill(.black)
+                        .fill(Color.customGreen)
                         .frame(height: 1)
                         .padding(.top)
+                        .padding(.horizontal, 15)
                     
                     // Section for Dinner
                     HStack{
@@ -243,6 +258,7 @@ struct SearchView: View {
                         NavigationLink(destination: SeeAllView(
                             restaurants: restaurantViewModel.restaurants,
                             isLunch: false,
+                            isRestaurant: false,
                             searchBar: $searchBar
                         )) {
                             Text("See All")
@@ -259,14 +275,21 @@ struct SearchView: View {
                         ScrollView(.horizontal, showsIndicators: true) {
                             HStack {
                                 Spacer().padding(.leading, 1)
-                                ForEach(restaurantViewModel.restaurants.filter
-                                        { searchBar.isEmpty ||
+                                let filteredRestaurants = restaurantViewModel.restaurants.filter
+                                    { (searchBar.isEmpty ||
                                     $0.name.localizedCaseInsensitiveContains(searchBar) ||
-                                    $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }}) { restaurant in
-                                        
+                                    $0.meals.contains { $0.bagType.localizedCaseInsensitiveContains(searchBar) }) &&
+                                    $0.meals.contains { $0.type == "Dinner"}}
+                                if filteredRestaurants.isEmpty {
+                                    EmptyProductCard()
+                                        .frame(width: 185, height: 160)
+                                        .foregroundStyle(.black)
+                                } else {
+                                    ForEach(filteredRestaurants) { restaurant in
                                         let dinnerMeals = restaurant.meals.filter { $0.type == "Dinner" && searchBar.isEmpty ||
                                             $0.type == "Dinner" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
                                             $0.type == "Dinner" && restaurant.name.localizedCaseInsensitiveContains(searchBar)}
+                                        
                                         let restLat = restaurant.latitude
                                         let restLong = restaurant.longitude
                                         var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
@@ -294,6 +317,7 @@ struct SearchView: View {
                                             .foregroundStyle(.black)
                                         }
                                     }
+                                }
                                 Spacer().padding(.trailing, 1)
                             }
                         }
@@ -304,6 +328,7 @@ struct SearchView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.customGreen, lineWidth: 2)
                     )
+                    .padding(.horizontal, 15)
                 }
                 .onAppear {
                     Task {

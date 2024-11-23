@@ -19,39 +19,7 @@ struct CurrentOfferings: View {
             NavigationView {
                 ScrollView {
                     VStack {
-                        Text("Current Offerings at \(currentRestaurant.name)")
-                            .font(.custom("StudyClash", size: 40))
-                            .foregroundColor(Color.customGreen)
-                            .padding(.top, 20)
                         
-                        TextField("Search restaurants/meal types...", text: $searchBar)
-                            .font(.custom("StudyClash", size: 20))
-                            .padding(10)
-                            .background(Color.customGray)
-                            .cornerRadius(8)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.customGreen, lineWidth: 2)
-                            )
-                            .padding(.horizontal, 15)
-                        
-                        if searchBar.count >= 1 {
-                            Text("Showing food options for \"" + searchBar + "\"...")
-                                .font(.custom("StudyClash", size: 18))
-                                .foregroundColor(.customGreen)
-                                .padding()
-                        } else {
-                            Text("Showing all food options...")
-                                .font(.custom("StudyClash", size: 18))
-                                .foregroundColor(.customGreen)
-                                .padding()
-                        }
-                        
-                        // Divider
-                        Rectangle()
-                            .fill(.black)
-                            .frame(height: 1)
-                            .padding(.top)
                         
                         // Section for Lunch
                         HStack{
@@ -74,6 +42,7 @@ struct CurrentOfferings: View {
                             NavigationLink(destination: SeeAllView(
                                 restaurants: [currentRestaurant],
                                 isLunch: true,
+                                isRestaurant: true,
                                 searchBar: $searchBar
                             )) {
                                 Text("See All")
@@ -90,20 +59,26 @@ struct CurrentOfferings: View {
                                 HStack {
                                     Spacer().padding(.leading, 1)
                                     let lunchMeals = currentRestaurant.meals.filter { $0.type == "Lunch" }
-                                    ForEach(lunchMeals) { meal in
-                                        ProductCard(
-                                            image: Image("waterworks"), // replace with image
-                                            quantity: Int(meal.quantity),
-                                            name: currentRestaurant.name,
-                                            bagType: meal.bagType,
-                                            rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                            ranking: currentRestaurant.meanRating,
-                                            distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
-                                            price: meal.price,
-                                            btnHandler: nil
-                                        )
-                                        .frame(width: 185, height: 160)
-                                        .foregroundStyle(.black)
+                                    if lunchMeals.isEmpty {
+                                        EmptyProductCard()
+                                            .frame(width: 185, height: 160)
+                                            .foregroundStyle(.black)
+                                    } else {
+                                        ForEach(lunchMeals) { meal in
+                                            ProductCard(
+                                                image: Image("waterworks"), // replace with image
+                                                quantity: Int(meal.quantity),
+                                                name: currentRestaurant.name,
+                                                bagType: meal.bagType,
+                                                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                                ranking: currentRestaurant.meanRating,
+                                                distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
+                                                price: meal.price,
+                                                btnHandler: nil
+                                            )
+                                            .frame(width: 185, height: 160)
+                                            .foregroundStyle(.black)
+                                        }
                                     }
                                     Spacer().padding(.trailing, 1)
                                 }
@@ -115,6 +90,7 @@ struct CurrentOfferings: View {
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.customGreen, lineWidth: 2)
                         )
+                        .padding(.horizontal, 15)
                         
                         
                         // Divider
@@ -144,6 +120,7 @@ struct CurrentOfferings: View {
                             NavigationLink(destination: SeeAllView(
                                 restaurants: [currentRestaurant],
                                 isLunch: false,
+                                isRestaurant: true,
                                 searchBar: $searchBar
                             )) {
                                 Text("See All")
@@ -162,20 +139,26 @@ struct CurrentOfferings: View {
                                 HStack {
                                     Spacer().padding(.leading, 1)
                                     let dinnerMeals = currentRestaurant.meals.filter { $0.type == "Dinner" }
-                                    ForEach(dinnerMeals) { meal in
-                                        ProductCard(
-                                            image: Image("waterworks"), // replace with image
-                                            quantity: Int(meal.quantity),
-                                            name: currentRestaurant.name,
-                                            bagType: meal.bagType,
-                                            rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                            ranking: currentRestaurant.meanRating,
-                                            distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
-                                            price: meal.price,
-                                            btnHandler: nil
-                                        )
-                                        .frame(width: 185, height: 160)
-                                        .foregroundStyle(.black)
+                                    if dinnerMeals.isEmpty {
+                                        EmptyProductCard()
+                                            .frame(width: 185, height: 160)
+                                            .foregroundStyle(.black)
+                                    } else {
+                                        ForEach(dinnerMeals) { meal in
+                                            ProductCard(
+                                                image: Image("waterworks"), // replace with image
+                                                quantity: Int(meal.quantity),
+                                                name: currentRestaurant.name,
+                                                bagType: meal.bagType,
+                                                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                                ranking: currentRestaurant.meanRating,
+                                                distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
+                                                price: meal.price,
+                                                btnHandler: nil
+                                            )
+                                            .frame(width: 185, height: 160)
+                                            .foregroundStyle(.black)
+                                        }
                                     }
                                     Spacer().padding(.trailing, 1)
                                 }
@@ -187,6 +170,7 @@ struct CurrentOfferings: View {
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.customGreen, lineWidth: 2)
                         )
+                        .padding(.horizontal, 15)
                         
                         Spacer()
                     }

@@ -47,39 +47,42 @@ struct CustomerView: View {
             .background(Color.customGreen.opacity(0.3))
             
             ZStack(alignment: .top) {
-                TabView {
-                    
-                    SearchView()
-                        .tabItem() {
-                            Image(systemName: "magnifyingglass")
-                            Text("Search")
-                        }
-                    
-                    FavoritesView()
-                        .tabItem() {
-                            Image(systemName: "star.fill")
-                            Text("Favorites")
-                        }
-                    
-                    LocationView()
-                        .tabItem() {
-                            Image(systemName: "location.fill.viewfinder")
-                            Text("Location")
-                        }
-                    
-                    HistoryView()
-                        .tabItem() {
-                            Image(systemName: "gobackward")
-                            Text("History")
-                        }
-                    
-                    StatsView()
-                        .tabItem() {
-                            Image(systemName: "chart.bar.xaxis")
-                            Text("Stats")
-                        }
+                ZStack {
+
+                    TabView {
+                        SearchView()
+                            .tabItem {
+                                Image(systemName: "magnifyingglass")
+                                Text("Search")
+                            }
+                        
+                        FavoritesView()
+                            .tabItem {
+                                Image(systemName: "star.fill")
+                                Text("Favorites")
+                            }
+                        
+                        LocationView()
+                            .tabItem {
+                                Image(systemName: "location.fill.viewfinder")
+                                Text("Location")
+                            }
+                        
+                        HistoryView()
+                            .tabItem {
+                                Image(systemName: "gobackward")
+                                Text("History")
+                            }
+                        
+                        StatsView()
+                            .tabItem {
+                                Image(systemName: "chart.bar.xaxis")
+                                Text("Stats")
+                            }
+                    }
                 }
                 
+                // Squiggly dividers for styling
                 SquigglyDividerTopBG()
                     .fill(Color.white)
                     .frame(height: 10)
@@ -94,7 +97,6 @@ struct CustomerView: View {
         }
     }
 }
-
 
 #Preview {
     CustomerView(isLoggedIn: .constant(true), isCustomer: .constant(true)).environmentObject(RestaurantViewModel())

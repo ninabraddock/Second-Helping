@@ -10,7 +10,13 @@ import SwiftUI
 struct SeeAllView: View {
     var restaurants: [Restaurant]
     var isLunch: Bool
+    var isRestaurant: Bool
     @Binding var searchBar: String
+    
+    // State for displaying the detail view
+    @State private var selectedMeal: Meal?
+    @State private var selectedRestaurant: Restaurant?
+    @State private var showMealDetail = false
     
     private let columns = [
             GridItem(.flexible()),
@@ -48,27 +54,47 @@ struct SeeAllView: View {
                 }
                 
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(filteredRestaurants) { restaurant in
-                        ForEach(filteredMeals(for: restaurant)) { meal in
-                            ProductCard(
-                                image: Image("waterworks"), // replace with image
-                                quantity: Int(meal.quantity),
-                                name: restaurant.name,
-                                bagType: meal.bagType,
-                                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                ranking: restaurant.meanRating,
-                                distance: distanceTo(userLong: nil, userLat: nil, restLat: restaurant.latitude, restLong: restaurant.longitude),
-                                price: meal.price,
-                                btnHandler: nil
-                            )
+                    if !(filteredRestaurants.contains { !filteredMeals(for: $0).isEmpty }) {
+                        EmptyProductCard()
                             .frame(width: 185, height: 160)
                             .foregroundStyle(.black)
+                    } else {
+                        ForEach(filteredRestaurants) { restaurant in
+                            ForEach(filteredMeals(for: restaurant)) { meal in
+                                Button {
+                                    if !isRestaurant {
+                                        // Set the selected meal, restaurant and show the detail sheet
+                                        selectedMeal = meal
+                                        selectedRestaurant = restaurant
+                                        showMealDetail = true
+                                    }
+                                } label: {
+                                    ProductCard(
+                                        image: Image("waterworks"), // replace with image
+                                        quantity: Int(meal.quantity),
+                                        name: restaurant.name,
+                                        bagType: meal.bagType,
+                                        rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                        ranking: restaurant.meanRating,
+                                        distance: distanceTo(userLong: nil, userLat: nil, restLat: restaurant.latitude, restLong: restaurant.longitude),
+                                        price: meal.price,
+                                        btnHandler: nil
+                                    )
+                                }
+                                .frame(width: 185, height: 160)
+                                .foregroundStyle(.black)
+                            }
                         }
                     }
                 }
             }
         }
         .padding(.horizontal, 10)
+        .sheet(isPresented: $showMealDetail) {
+            if let meal = selectedMeal {
+                MealDetailSheet(meal: meal)
+            }
+        }
     }
 
     private var filteredRestaurants: [Restaurant] {
@@ -87,5 +113,5 @@ struct SeeAllView: View {
 }
 
 #Preview {
-    SeeAllView(restaurants: [], isLunch: true, searchBar: .constant(""))
+    SeeAllView(restaurants: [], isLunch: true, isRestaurant: false, searchBar: .constant(""))
 }

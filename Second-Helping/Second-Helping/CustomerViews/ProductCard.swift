@@ -152,6 +152,35 @@ struct ProductCard: View {
     }
 }
 
+struct EmptyProductCard: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            VStack(spacing: 10) {
+                Spacer()
+                Image(systemName: "face.dashed")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+                    .foregroundColor(.gray)
+                    .rotationEffect(.degrees(180))
+                
+                Text("No Meals Available")
+                    .font(.custom("StudyClash", size: 20))
+                    .foregroundColor(.gray)
+                    .padding(.horizontal, 10)
+                    .multilineTextAlignment(.center)
+                Spacer()
+            }
+            Spacer()
+        }
+        .background(Color.white)
+        .cornerRadius(15)
+        .shadow(color: Color.black.opacity(0.2), radius: 7, x: 0, y: 2)
+    }
+}
+
+
 struct ProductCard_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView(.horizontal, showsIndicators: false) {
