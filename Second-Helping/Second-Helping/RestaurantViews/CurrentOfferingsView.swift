@@ -19,7 +19,40 @@ struct CurrentOfferings: View {
             NavigationView {
                 ScrollView {
                     VStack {
+                        Text("Current Offerings at \(currentRestaurant.name)")
+                            .font(.custom("StudyClash", size: 40))
+                            .foregroundColor(Color.customGreen)
+                            .padding(.top, 20)
+
+                        TextField("Search restaurants/meal types...", text: $searchBar)
+                            .font(.custom("StudyClash", size: 20))
+                            .padding(10)
+                            .background(Color.customGray)
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.customGreen, lineWidth: 2)
+                            )
+                            .padding(.horizontal, 15)
                         
+                        if searchBar.count >= 1 {
+                            Text("Showing food options for \"" + searchBar + "\"...")
+                                .font(.custom("StudyClash", size: 18))
+                                .foregroundColor(.customGreen)
+                                .padding()
+                        } else {
+                            Text("Showing all food options...")
+                                .font(.custom("StudyClash", size: 18))
+                                .foregroundColor(.customGreen)
+                                .padding()
+                        }
+                        
+                        // Divider
+                        Rectangle()
+                            .fill(Color.customGreen)
+                            .frame(height: 1)
+                            .padding(.top)
+                            .padding(.horizontal, 15)
                         
                         // Section for Lunch
                         HStack{
@@ -58,7 +91,9 @@ struct CurrentOfferings: View {
                             ScrollView(.horizontal, showsIndicators: true) {
                                 HStack {
                                     Spacer().padding(.leading, 1)
-                                    let lunchMeals = currentRestaurant.meals.filter { $0.type == "Lunch" }
+                                    let lunchMeals = currentRestaurant.meals.filter { $0.type == "Lunch" && searchBar.isEmpty ||
+                                        $0.type == "Lunch" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
+                                        $0.type == "Lunch" && currentRestaurant.name.localizedCaseInsensitiveContains(searchBar)}
                                     if lunchMeals.isEmpty {
                                         EmptyProductCard()
                                             .frame(width: 185, height: 160)
@@ -95,9 +130,10 @@ struct CurrentOfferings: View {
                         
                         // Divider
                         Rectangle()
-                            .fill(.black)
+                            .fill(Color.customGreen)
                             .frame(height: 1)
                             .padding(.top)
+                            .padding(.horizontal, 15)
                         
                         // Section for Dinner
                         HStack{
@@ -138,7 +174,9 @@ struct CurrentOfferings: View {
                             ScrollView(.horizontal, showsIndicators: true) {
                                 HStack {
                                     Spacer().padding(.leading, 1)
-                                    let dinnerMeals = currentRestaurant.meals.filter { $0.type == "Dinner" }
+                                    let dinnerMeals = currentRestaurant.meals.filter { $0.type == "Dinner" && searchBar.isEmpty ||
+                                        $0.type == "Dinner" && $0.bagType.localizedCaseInsensitiveContains(searchBar) ||
+                                        $0.type == "Dinner" && currentRestaurant.name.localizedCaseInsensitiveContains(searchBar)}
                                     if dinnerMeals.isEmpty {
                                         EmptyProductCard()
                                             .frame(width: 185, height: 160)
@@ -188,6 +226,7 @@ struct CurrentOfferings: View {
                     }
                 }
             }
+            .background(.white)
         }
     }
 }

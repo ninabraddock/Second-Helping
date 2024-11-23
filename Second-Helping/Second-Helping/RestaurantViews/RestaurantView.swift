@@ -48,23 +48,49 @@ struct RestaurantView: View {
                 
             ZStack(alignment: .top) {
                 TabView {
-                    CurrentOfferings()
+                    Group {
+                        ZStack {
+                            Color.customGreen
+                            CurrentOfferings()
+                                .padding(.horizontal, 8)
+                        }
+                    }
                         .tabItem() {
                             Image(systemName: "magnifyingglass")
                             Text("Current Offerings")
                         }
                     
-                    AddMeal()
+                    Group {
+                        ZStack {
+                            Color.customGreen
+                            AddMeal()
+                                .padding(.horizontal, 8)
+                        }
+                    }
                         .tabItem() {
                             Image(systemName: "star.fill")
                             Text("Add Meal")
                         }
-                    ActiveOrdersView()
+                    
+                    Group {
+                        ZStack {
+                            Color.customGreen
+                            ActiveOrdersView()
+                                .padding(.horizontal, 8)
+                        }
+                    }
                         .tabItem() {
                             Image(systemName: "checklist")
                             Text("Active Orders")
                         }
-                    PastOrdersView()
+                    
+                    Group {
+                        ZStack {
+                            Color.customGreen
+                            PastOrdersView()
+                                .padding(.horizontal, 8)
+                        }
+                    }
                         .tabItem() {
                             Image(systemName: "clock")
                             Text("Past Orders")

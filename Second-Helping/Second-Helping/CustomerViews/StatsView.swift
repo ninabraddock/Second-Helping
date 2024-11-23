@@ -13,26 +13,30 @@ let theme_color = Color("main_color_theme")
 
 struct StatsView: View {
     var body: some View {
-        VStack {
-            Text("Stats!")
-                .font(.largeTitle)
-            
+        HStack {
             Spacer()
-            
-            VStack(spacing: 20) {
-                HStack(spacing: 20) {
-                    StatBox(text: "Food Saved", gifName: "food_saved", value: "20", subtitle: "pounds")
-                    StatBox(text: "CO₂ Avoided", gifName: "CO2", value: "20", subtitle: "ppm")
-                }
+            VStack {
+                Text("Stats!")
+                    .font(.largeTitle)
                 
-                HStack(spacing: 20) {
-                    StatBox(text: "Money Saved", gifName: "money_gif", value: "$20", subtitle: "Dollars")
-                    StatBox(text: "Meals Saved", gifName: "meal_saved", value: "20", subtitle: "total")
+                Spacer()
+                
+                VStack(spacing: 20) {
+                    HStack(spacing: 20) {
+                        StatBox(text: "Food Saved", gifName: "food_saved", value: "20", subtitle: "pounds")
+                        StatBox(text: "CO₂ Avoided", gifName: "CO2", value: "20", subtitle: "ppm")
+                    }
+                    
+                    HStack(spacing: 20) {
+                        StatBox(text: "Money Saved", gifName: "money_gif", value: "$20", subtitle: "Dollars")
+                        StatBox(text: "Meals Saved", gifName: "meal_saved", value: "20", subtitle: "total")
+                    }
                 }
+                Spacer()
             }
             Spacer()
         }
-        .padding()
+        .background(.white)
     }
 }
 

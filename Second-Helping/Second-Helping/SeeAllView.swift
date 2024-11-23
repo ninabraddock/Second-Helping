@@ -42,12 +42,13 @@ struct SeeAllView: View {
                     .padding(.horizontal, 15)
                 
                 if searchBar.count >= 1 {
-                    Text("Showing dinner options for \"" + searchBar + "\"...")
+                    Text(isLunch ?  "Showing lunch options for \"" + searchBar + "\"..." :
+                                    "Showing dinner options for \"" + searchBar + "\"...")
                         .font(.custom("StudyClash", size: 18))
                         .foregroundColor(.customGreen)
                         .padding()
                 } else {
-                    Text("Showing all dinner options...")
+                    Text(isLunch ? "Showing all lunch options..." : "Showing all dinner options...")
                         .font(.custom("StudyClash", size: 18))
                         .foregroundColor(.customGreen)
                         .padding()
@@ -81,7 +82,7 @@ struct SeeAllView: View {
                                         btnHandler: nil
                                     )
                                 }
-                                .frame(width: 185, height: 160)
+                                .frame(width: 175, height: 150)
                                 .foregroundStyle(.black)
                             }
                         }

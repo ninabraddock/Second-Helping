@@ -151,6 +151,7 @@ struct AddMeal: View {
             .cornerRadius(10)
             
         } //end form
+        .background(.white)
         .onAppear {
             if let uid = authViewModel.userSession?.uid {
                 Task {

@@ -13,11 +13,13 @@ struct FavoritesView: View {
             HStack {
                 Text("Favorites View")
                     .font(.largeTitle)
+                    .padding(.top)
+                    .padding(.leading, 15)
                 Spacer()
             }
             Spacer()
         }
-        .padding()
+        .background(.white)
     }
 }
 

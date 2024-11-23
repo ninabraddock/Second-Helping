@@ -50,13 +50,25 @@ struct CustomerView: View {
                 ZStack {
 
                     TabView {
-                        SearchView()
+                        Group {
+                            ZStack {
+                                Color.customGreen
+                                SearchView()
+                                    .padding(.horizontal, 8)
+                            }
+                        }
                             .tabItem {
                                 Image(systemName: "magnifyingglass")
                                 Text("Search")
                             }
                         
-                        FavoritesView()
+                        Group {
+                            ZStack {
+                                Color.customGreen
+                                FavoritesView()
+                                    .padding(.horizontal, 8)
+                            }
+                        }
                             .tabItem {
                                 Image(systemName: "star.fill")
                                 Text("Favorites")
@@ -68,17 +80,33 @@ struct CustomerView: View {
                                 Text("Location")
                             }
                         
-                        HistoryView()
+                        Group {
+                            ZStack {
+                                Color.customGreen
+                                HistoryView()
+                                    .padding(.horizontal, 8)
+                            }
+                        }
                             .tabItem {
                                 Image(systemName: "gobackward")
                                 Text("History")
                             }
                         
-                        StatsView()
+                        Group {
+                            ZStack {
+                                Color.customGreen
+                                StatsView()
+                                    .padding(.horizontal, 8)
+                            }
+                        }
                             .tabItem {
                                 Image(systemName: "chart.bar.xaxis")
                                 Text("Stats")
                             }
+                    }
+                    .onAppear() {
+//                        UITabBar.appearance().isTranslucent = false
+                        UITabBar.appearance().backgroundColor = .white
                     }
                 }
                 

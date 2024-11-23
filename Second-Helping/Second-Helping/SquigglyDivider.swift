@@ -14,7 +14,7 @@ struct SquigglyDivider: Shape {
         let frequency: CGFloat = 20
         
         var curX = rect.minX-2
-        var curY = rect.midY - 10
+        var curY = rect.midY - 2
         path.move(to: CGPoint(x: curX, y: curY))
 
         for x in stride(from: rect.minX-2, to: rect.maxX+2, by: 1) {
@@ -37,7 +37,7 @@ struct SquigglyDividerTopBG: Shape {
         let frequency: CGFloat = 20
         
         var curX = rect.maxX+2
-        var curY = rect.minY - 10
+        var curY = rect.minY - 2
         path.move(to: CGPoint(x: curX, y: curY))
 
         curX = rect.minX-2
@@ -55,7 +55,7 @@ struct SquigglyDividerTopBG: Shape {
             path.addLine(to: CGPoint(x: curX, y: curY))
         }
         
-        curY = rect.minY - 10
+        curY = rect.minY - 2
         path.addLine(to: CGPoint(x: curX, y: curY))
         
         return path
