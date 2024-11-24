@@ -84,7 +84,7 @@
 		084E81532CDD186200F46F5A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		084E81592CDD19B700F46F5A /* GifImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifImageView.swift; sourceTree = "<group>"; };
 		0864020A2CAC254F00291E53 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
-		0872A6882CA309C4009814A5 /* Second-Helping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Second-Helping.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0872A6882CA309C4009814A5 /* Second Helping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Second Helping.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0872A68B2CA309C4009814A5 /* Second_HelpingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Second_HelpingApp.swift; sourceTree = "<group>"; };
 		0872A68D2CA309C4009814A5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0872A68F2CA309C6009814A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 		0872A6892CA309C4009814A5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0872A6882CA309C4009814A5 /* Second-Helping.app */,
+				0872A6882CA309C4009814A5 /* Second Helping.app */,
 				0872A6982CA309C7009814A5 /* Second-HelpingTests.xctest */,
 				0872A6A22CA309C7009814A5 /* Second-HelpingUITests.xctest */,
 			);
@@ -397,7 +397,7 @@
 			);
 			name = "Second-Helping";
 			productName = "Second-Helping";
-			productReference = 0872A6882CA309C4009814A5 /* Second-Helping.app */;
+			productReference = 0872A6882CA309C4009814A5 /* Second Helping.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0872A6972CA309C7009814A5 /* Second-HelpingTests */ = {
@@ -732,7 +732,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.n8blanchard1.Second-Helping";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Second Helping";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -764,7 +764,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.n8blanchard1.Second-Helping";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Second Helping";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

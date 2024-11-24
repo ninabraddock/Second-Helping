@@ -16,7 +16,7 @@ struct LoginView: View {
         ZStack {
             NavigationStack {
                 VStack {
-                    Image("logo")
+                    Image("fork_knife_image")
                         .resizable()
                         .scaledToFill()
                         .frame(width: 100, height: 100)
