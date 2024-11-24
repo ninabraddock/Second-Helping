@@ -62,6 +62,7 @@ extension Color {
 }
 
 struct SearchView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     @EnvironmentObject var loadingState: LoadingState
     @StateObject var locationManager = LocationManager()
@@ -199,6 +200,7 @@ struct SearchView: View {
                                                 showMealDetail = true
                                             } label: {
                                                 ProductCard(
+                                                    id: meal.id,
                                                     image: Image("waterworks"), // replace with image
                                                     quantity: Int(meal.quantity),
                                                     name: restaurant.name,
@@ -302,6 +304,7 @@ struct SearchView: View {
                                                 showMealDetail = true
                                             } label: {
                                                 ProductCard(
+                                                    id: meal.id,
                                                     image: Image("waterworks"), // replace with image
                                                     quantity: Int(meal.quantity),
                                                     name: restaurant.name,
@@ -332,7 +335,8 @@ struct SearchView: View {
                 }
                 .onAppear {
                     Task {
-                        await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
+                        await authViewModel.fetchUsers()
+                        await restaurantViewModel.fetchRestaurants()
                     }
                 }
                 .sheet(isPresented: $showMealDetail) {
@@ -340,10 +344,17 @@ struct SearchView: View {
                         MealDetailSheet(meal: meal)
                     }
                 }
+                .onChange(of: showMealDetail) {
+                    Task {
+                        await authViewModel.fetchUsers()
+                        await restaurantViewModel.fetchRestaurants()
+                    }
+                }
             }
             .refreshable {
                 Task {
                     loadingState.isLoading = true
+                    await authViewModel.fetchUsers()
                     await restaurantViewModel.fetchRestaurants()
                     loadingState.isLoading = false
                 }

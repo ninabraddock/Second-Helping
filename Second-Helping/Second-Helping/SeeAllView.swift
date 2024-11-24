@@ -71,6 +71,7 @@ struct SeeAllView: View {
                                     }
                                 } label: {
                                     ProductCard(
+                                        id: meal.id,
                                         image: Image("waterworks"), // replace with image
                                         quantity: Int(meal.quantity),
                                         name: restaurant.name,

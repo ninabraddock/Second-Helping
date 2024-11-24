@@ -12,12 +12,23 @@ struct MealDetailSheet: View {
     @EnvironmentObject private var restaurantViewModel: RestaurantViewModel
     let meal: Meal
     @State private var quantity = 0
+    @State private var isFavorite = false
 
-    
-    
-    
     var body: some View {
         VStack(spacing: 20) {
+            HStack {
+                Spacer()
+                Button(action: {
+                    toggleFavorite()
+                }) {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .foregroundColor(isFavorite ? .pink : .gray) // Light pink when liked
+                        .font(.system(size: 24))
+                }
+                .padding(.top, 10)
+                .padding(.trailing, 20)
+            }
+            
             Text("Meal Type: \(meal.type)")
             Text("Bag Type: \(meal.bagType)")
             Text("Price: \(meal.price, specifier: "%.2f")")
@@ -28,6 +39,8 @@ struct MealDetailSheet: View {
         .onAppear {
                     Task {
                         await restaurantViewModel.fetchRestaurants()
+                        await authViewModel.fetchUsers()
+                        checkIfFavorite()
                     }
                 }
         .presentationDetents([.medium, .large]) // Control the height of the sheet
@@ -47,6 +60,35 @@ struct MealDetailSheet: View {
         }) {
             Text("Order")
         }
+    }
+    
+    
+    private func toggleFavorite() {
+        guard let currentUser = authViewModel.currentUser, let mealId = meal.id else {
+            print("Meal ID is nil")
+            return
+        }
+        
+        let mealIdString = mealId.uuidString
+        
+        isFavorite.toggle()
+        
+        if isFavorite {
+            authViewModel.addFavoriteMeal(mealId: mealIdString)
+        } else {
+            authViewModel.removeFavoriteMeal(mealId: mealIdString)
+        }
+    }
+
+    
+    private func checkIfFavorite() {
+        guard let currentUser = authViewModel.currentUser, let mealId = meal.id else {
+            return
+        }
+        
+        let mealIdString = mealId.uuidString
+        
+        isFavorite = currentUser.favoriteMeals.contains(mealIdString)
     }
 }
 

@@ -23,6 +23,7 @@ struct CurrentOfferings: View {
                             .font(.custom("StudyClash", size: 40))
                             .foregroundColor(Color.customGreen)
                             .padding(.top, 20)
+                            .multilineTextAlignment(.center)
 
                         TextField("Search restaurants/meal types...", text: $searchBar)
                             .font(.custom("StudyClash", size: 20))
@@ -101,6 +102,7 @@ struct CurrentOfferings: View {
                                     } else {
                                         ForEach(lunchMeals) { meal in
                                             ProductCard(
+                                                id: meal.id,
                                                 image: Image("waterworks"), // replace with image
                                                 quantity: Int(meal.quantity),
                                                 name: currentRestaurant.name,
@@ -184,6 +186,7 @@ struct CurrentOfferings: View {
                                     } else {
                                         ForEach(dinnerMeals) { meal in
                                             ProductCard(
+                                                id: meal.id,
                                                 image: Image("waterworks"), // replace with image
                                                 quantity: Int(meal.quantity),
                                                 name: currentRestaurant.name,
@@ -217,6 +220,13 @@ struct CurrentOfferings: View {
                             await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
                         }
                     }
+                    // Add back once we have some screen from clicking on product cards
+//                    .onChange(of: showMealDetail) {
+//                        Task {
+//                            await authViewModel.fetchUsers()
+//                            await restaurantViewModel.fetchRestaurants()
+//                        }
+//                    }
                 }
                 .refreshable {
                     Task {

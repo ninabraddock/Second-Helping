@@ -13,6 +13,7 @@ struct User: Identifiable, Codable {
     let email: String
     let isCustomer: Bool
     var completedOrders: [Meal]
+    var favoriteMeals: [String]
     
     var initials: String {
         let formatter = PersonNameComponentsFormatter()
@@ -30,5 +31,6 @@ extension User {
                                 fullName: "Jason Hibbler",
                                 email: "test@example.com",
                                 isCustomer: true,
-                                completedOrders: [])
+                                completedOrders: [],
+                                favoriteMeals: [])
 }

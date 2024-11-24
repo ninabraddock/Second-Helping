@@ -56,7 +56,7 @@ class AuthViewModel: ObservableObject {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
-            let user = User(id: result.user.uid, fullName: fullname, email: email, isCustomer: isCustomer, completedOrders: [])
+            let user = User(id: result.user.uid, fullName: fullname, email: email, isCustomer: isCustomer, completedOrders: [], favoriteMeals: [])
             let encoder = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
             await fetchUser()
@@ -155,7 +155,7 @@ class AuthViewModel: ObservableObject {
                 if !curUser.id.isEmpty {
                     await fetchUser(withID: curUser.id)
                 } else {
-                    // We don't have an id for that restaurant, lets try to find a restaurant with that name
+                    // We don't have an id for that user, lets try to find a user with that name
                     let userName = curUser.fullName
                     for user in users {
                         if user.fullName == userName {
@@ -230,6 +230,58 @@ class AuthViewModel: ObservableObject {
         print(users)
     }
     
+    func addFavoriteMeal(mealId: String) {
+        // Ensure we have a current user
+        guard var user = currentUser else {
+            print("No current user found.")
+            return
+        }
+        
+        // Check if the meal is already in the favorites
+        if !user.favoriteMeals.contains(mealId) {
+            // Add the meal ID to the favoriteMeals array
+            user.favoriteMeals.append(mealId)
+            
+            // Update the Firestore document for the current user
+            Task {
+                do {
+                    let encoder = try Firestore.Encoder().encode(user)
+                    try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
+                    print("Meal added to favorites successfully.")
+                } catch {
+                    print("Failed to add meal to favorites: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            print("Meal is already in the favorites.")
+        }
+    }
+    
+    func removeFavoriteMeal(mealId: String) {
+        // Ensure we have a current user
+        guard var user = currentUser else {
+            print("No current user found.")
+            return
+        }
+        
+        // Remove the meal ID from the favoriteMeals array if it exists
+        if let index = user.favoriteMeals.firstIndex(of: mealId) {
+            user.favoriteMeals.remove(at: index)
+            
+            // Update the Firestore document for the current user
+            Task {
+                do {
+                    let encoder = try Firestore.Encoder().encode(user)
+                    try await Firestore.firestore().collection("users").document(user.id).setData(encoder)
+                    print("Meal removed from favorites successfully.")
+                } catch {
+                    print("Failed to remove meal from favorites: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            print("Meal was not found in the favorites.")
+        }
+    }
     
 }
   

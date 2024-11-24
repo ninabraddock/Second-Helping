@@ -21,7 +21,9 @@ struct LocationView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
     
+    @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    
     // to catch duplicate addresses
     @State private var visitedAddresses: Set<String> = []
     @State private var selectedRestaurant: Restaurant?
@@ -77,6 +79,9 @@ struct LocationView: View {
 
 struct RestaurantDetailSheetView: View {
     var restaurant: Restaurant
+    
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     
     // State for displaying the detail view
     @State private var selectedMeal: Meal?
@@ -140,6 +145,7 @@ struct RestaurantDetailSheetView: View {
                                     showMealDetail = true
                                 } label: {
                                     ProductCard(
+                                        id: meal.id,
                                         image: Image("waterworks"), // replace with image
                                         quantity: Int(meal.quantity),
                                         name: restaurant.name,
@@ -217,6 +223,7 @@ struct RestaurantDetailSheetView: View {
                                     showMealDetail = true
                                 } label: {
                                     ProductCard(
+                                        id: meal.id,
                                         image: Image("waterworks"), // replace with image
                                         quantity: Int(meal.quantity),
                                         name: restaurant.name,
@@ -247,9 +254,21 @@ struct RestaurantDetailSheetView: View {
             Spacer()
         }
         .background(Color.white)
+        .onAppear {
+            Task {
+                await authViewModel.fetchUsers()
+                await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
+            }
+        }
         .sheet(isPresented: $showMealDetail) {
             if let meal = selectedMeal {
                 MealDetailSheet(meal: meal)
+            }
+        }
+        .onChange(of: showMealDetail) {
+            Task {
+                await authViewModel.fetchUsers()
+                await restaurantViewModel.fetchRestaurants()
             }
         }
     }

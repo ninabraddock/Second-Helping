@@ -12,6 +12,9 @@ let theme_color = Color("main_color_theme")
 
 
 struct StatsView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    
     var body: some View {
         HStack {
             Spacer()
@@ -37,6 +40,12 @@ struct StatsView: View {
             Spacer()
         }
         .background(.white)
+        .onAppear {
+            Task {
+                await authViewModel.fetchUsers()
+                await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
+            }
+        }
     }
 }
 

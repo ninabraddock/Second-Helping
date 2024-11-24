@@ -39,6 +39,7 @@ struct RoundedCorner: Shape {
 // Product card
 struct ProductCard: View {
     // Def global variables
+    var id: UUID?
     var image: Image
     var quantity: Int
     var name: String
@@ -49,7 +50,10 @@ struct ProductCard: View {
     var price: Double
     var btnHandler: (() -> ())? // Optional, no param, return nothing
     
-    init(image: Image,
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
+    init(id: UUID?,
+         image: Image,
          quantity: Int,
          name: String,
          bagType: String,
@@ -59,6 +63,7 @@ struct ProductCard: View {
          price: Double,
          btnHandler: (() -> ())?) {
         
+        self.id = id
         self.image = image
         self.quantity = quantity
         self.name = name
@@ -111,8 +116,9 @@ struct ProductCard: View {
                             )
                         
                         // Favorite a bag
+                        let isFavorite = authViewModel.currentUser?.favoriteMeals.contains(id?.uuidString ?? "") ?? false
                         Image(systemName: "heart.square.fill")
-                            .foregroundColor(.white.opacity(1.0))
+                            .foregroundColor(isFavorite ? .pink : .white)
                             .font(.system(size: 35))
                             .position(
                                 x: heartPosition.width / imagePosition.width * geometry.size.width,
@@ -149,6 +155,11 @@ struct ProductCard: View {
         .background(Color.white)
         .cornerRadius(15)
         .shadow(color: Color.black.opacity(0.2), radius: 7, x: 0, y: 2)
+        .onAppear {
+            Task {
+                await authViewModel.fetchUsers()
+            }
+        }
     }
 }
 
@@ -186,6 +197,7 @@ struct ProductCard_Previews: PreviewProvider {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 20) {
                 ProductCard(
+                    id: UUID(),
                     image: Image("theGriffin"),
                     quantity: Int(4),
                     name: "The Griffin",
@@ -197,6 +209,7 @@ struct ProductCard_Previews: PreviewProvider {
                     btnHandler: nil
                 )
                 ProductCard(
+                    id: UUID(),
                     image: Image("blueBird"),
                     quantity: Int(2),
                     name: "BlueBird Barbeque",

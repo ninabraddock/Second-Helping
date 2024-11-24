@@ -77,6 +77,11 @@ struct HistoryView: View {
             Spacer()
         }
         .background(.white)
+        .onAppear {
+            Task {
+                await authViewModel.fetchUsers()
+            }
+        }
     }
 }
 
