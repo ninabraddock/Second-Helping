@@ -10,7 +10,8 @@ import SwiftUI
 struct IntroView: View {
     var body: some View {
         ZStack {
-            Color("main_color_theme")
+            Color.white
+            Color.customGreen
             VStack {
                 GifImageView("intro")
                     .frame(width:300, height: 200)
