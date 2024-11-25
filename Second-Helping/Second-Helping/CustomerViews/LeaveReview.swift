@@ -12,6 +12,7 @@ import SwiftUI
 struct LeaveReview: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var restaurantViewModel: RestaurantViewModel
+    let meal: Meal
     @State private var reviewNum: Int = 1
     @State private var reviewText: String = ""
     
@@ -50,6 +51,7 @@ struct LeaveReview: View {
             Button(action: {
                 if let currentUser = authViewModel.currentUser {
                     print(currentUser.fullName)
+                    restaurantViewModel.addReview(meal: meal, restaurantArray: restaurantViewModel.restaurants, rating: reviewNum, textReview: reviewText)
                 } else {
                     print("No current user available")
                 }

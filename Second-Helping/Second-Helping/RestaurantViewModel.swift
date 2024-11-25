@@ -183,10 +183,6 @@ class RestaurantViewModel: ObservableObject {
         
     }
     
-    
-    
-    
-    
     func completeOrderForRestaurant(meal: Meal, restaurantArray: [Restaurant]) {
         // filter to find the restaurant that the meal belongs to and save that in a variable
         let filteredArray = restaurantArray.filter { $0.name == meal.restaurantFrom }
@@ -217,7 +213,35 @@ class RestaurantViewModel: ObservableObject {
                     print("Failed to update restaurant in Firestore: \(error.localizedDescription)")
                 }
             }
-        
     }
     
+    func addReview(meal: Meal, restaurantArray: [Restaurant], rating: Int, textReview: String) {
+        // filter to find the restaurant that the meal belongs to and save that in a variable
+        let filteredArray = restaurantArray.filter { $0.name == meal.restaurantFrom }
+        var restaurantVar = filteredArray[0]
+    
+        var newReview = Review(rating: rating, text: textReview)
+        
+        // add review to list of reviews
+        restaurantVar.reviews.append(newReview)
+        
+        //updateRestaurant(restaurantVar)
+        self.currentRestaurant = restaurantVar
+        
+        Task {
+                do {
+                    // Use Firestore's Encoder to encode the updated restaurant object
+                    let encoder = try Firestore.Encoder().encode(restaurantVar)
+                    
+                    // If restaurant has an ID, update it in Firestore
+                    if let restaurantID = restaurantVar.id {
+                        try await firestore.collection("restaurants").document(restaurantID).setData(encoder, merge: true)
+                        print("Restaurant updated successfully in Firestore.")
+                    }
+                } catch {
+                    print("Failed to update restaurant in Firestore: \(error.localizedDescription)")
+                }
+            }
+        
+    }
 }

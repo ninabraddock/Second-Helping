@@ -31,8 +31,10 @@ func ratingToStars(rating: Double) -> [Image] {
 
 struct HistoryView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject private var restaurantViewModel: RestaurantViewModel
     @State private var selectedQuantity: Int = 0
     @State private var showReview = false
+    @State private var selectedMeal: Meal?
     var body: some View {
         HStack {
             Spacer()
@@ -55,6 +57,7 @@ struct HistoryView: View {
                                     Spacer()
                                     
                                     Button(action: {
+                                        selectedMeal = order
                                         showReview = true
                                     }) {
                                         Text("Leave a Review")
@@ -90,7 +93,15 @@ struct HistoryView: View {
                 }
             }
             .sheet(isPresented: $showReview) {
-                LeaveReview()
+                if let meal = selectedMeal {
+                    LeaveReview(meal: meal)
+                }
+            }
+            .onChange(of: showReview) {
+                Task {
+                    await authViewModel.fetchUsers()
+                    await restaurantViewModel.fetchRestaurants()
+                }
             }
             Spacer()
         }
