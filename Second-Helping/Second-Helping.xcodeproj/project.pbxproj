@@ -61,6 +61,7 @@
 		DDFC707A2CAF5780007A506A /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC70772CAF5780007A506A /* SettingsRowView.swift */; };
 		DDFC707E2CAF6048007A506A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDFC707D2CAF6048007A506A /* FirebaseAuth */; };
 		DDFC70802CAF6048007A506A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DDFC707F2CAF6048007A506A /* FirebaseFirestore */; };
+		FAB951062CF3F15E006618F8 /* LeaveReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB951052CF3F159006618F8 /* LeaveReview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		DDFC70732CAF577C007A506A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		DDFC70762CAF5780007A506A /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		DDFC70772CAF5780007A506A /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
+		FAB951052CF3F159006618F8 /* LeaveReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveReview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 		0872A6C72CA4CAF3009814A5 /* CustomerViews */ = {
 			isa = PBXGroup;
 			children = (
+				FAB951052CF3F159006618F8 /* LeaveReview.swift */,
 				DD59B1812CD68CEA003189F9 /* gifs */,
 				0872A6B52CA4B274009814A5 /* CustomerView.swift */,
 				0872A6BF2CA4CAB4009814A5 /* SearchView.swift */,
@@ -539,6 +542,7 @@
 				DDFC70792CAF5780007A506A /* InputView.swift in Sources */,
 				DDFC707A2CAF5780007A506A /* SettingsRowView.swift in Sources */,
 				08A09B9C2CBE9A4500F8A3C3 /* RestaurantViewModel.swift in Sources */,
+				FAB951062CF3F15E006618F8 /* LeaveReview.swift in Sources */,
 				0872A6CA2CA4CC5A009814A5 /* StatsView.swift in Sources */,
 				0872A6BE2CA4CA64009814A5 /* LocationView.swift in Sources */,
 				DDFC70722CAF5777007A506A /* User.swift in Sources */,

@@ -32,7 +32,7 @@ func ratingToStars(rating: Double) -> [Image] {
 struct HistoryView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @State private var selectedQuantity: Int = 0
-
+    @State private var showReview = false
     var body: some View {
         HStack {
             Spacer()
@@ -54,6 +54,21 @@ struct HistoryView: View {
                                     
                                     Spacer()
                                     
+                                    Button(action: {
+                                        showReview = true
+                                    }) {
+                                        Text("Leave a Review")
+                                    }
+                                    .font(.custom("StudyClash", size: 20))
+                                    .background(Color.customGray)
+                                    .cornerRadius(8)
+                                    .padding(.horizontal, 4)
+                                    .padding(.vertical, 2)
+                                    .foregroundColor(Color.customGreen)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.customGreen, lineWidth: 2)
+                                    )
                                 }
                                 
                                 HStack {
@@ -73,6 +88,9 @@ struct HistoryView: View {
                 } else {
                     Text("Loading orders...")
                 }
+            }
+            .sheet(isPresented: $showReview) {
+                LeaveReview()
             }
             Spacer()
         }
