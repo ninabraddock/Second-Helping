@@ -11,13 +11,14 @@ struct MealDetailSheet: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var restaurantViewModel: RestaurantViewModel
     let meal: Meal
-    @State private var quantity = 0
+    @State private var quantity = 1
     @State private var isFavorite = false
 
     var body: some View {
         VStack(spacing: 20) {
             HStack {
                 Spacer()
+                
                 Button(action: {
                     toggleFavorite()
                 }) {
@@ -28,12 +29,71 @@ struct MealDetailSheet: View {
                 .padding(.top, 10)
                 .padding(.trailing, 20)
             }
-            
+            Text("Meal Details")
+                .font(.custom("StudyClash", size: 24))
+                .foregroundColor(Color.customGreen)
+                .underline()
+                .padding(.horizontal)
+
             Text("Meal Type: \(meal.type)")
+                .font(.custom("StudyClash", size: 20))
+                .foregroundColor(Color.customGreen)
+                .padding(.horizontal)
+            
             Text("Bag Type: \(meal.bagType)")
+                .font(.custom("StudyClash", size: 20))
+                .foregroundColor(Color.customGreen)
+                .padding(.horizontal)
+            
             Text("Price: \(meal.price, specifier: "%.2f")")
+                .font(.custom("StudyClash", size: 20))
+                .foregroundColor(Color.customGreen)
+                .padding(.horizontal)
+            
             Text("Quantity: \(meal.quantity)")
+                .font(.custom("StudyClash", size: 20))
+                .foregroundColor(Color.customGreen)
+                .padding(.horizontal)
+            
             Text("Pick-Up Time: \(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)")
+                .font(.custom("StudyClash", size: 20))
+                .foregroundColor(Color.customGreen)
+                .padding(.horizontal)
+            
+            Stepper("Quantity: \(quantity)", value: $quantity, in: 1...meal.quantity)
+                .padding(10)
+                .padding(.horizontal, 15)
+                .font(.custom("StudyClash", size: 20))
+                .background(Color.customGray)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.customGreen, lineWidth: 2)
+                )
+            
+            Button(action: {
+                if let currentUser = authViewModel.currentUser {
+                    print(currentUser.fullName)
+                    restaurantViewModel.addToActiveOrders(meal: meal, restaurantArray: restaurantViewModel.restaurants, quantity: quantity, mealOrderUser: currentUser.fullName)
+                    //await restaurantViewModel.fetchRestaurants()
+                } else {
+                    print("No current user available")
+                }
+            }) {
+                Text("Place Order")
+            }
+            .font(.custom("StudyClash", size: 20))
+            .foregroundColor(Color.customGreen)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 4)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.customGreen.opacity(0.3))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.customGreen, lineWidth: 2)
+                    )
+            )
         }
         .padding()
         .onAppear {
@@ -46,20 +106,7 @@ struct MealDetailSheet: View {
         .presentationDetents([.medium, .large]) // Control the height of the sheet
         
         // stepper for picking quantity
-        Stepper("Quantity: \(quantity)", value: $quantity, in: 1...meal.quantity)
         
-        
-        Button(action: {
-            if let currentUser = authViewModel.currentUser {
-                print(currentUser.fullName)
-                restaurantViewModel.addToActiveOrders(meal: meal, restaurantArray: restaurantViewModel.restaurants, quantity: quantity, mealOrderUser: currentUser.fullName
-                )
-            } else {
-                print("No current user available")
-            }
-        }) {
-            Text("Order")
-        }
     }
     
     
