@@ -26,13 +26,23 @@ struct StatsView: View {
                 
                 VStack(spacing: 20) {
                     HStack(spacing: 20) {
-                        StatBox(text: "Food Saved", gifName: "food_saved", value: "20", subtitle: "pounds")
-                        StatBox(text: "CO₂ Avoided", gifName: "CO2", value: "20", subtitle: "ppm")
+                        StatBox(text: "Food Saved",
+                                gifName: "food_saved",
+                                value:  "\(Double(restaurantViewModel.totalReviewsSubmitted) * 1.3)",
+                                subtitle: "pounds")
+                        
+                        StatBox(text: "CO₂ Avoided",
+                                gifName: "CO2",
+                                value: "\(Double(restaurantViewModel.totalReviewsSubmitted) * 4.5)",
+                                subtitle: "ppm")
                     }
                     
                     HStack(spacing: 20) {
                         StatBox(text: "Money Saved", gifName: "money_gif", value: "$20", subtitle: "Dollars")
-                        StatBox(text: "Meals Saved", gifName: "meal_saved", value: "20", subtitle: "total")
+                        StatBox(text: "Meals Saved",
+                                gifName: "meal_saved",
+                                value: "\(restaurantViewModel.totalReviewsSubmitted)",
+                                subtitle: "total")
                     }
                 }
                 Spacer()
@@ -61,29 +71,21 @@ struct StatBox: View {
                 .font(.title3)
                 .bold()
                 .multilineTextAlignment(.center)
-//                .padding(.top, 10)
-//            Spacer()
             
             GifImageView(gifName)
                 .frame(width: 100, height: 75)
             
-            // TODO:
             Text(value)
                 .font(.title3)
                 .bold()
-            
-//            Spacer()
             
             Text(subtitle)
                 .font(.title3)
                 .bold()
                 .multilineTextAlignment(.center)
-//            Spacer()
             
         }
         .padding()
-//        .background(Color.green)
-//        .foregroundColor(.white)
         .cornerRadius(10)
         .overlay(
             RoundedRectangle(cornerRadius: 20)
@@ -94,4 +96,5 @@ struct StatBox: View {
 
 #Preview {
     StatsView()
+//        .environmentObject(RestaurantViewModel)
 }

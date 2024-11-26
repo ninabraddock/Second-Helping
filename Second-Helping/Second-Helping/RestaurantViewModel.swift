@@ -12,6 +12,7 @@ import FirebaseFirestore
 class RestaurantViewModel: ObservableObject {
     @Published var restaurants: [Restaurant] = []
     @Published var currentRestaurant: Restaurant?
+    @Published var totalReviewsSubmitted: Int = 0
     
     private let firestore = Firestore.firestore()
     
@@ -242,6 +243,6 @@ class RestaurantViewModel: ObservableObject {
                     print("Failed to update restaurant in Firestore: \(error.localizedDescription)")
                 }
             }
-        
+        totalReviewsSubmitted += 1
     }
 }
