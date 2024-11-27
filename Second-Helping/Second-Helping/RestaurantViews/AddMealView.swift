@@ -35,6 +35,7 @@ struct AddMeal: View {
     @State private var enteredQuantity = ""
     @State private var startTime = Date()
     @State private var endTime = Date()
+    @State private var hasAddedMeal = false
     
     var bagTypes = ["--select bag--", "Mystery Bag", "Meal Prep"]
     var mealTypes = ["--select meal--", "Lunch", "Dinner"]
@@ -70,12 +71,17 @@ struct AddMeal: View {
         Form{
             
             // Bag type Section
-            Section(header: Text("Bag Type")) {
+            Section(header: 
+                Text("Bag Type")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 Picker("Select Bag Type", selection: $newMeal.bagType) {
                     ForEach(bagTypes, id: \.self) { bagType in
                         Text(bagType)
+                            .font(.custom("StudyClash", size: 18))
                     }
                 }
+                .font(.custom("StudyClash", size: 18))
             }
             
             // Original Price Section
@@ -109,8 +115,12 @@ struct AddMeal: View {
             }
             
             // Quantity Section
-            Section(header: Text("Quantity")) {
+            Section(header: 
+                Text("Quantity")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 TextField("Enter Quantity", text: $enteredQuantity)
+                    .font(.custom("StudyClash", size: 18))
                     .keyboardType(.numberPad)
                     .onChange(of: enteredQuantity) {
                         // Update newMeal.quantity only if enteredQuantity is a valid number
@@ -123,31 +133,50 @@ struct AddMeal: View {
             }
             
             // Pickup Start Time Section
-            Section(header: Text("Pickup Start Time")) {
+            Section(header: 
+                Text("Pickup Start Time")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 DatePicker("Start Time", selection: $startTime, displayedComponents: .hourAndMinute)
+                    .font(.custom("StudyClash", size: 18))
                     .datePickerStyle(WheelDatePickerStyle())
                     .onChange(of: startTime) {
                         newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
                     }
             }
+            .onAppear() {
+                newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
+            }
             
             // Pickup End Time Section
-            Section(header: Text("Pickup End Time")) {
+            Section(header: 
+                Text("Pickup End Time")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 DatePicker("End Time", selection: $endTime, displayedComponents: .hourAndMinute)
+                    .font(.custom("StudyClash", size: 18))
                     .datePickerStyle(WheelDatePickerStyle())
                     .onChange(of: endTime) {
                         newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
                     }
             }
+            .onAppear() {
+                newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
+            }
             
             
             // Meal Type Section
-            Section(header: Text("Meal Type")) {
+            Section(header: 
+                Text("Meal Type")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 Picker("Select Meal Type", selection: $newMeal.type) {
                     ForEach(mealTypes, id: \.self) { mealType in
                         Text(mealType)
+                            .font(.custom("StudyClash", size: 18))
                     }
                 }
+                .font(.custom("StudyClash", size: 18))
             }
             
             let isValid = formValid(newMeal: newMeal, pickupStartTime: startTime, pickupEndTime: endTime)
@@ -155,22 +184,38 @@ struct AddMeal: View {
             Button {
                 Task {
                     await addNewMeal(newMeal: newMeal, restaurantHandler: restaurantViewModel)
+                    hasAddedMeal = true
                 }
             } label: {
                 HStack {
                     Text("Add Meal")
-                        .fontWeight(.semibold)
+                        .font(.custom("StudyClash", size: 24))
                     Image(systemName: "plus")
                 }
                 .foregroundStyle(.white)
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
-                .background(Color(.systemBlue))
-                .cornerRadius(10)
             }
-            .disabled(!isValid) // Disable button if form is not valid
-            .opacity(isValid ? 1 : 0.5) // Adjust opacity based on form validity
+            .background(Color.customGreen)
+            .disabled(!isValid)
+            // grayout btn
+            .opacity(isValid ? 1 : 0.5)
+            .cornerRadius(10)
+            .listRowInsets(EdgeInsets())
             .listRowBackground(Color.clear)
             
+            if hasAddedMeal {
+                Text("You have added the meal")
+                    .font(.custom("StudyClash", size: 16))
+                    .foregroundColor(Color.customGreen)
+                    .padding(.horizontal)
+                    .padding(.bottom)
+            } else {
+                Text("")
+                    .font(.custom("StudyClash", size: 16))
+                    .foregroundColor(Color.customGreen)
+                    .padding(.horizontal)
+                    .padding(.bottom)
+            }
         } //end form
         .background(.white)
         .onAppear {
@@ -191,9 +236,12 @@ struct AddMeal: View {
 @MainActor func addNewMeal(newMeal: Meal, restaurantHandler: RestaurantViewModel) async {
     // adding a meal to a restaurant
     print("ADDING MEAL")
+    var mealToAdd = newMeal
+    // set the UUID for the meal
+    mealToAdd.id = UUID()
     if let curRestaurant = restaurantHandler.currentRestaurant {
         var updatedRestaurant = curRestaurant
-        updatedRestaurant.meals.append(newMeal)
+        updatedRestaurant.meals.append(mealToAdd)
         do {
             try await restaurantHandler.updateRestaurant(updatedRestaurant)
         } catch {
@@ -207,7 +255,7 @@ struct AddMeal: View {
 
 
 func formValid(newMeal: Meal, pickupStartTime: Date, pickupEndTime: Date) -> Bool {
-
+    
     if !["Mystery Bag", "Meal Prep"].contains(newMeal.bagType) {
         return false
     }
