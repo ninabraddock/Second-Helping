@@ -17,6 +17,7 @@ struct SeeAllView: View {
     @State private var selectedMeal: Meal?
     @State private var selectedRestaurant: Restaurant?
     @State private var showMealDetail = false
+    @State private var showRestMealDetail = false
     
     private let columns = [
             GridItem(.flexible()),
@@ -63,11 +64,17 @@ struct SeeAllView: View {
                         ForEach(filteredRestaurants) { restaurant in
                             ForEach(filteredMeals(for: restaurant)) { meal in
                                 Button {
-                                    if !isRestaurant {
-                                        // Set the selected meal, restaurant and show the detail sheet
-                                        selectedMeal = meal
-                                        selectedRestaurant = restaurant
-                                        showMealDetail = true
+                                    Task {
+                                        if isRestaurant {
+                                            // Set the selected meal, restaurant and show the detail sheet
+                                            selectedMeal = meal
+                                            showRestMealDetail = true
+                                        } else {
+                                            // Set the selected meal, restaurant, and show the detail sheet
+                                            selectedMeal = meal
+                                            selectedRestaurant = restaurant
+                                            showMealDetail = true
+                                        }
                                     }
                                 } label: {
                                     ProductCard(
@@ -95,6 +102,11 @@ struct SeeAllView: View {
         .sheet(isPresented: $showMealDetail) {
             if let meal = selectedMeal {
                 MealDetailSheet(meal: meal)
+            }
+        }
+        .sheet(isPresented: $showRestMealDetail) {
+            if let meal = selectedMeal {
+                RestMealDetailView(meal: meal)
             }
         }
     }

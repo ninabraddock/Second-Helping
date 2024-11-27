@@ -123,12 +123,12 @@ struct MealDetailSheet: View {
         }
         .padding()
         .onAppear {
-                    Task {
-                        await restaurantViewModel.fetchRestaurants()
-                        await authViewModel.fetchUsers()
-                        checkIfFavorite()
-                    }
-                }
+            Task {
+                await restaurantViewModel.fetchRestaurants()
+                await authViewModel.fetchUsers()
+                checkIfFavorite()
+            }
+        }
         .border(Color.customGreen, width: 6)
         .presentationDetents([.medium, .large]) // Control the height of the sheet
         
