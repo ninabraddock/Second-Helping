@@ -111,6 +111,7 @@ struct MealDetailSheet: View {
                         checkIfFavorite()
                     }
                 }
+        .border(Color.customGreen, width: 6)
         .presentationDetents([.medium, .large]) // Control the height of the sheet
         
         // stepper for picking quantity

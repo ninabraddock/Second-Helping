@@ -77,8 +77,10 @@ struct LeaveReview: View {
                     .font(.custom("StudyClash", size: 16))
                     .foregroundColor(Color.customGreen)
                     .padding(.horizontal)
-            }        }
+            }
+        }
         .padding()
+        .border(Color.customGreen, width: 6)
         .onAppear {
                     Task {
                         await restaurantViewModel.fetchRestaurants()
@@ -87,4 +89,5 @@ struct LeaveReview: View {
                 }
         .presentationDetents([.medium, .large]) // Control the height of the sheet
     }
+        
 }

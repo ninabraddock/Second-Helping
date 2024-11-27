@@ -78,6 +78,7 @@ struct RegistrationView: View {
                 
                 Text("Second Helping")
                     .font(.custom("StudyClash", size: 34))
+                    .foregroundStyle(Color.customGreen)
                     .padding(.bottom, 24)
                 
                 VStack(spacing: 20){
@@ -199,10 +200,10 @@ struct RegistrationView: View {
                             .fontWeight(.semibold)
                         Image(systemName: "arrow.right")
                     }
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.customGreen)
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                 }
-                .background(Color(.systemBlue))
+                .background(Color.customGreen)
                 .disabled(!formIsValid)
                 .opacity(formIsValid ? 1 : 0.5)
                 .cornerRadius(10)
@@ -219,6 +220,7 @@ struct RegistrationView: View {
                             .fontWeight(.bold)
                     }
                     .font(.custom("StudyClash", size: 18))
+                    .foregroundStyle(Color.customGreen)
                 }
                 .padding(.bottom, 16)
             }

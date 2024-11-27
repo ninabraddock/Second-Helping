@@ -24,6 +24,7 @@ struct LoginView: View {
                     
                     Text("Second Helping")
                         .font(.custom("StudyClash", size: 34))
+                        .foregroundColor(Color.customGreen)
                         .padding(.bottom, 24)
                     
                     Picker("User Type", selection: $isCustomer) {
@@ -35,6 +36,7 @@ struct LoginView: View {
                     .font(.custom("StudyClash", size: 18))
                     .pickerStyle(SegmentedPickerStyle())
                     .padding([.bottom, .horizontal])
+                    
                     
                     VStack(spacing: 20){
                         InputView(text: $email,
@@ -133,7 +135,7 @@ struct LoginView: View {
                         .foregroundStyle(.white)
                         .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                     }
-                    .background(Color(.systemBlue))
+                    .background(Color.customGreen)
                     .disabled(!formIsValid)
                     // grayout btn
                     .opacity(formIsValid ? 1 : 0.5)
@@ -151,6 +153,7 @@ struct LoginView: View {
                                 .fontWeight(.bold)
                         }
                         .font(.custom("StudyClash", size: 18))
+                        .foregroundStyle(Color.customGreen)
                     }
                     .padding(.bottom, 32)
                     
@@ -165,6 +168,7 @@ struct LoginView: View {
                                 .fontWeight(.bold)
                         }
                         .font(.custom("StudyClash", size: 18))
+                        .foregroundStyle(Color.customGreen)
                     }
                     .padding(.bottom, 16)
                     
