@@ -16,7 +16,7 @@ struct MealDetailSheet: View {
     @State private var haveOrdered = false
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 15) {
             HStack {
                 Spacer()
                 
@@ -27,8 +27,7 @@ struct MealDetailSheet: View {
                         .foregroundColor(isFavorite ? .pink : .gray) // Light pink when liked
                         .font(.system(size: 24))
                 }
-                .padding(.top, 10)
-                .padding(.trailing, 20)
+                .padding([.top, .trailing])
             }
             Text("Meal Details")
                 .font(.custom("StudyClash", size: 24))
@@ -101,6 +100,13 @@ struct MealDetailSheet: View {
                     .font(.custom("StudyClash", size: 16))
                     .foregroundColor(Color.customGreen)
                     .padding(.horizontal)
+                    .padding(.bottom)
+            } else {
+                Text("")
+                    .font(.custom("StudyClash", size: 16))
+                    .foregroundColor(Color.customGreen)
+                    .padding(.horizontal)
+                    .padding(.bottom)
             }
         }
         .padding()
