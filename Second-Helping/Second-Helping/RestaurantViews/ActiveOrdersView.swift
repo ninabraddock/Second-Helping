@@ -14,61 +14,81 @@ struct ActiveOrdersView: View {
 
     var body: some View {
         var allUsers = authViewModel.users
-        HStack {
-            Spacer()
-            VStack {
-                Text("Active Orders")
-                    .font(.largeTitle)
-                    .padding([.bottom, .top], 20)
-                
-                // Check if currentUser exists
-                if let currentRestaurant = restaurantViewModel.currentRestaurant {
-                    // Display orders if the restaurant is fetched
-                    VStack(alignment: .leading, spacing: 0) {
-                        ForEach(currentRestaurant.activeOrders) { order in
-                            VStack(alignment: .leading, spacing: 10) {
-                                HStack {
-                                    Text(currentRestaurant.name)
-                                        .font(.title3)
-                                    
-                                    Spacer()
-                                    
-                                }
-                                
-                                HStack {
-                                    Text("Type of Bag: \(order.bagType)") // Assuming order has a bagType
-                                    Spacer()
-                                    Text("Qty: \(order.quantity)") // Assuming order has a quantity
-                                    Spacer()
-                                    Text("Customer Name: \(order.mealOrderUser)")
-                                    Button(action: {
-                                        //  move this to active orders view:
+        ScrollView {
+            HStack {
+                Spacer()
+                VStack {
+                    Text("Active Orders")
+                        .font(.custom("StudyClash", size: 40))
+                        .foregroundColor(Color.customGreen)
+                        .padding([.bottom, .top], 20)
+                    
+                    // Check if currentUser exists
+                    if let currentRestaurant = restaurantViewModel.currentRestaurant {
+                        // Display orders if the restaurant is fetched
+                        VStack(alignment: .leading, spacing: 0) {
+                            ForEach(currentRestaurant.activeOrders) { order in
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text("\(order.bagType)") // Assuming order has a bagType
+                                            .font(.custom("StudyClash", size: 22))
+                                            .foregroundColor(.black)
                                         
-                                        authViewModel.completeOrderForUser(meal: order, userArray: allUsers)
-                                        restaurantViewModel.completeOrderForRestaurant(meal: order, restaurantArray: restaurantViewModel.restaurants)
-                                    }) {
-                                        Text("Complete Order")
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            //  move this to active orders view:
+                                            
+                                            authViewModel.completeOrderForUser(meal: order, userArray: allUsers)
+                                            restaurantViewModel.completeOrderForRestaurant(meal: order, restaurantArray: restaurantViewModel.restaurants)
+                                        }) {
+                                            Text("Complete Order")
+                                        }
+                                        .font(.custom("StudyClash", size: 20))
+                                        .background(Color.customGray)
+                                        .cornerRadius(8)
+                                        .padding(.horizontal, 4)
+                                        .padding(.vertical, 2)
+                                        .foregroundColor(Color.customGreen)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .stroke(Color.customGreen, lineWidth: 2)
+                                        )
                                     }
+                                    HStack {
+                                        Text("Qty: \(order.quantity)") // Assuming order has a quantity
+                                            .font(.custom("StudyClash", size: 18))
+                                            .foregroundColor(.black)
+                                        Text("Price: $\(String(format: "%.2f", order.reducedPrice))")
+                                            .font(.custom("StudyClash", size: 18))
+                                            .foregroundColor(.black)
+                                            .padding(.leading)
+                                    }
+                                    Text("Customer Name: \(order.mealOrderUser)")
+                                        .font(.custom("StudyClash", size: 18))
+                                        .foregroundColor(.black)
+                                    
+                                    Divider()
+                                        .frame(height: 1)
+                                        .background(Color.customGreen)
+                                        .padding(.bottom, 5)
                                 }
-                                
-                                Divider()
-                                    .frame(height: 1)
-                                    .background(Color(UIColor.lightGray))
+                            }
+                            Spacer()
+                        }
+                        .padding([.leading, .trailing], 25)
+                        .onAppear {
+                            Task {
+                                await authViewModel.fetchUsers() // Fetch users on view appear
                             }
                         }
-                        Spacer()
+                    } else {
+                        Text("Loading orders...")
+                            .font(.custom("StudyClash", size: 18))
                     }
-                    .padding([.leading, .trailing], 25)
-                    .onAppear {
-                        Task {
-                            await authViewModel.fetchUsers() // Fetch users on view appear
-                        }
-                    }
-                } else {
-                    Text("Loading orders...")
                 }
+                Spacer()
             }
-            Spacer()
         }
         .background(.white)
     }
