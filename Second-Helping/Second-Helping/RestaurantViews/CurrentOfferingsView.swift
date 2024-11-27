@@ -110,7 +110,7 @@ struct CurrentOfferings: View {
                                                 rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
                                                 ranking: currentRestaurant.meanRating,
                                                 distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
-                                                price: meal.price,
+                                                reducedPrice: meal.reducedPrice,
                                                 btnHandler: nil
                                             )
                                             .frame(width: 185, height: 160)
@@ -194,7 +194,7 @@ struct CurrentOfferings: View {
                                                 rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
                                                 ranking: currentRestaurant.meanRating,
                                                 distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
-                                                price: meal.price,
+                                                reducedPrice: meal.reducedPrice,
                                                 btnHandler: nil
                                             )
                                             .frame(width: 185, height: 160)
@@ -246,12 +246,3 @@ struct CurrentOfferings: View {
 #Preview {
     CurrentOfferings().environmentObject(RestaurantViewModel()).environmentObject(LoadingState())
 }
-
-
-
-
-
-
-
-
-

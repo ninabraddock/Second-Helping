@@ -31,7 +31,8 @@ struct Restaurant: Identifiable, Codable {
 struct Meal: Identifiable, Codable {
     var id: UUID? = UUID()
     var bagType: String
-    var price: Double
+    var originalPrice: Double
+    var reducedPrice: Double
     var quantity: Int
     var rangePickUpTime: PickUpTime
     var type: String

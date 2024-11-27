@@ -86,22 +86,6 @@ struct SearchView: View {
                         .foregroundColor(Color.customGreen)
                         .padding(.top, 20)
                     
-                    //                if let location = locationManager.location {
-                    //                    Text("Successfully found location")
-                    //                        .onAppear {
-                    //                            userLat = location.latitude
-                    //                            userLong = location.longitude
-                    //                        }
-                    //                    Text("Longitude: \(String(describing: userLong))")
-                    //                    Text("Latitude: \(String(describing: userLat))")
-                    //                }
-                    //
-                    //                LocationButton {
-                    //                    locationManager.requestLocation()
-                    //                }
-                    //                .frame(height: 44)
-                    //                .padding()
-                    
                     TextField("Search restaurants/meal types...", text: $searchBar)
                         .font(.custom("StudyClash", size: 20))
                         .padding(10)
@@ -193,29 +177,14 @@ struct SearchView: View {
                                         var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
                                         
                                         ForEach(lunchMeals) { meal in
-                                            Button {
-                                                // Set the selected meal, restaurant and show the detail sheet
-                                                selectedMeal = meal
-                                                selectedRestaurant = restaurant
-                                                showMealDetail = true
-                                            } label: {
-                                                ProductCard(
-                                                    id: meal.id,
-                                                    image: Image("waterworks"), // replace with image
-                                                    quantity: Int(meal.quantity),
-                                                    name: restaurant.name,
-                                                    bagType: meal.bagType,
-                                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                                    ranking: restaurant.meanRating,
-                                                    distance: distanceToRest,
-                                                    price: meal.price,
-                                                    btnHandler: nil
-                                                )
-                                            }
-                                            .frame(width: 185, height: 160)
-                                            .foregroundStyle(.black)
-                                            
-                                            
+                                            ProductCardView(
+                                                meal: meal,
+                                                restaurant: restaurant,
+                                                distanceToRest: distanceToRest,
+                                                selectedMeal: $selectedMeal,
+                                                selectedRestaurant: $selectedRestaurant,
+                                                showMealDetail: $showMealDetail
+                                            )
                                         }
                                     }
                                 }
@@ -297,27 +266,14 @@ struct SearchView: View {
                                         var distanceToRest = distanceTo(userLong: userLong, userLat: userLat, restLat: restLat, restLong: restLong)
                                         
                                         ForEach(dinnerMeals) { meal in
-                                            Button {
-                                                // Set the selected meal, restaurant and show the detail sheet
-                                                selectedMeal = meal
-                                                selectedRestaurant = restaurant
-                                                showMealDetail = true
-                                            } label: {
-                                                ProductCard(
-                                                    id: meal.id,
-                                                    image: Image("waterworks"), // replace with image
-                                                    quantity: Int(meal.quantity),
-                                                    name: restaurant.name,
-                                                    bagType: meal.bagType,
-                                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                                    ranking: restaurant.meanRating,
-                                                    distance: distanceToRest,
-                                                    price: meal.price,
-                                                    btnHandler: nil
-                                                )
-                                            }
-                                            .frame(width: 185, height: 160)
-                                            .foregroundStyle(.black)
+                                            ProductCardView(
+                                                meal: meal,
+                                                restaurant: restaurant,
+                                                distanceToRest: distanceToRest,
+                                                selectedMeal: $selectedMeal,
+                                                selectedRestaurant: $selectedRestaurant,
+                                                showMealDetail: $showMealDetail
+                                            )
                                         }
                                     }
                                 }
@@ -361,6 +317,40 @@ struct SearchView: View {
             }
             .background(.white)
         }
+    }
+}
+
+struct ProductCardView: View {
+    var meal: Meal
+    var restaurant: Restaurant
+    var distanceToRest: Double
+    
+    @Binding var selectedMeal: Meal?
+    @Binding var selectedRestaurant: Restaurant?
+    @Binding var showMealDetail: Bool
+    
+    var body: some View {
+        Button {
+            // Set the selected meal, restaurant, and show the detail sheet
+            selectedMeal = meal
+            selectedRestaurant = restaurant
+            showMealDetail = true
+        } label: {
+            ProductCard(
+                id: meal.id,
+                image: Image("waterworks"), // Replace with actual image
+                quantity: Int(meal.quantity),
+                name: restaurant.name,
+                bagType: meal.bagType,
+                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                ranking: restaurant.meanRating,
+                distance: distanceToRest,
+                reducedPrice: meal.reducedPrice,
+                btnHandler: nil
+            )
+        }
+        .frame(width: 185, height: 160)
+        .foregroundStyle(.black)
     }
 }
 

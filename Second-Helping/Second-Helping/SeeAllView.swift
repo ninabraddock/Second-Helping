@@ -79,7 +79,7 @@ struct SeeAllView: View {
                                         rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
                                         ranking: restaurant.meanRating,
                                         distance: distanceTo(userLong: nil, userLat: nil, restLat: restaurant.latitude, restLong: restaurant.longitude),
-                                        price: meal.price,
+                                        reducedPrice: meal.reducedPrice,
                                         btnHandler: nil
                                     )
                                 }

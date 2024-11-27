@@ -47,7 +47,7 @@ struct ProductCard: View {
     var rangePickUpTime: String // Modify later
     var ranking: Double
     var distance: Double
-    var price: Double
+    var reducedPrice: Double
     var btnHandler: (() -> ())? // Optional, no param, return nothing
     
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -60,7 +60,7 @@ struct ProductCard: View {
          rangePickUpTime: String, // Modify later
          ranking: Double,
          distance: Double,
-         price: Double,
+         reducedPrice: Double,
          btnHandler: (() -> ())?) {
         
         self.id = id
@@ -71,7 +71,7 @@ struct ProductCard: View {
         self.rangePickUpTime = rangePickUpTime
         self.ranking = ranking
         self.distance = distance
-        self.price = price
+        self.reducedPrice = reducedPrice
         self.btnHandler = btnHandler
     }
     
@@ -143,10 +143,10 @@ struct ProductCard: View {
                 Text(String(format: "%.1f", self.ranking))
                     .font(.custom("StudyClash", size: 16))
                 Divider().frame(height: 16)
-                Text(String(format: "%.1f", self.distance))
+                Text(String(format: "%.1fmi", self.distance))
                     .font(.custom("StudyClash", size: 16))
                     Spacer()
-                Text(String(format: "$%.2f", self.price))
+                Text(String(format: "$%.2f", self.reducedPrice))
                     .font(.custom("StudyClash", size: 16))
             }
             .padding(.bottom, 8)
@@ -205,7 +205,7 @@ struct ProductCard_Previews: PreviewProvider {
                     rangePickUpTime: "1:00 pm - 1:45 pm",
                     ranking: 4.4,
                     distance: 0.8,
-                    price: 5.50,
+                    reducedPrice: 5.50,
                     btnHandler: nil
                 )
                 ProductCard(
@@ -217,7 +217,7 @@ struct ProductCard_Previews: PreviewProvider {
                     rangePickUpTime: "12:15 pm - 1:15 pm",
                     ranking: 3.2,
                     distance: 0.6,
-                    price: 6.00,
+                    reducedPrice: 6.00,
                     btnHandler: nil
                 )
             }

@@ -20,11 +20,16 @@ struct AddMeal: View {
     @State private var restaurantName: String = ""
 
     // Form Variables
-    @State private var newMeal: Meal = Meal(bagType:"", price:0, quantity:0, rangePickUpTime: PickUpTime(start:"", end:""), type:"", restaurantFrom: "", mealOrderUser: "")
+    @State private var newMeal: Meal = Meal(bagType:"", originalPrice:0, reducedPrice:0, quantity:0, rangePickUpTime: PickUpTime(start:"", end:""), type:"", restaurantFrom: "", mealOrderUser: "")
     
-    @State private var enteredPrice = ""
-    var enteredPriceFormatted: Double {
-        return (Double(enteredPrice) ?? 0) / 100
+    @State private var enteredOriginalPrice = ""
+    var enteredOriginalPriceFormatted: Double {
+        return (Double(enteredOriginalPrice) ?? 0) / 100
+    }
+    
+    @State private var enteredReducedPrice = ""
+    var enteredReducedPriceFormatted: Double {
+        return (Double(enteredReducedPrice) ?? 0) / 100
     }
     
     @State private var enteredQuantity = ""
@@ -73,18 +78,33 @@ struct AddMeal: View {
                 }
             }
             
-            // Price Section
-            Section(header: Text("Price")) {
+            // Original Price Section
+            Section(header: Text("Original Price")) {
                 ZStack(alignment: .leading) {
-                    TextField("", text: $enteredPrice)
+                    TextField("", text: $enteredOriginalPrice)
                         .keyboardType(.numberPad).foregroundColor(.clear)
                         .textFieldStyle(PlainTextFieldStyle())
                         .disableAutocorrection(true)
                         .accentColor(.clear)
-                    Text("\(enteredPriceFormatted, specifier: "%.2f")")
+                    Text("\(enteredOriginalPriceFormatted, specifier: "%.2f")")
                 }
-                .onChange(of: enteredPriceFormatted) {
-                    newMeal.price = enteredPriceFormatted
+                .onChange(of: enteredOriginalPriceFormatted) {
+                    newMeal.originalPrice = enteredOriginalPriceFormatted
+                }
+            }
+            
+            // Reduced Price Section
+            Section(header: Text("Reduced Price")) {
+                ZStack(alignment: .leading) {
+                    TextField("", text: $enteredReducedPrice)
+                        .keyboardType(.numberPad).foregroundColor(.clear)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .disableAutocorrection(true)
+                        .accentColor(.clear)
+                    Text("\(enteredReducedPriceFormatted, specifier: "%.2f")")
+                }
+                .onChange(of: enteredReducedPriceFormatted) {
+                    newMeal.reducedPrice = enteredReducedPriceFormatted
                 }
             }
             
@@ -144,11 +164,12 @@ struct AddMeal: View {
                 }
                 .foregroundStyle(.white)
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                .background(Color(.systemBlue))
+                .cornerRadius(10)
             }
-            .background(Color(.systemBlue))
             .disabled(!isValid) // Disable button if form is not valid
             .opacity(isValid ? 1 : 0.5) // Adjust opacity based on form validity
-            .cornerRadius(10)
+            .listRowBackground(Color.clear)
             
         } //end form
         .background(.white)
@@ -191,7 +212,10 @@ func formValid(newMeal: Meal, pickupStartTime: Date, pickupEndTime: Date) -> Boo
         return false
     }
     
-    if newMeal.price <= 0 {
+    if newMeal.originalPrice <= 0 {
+        return false
+    }
+    if newMeal.reducedPrice <= 0 && newMeal.reducedPrice >= newMeal.originalPrice {
         return false
     }
     

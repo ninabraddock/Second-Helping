@@ -153,7 +153,7 @@ struct RestaurantDetailSheetView: View {
                                         rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
                                         ranking: restaurant.meanRating,
                                         distance: 0.0, // Setting to 0 because this is the current restaurant
-                                        price: meal.price,
+                                        reducedPrice: meal.reducedPrice,
                                         btnHandler: nil
                                     )
                                 }
@@ -231,7 +231,7 @@ struct RestaurantDetailSheetView: View {
                                         rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
                                         ranking: restaurant.meanRating,
                                         distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
-                                        price: meal.price,
+                                        reducedPrice: meal.reducedPrice,
                                         btnHandler: nil
                                     )
                                 }

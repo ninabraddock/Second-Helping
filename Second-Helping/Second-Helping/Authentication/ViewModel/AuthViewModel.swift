@@ -184,7 +184,8 @@ class AuthViewModel: ObservableObject {
         
         let fakeMeal = Meal(
             bagType: "Test Bag",
-            price: 1.5,
+            originalPrice: 3.5,
+            reducedPrice: 1.5,
             quantity: 1,
             rangePickUpTime: PickUpTime(start: "12:00", end: "12:00"),
             type: "Dinner",

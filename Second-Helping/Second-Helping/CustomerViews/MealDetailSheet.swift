@@ -46,7 +46,12 @@ struct MealDetailSheet: View {
                 .foregroundColor(Color.customGreen)
                 .padding(.horizontal)
             
-            Text("Price: \(meal.price, specifier: "%.2f")")
+            Text("originalPrice: \(meal.originalPrice, specifier: "%.2f")")
+                .font(.custom("StudyClash", size: 20))
+                .foregroundColor(Color.customGreen)
+                .padding(.horizontal)
+            
+            Text("reducedPrice: \(meal.reducedPrice, specifier: "%.2f")")
                 .font(.custom("StudyClash", size: 20))
                 .foregroundColor(Color.customGreen)
                 .padding(.horizontal)
@@ -149,5 +154,5 @@ struct MealDetailSheet: View {
 }
 
 #Preview {
-    MealDetailSheet(meal: Meal(bagType: "Mystery Bag", price: 5.00, quantity: 5, rangePickUpTime: PickUpTime(start:"9:00 PM", end:"10:30 PM"), type: "Dinner", restaurantFrom: "Placeholder restaurant", mealOrderUser: "Placeholder User"))
+    MealDetailSheet(meal: Meal(bagType: "Mystery Bag", originalPrice: 5.00, reducedPrice: 3.00, quantity: 5, rangePickUpTime: PickUpTime(start:"9:00 PM", end:"10:30 PM"), type: "Dinner", restaurantFrom: "Placeholder restaurant", mealOrderUser: "Placeholder User"))
 }
