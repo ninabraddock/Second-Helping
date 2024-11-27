@@ -13,6 +13,7 @@ struct MealDetailSheet: View {
     let meal: Meal
     @State private var quantity = 1
     @State private var isFavorite = false
+    @State private var haveOrdered = false
 
     var body: some View {
         VStack(spacing: 20) {
@@ -75,7 +76,7 @@ struct MealDetailSheet: View {
                 if let currentUser = authViewModel.currentUser {
                     print(currentUser.fullName)
                     restaurantViewModel.addToActiveOrders(meal: meal, restaurantArray: restaurantViewModel.restaurants, quantity: quantity, mealOrderUser: currentUser.fullName)
-                    //await restaurantViewModel.fetchRestaurants()
+                    haveOrdered = true
                 } else {
                     print("No current user available")
                 }
@@ -94,6 +95,13 @@ struct MealDetailSheet: View {
                             .stroke(Color.customGreen, lineWidth: 2)
                     )
             )
+            
+            if haveOrdered {
+                Text("You have successfully placed your order")
+                    .font(.custom("StudyClash", size: 16))
+                    .foregroundColor(Color.customGreen)
+                    .padding(.horizontal)
+            }
         }
         .padding()
         .onAppear {

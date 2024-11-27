@@ -15,6 +15,7 @@ struct LeaveReview: View {
     let meal: Meal
     @State private var reviewNum: Int = 1
     @State private var reviewText: String = ""
+    @State private var hasLeftReview = false
     
 
     var body: some View {
@@ -52,6 +53,7 @@ struct LeaveReview: View {
                 if let currentUser = authViewModel.currentUser {
                     print(currentUser.fullName)
                     restaurantViewModel.addReview(meal: meal, restaurantArray: restaurantViewModel.restaurants, rating: reviewNum, textReview: reviewText)
+                    hasLeftReview = true
                 } else {
                     print("No current user available")
                 }
@@ -70,7 +72,12 @@ struct LeaveReview: View {
                             .stroke(Color.customGreen, lineWidth: 2)
                     )
             )
-        }
+            if hasLeftReview {
+                Text("Your review has been submitted")
+                    .font(.custom("StudyClash", size: 16))
+                    .foregroundColor(Color.customGreen)
+                    .padding(.horizontal)
+            }        }
         .padding()
         .onAppear {
                     Task {
