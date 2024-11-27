@@ -200,7 +200,7 @@ struct RegistrationView: View {
                             .fontWeight(.semibold)
                         Image(systemName: "arrow.right")
                     }
-                    .foregroundStyle(Color.customGreen)
+                    .foregroundStyle(.white)
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                 }
                 .background(Color.customGreen)

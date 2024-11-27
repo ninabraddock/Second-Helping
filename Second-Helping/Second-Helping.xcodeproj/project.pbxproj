@@ -62,6 +62,7 @@
 		DDFC707E2CAF6048007A506A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDFC707D2CAF6048007A506A /* FirebaseAuth */; };
 		DDFC70802CAF6048007A506A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DDFC707F2CAF6048007A506A /* FirebaseFirestore */; };
 		FAB951062CF3F15E006618F8 /* LeaveReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB951052CF3F159006618F8 /* LeaveReview.swift */; };
+		FABB112F2CF7B3F600C4FE21 /* RestMealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB112E2CF7B3EF00C4FE21 /* RestMealDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		DDFC70762CAF5780007A506A /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		DDFC70772CAF5780007A506A /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		FAB951052CF3F159006618F8 /* LeaveReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveReview.swift; sourceTree = "<group>"; };
+		FABB112E2CF7B3EF00C4FE21 /* RestMealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestMealDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +280,7 @@
 		0872A6C82CA4CB50009814A5 /* RestaurantViews */ = {
 			isa = PBXGroup;
 			children = (
+				FABB112E2CF7B3EF00C4FE21 /* RestMealDetailView.swift */,
 				56F1B4DF2CC1A9F1004EA0D8 /* AddMealView.swift */,
 				56F1B4DD2CC1A156004EA0D8 /* CurrentOfferingsView.swift */,
 				0872A6B72CA4B281009814A5 /* RestaurantView.swift */,
@@ -534,6 +537,7 @@
 				0872A6B62CA4B274009814A5 /* CustomerView.swift in Sources */,
 				084E81542CDD186200F46F5A /* LoadingView.swift in Sources */,
 				0872A6C02CA4CAB4009814A5 /* SearchView.swift in Sources */,
+				FABB112F2CF7B3F600C4FE21 /* RestMealDetailView.swift in Sources */,
 				56F1B4E02CC1A9F9004EA0D8 /* AddMealView.swift in Sources */,
 				0872A6C22CA4CAC7009814A5 /* FavoritesView.swift in Sources */,
 				08ACC6DD2CEE98CE00B1B3E8 /* SquigglyDivider.swift in Sources */,

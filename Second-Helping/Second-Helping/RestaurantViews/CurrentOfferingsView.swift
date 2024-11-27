@@ -13,6 +13,8 @@ struct CurrentOfferings: View {
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     @EnvironmentObject var loadingState: LoadingState
     @State private var searchBar = ""
+    @State private var selectedMeal: Meal?
+    @State private var showMealDetail = false
     
     var body: some View {
         if let currentRestaurant = restaurantViewModel.currentRestaurant {
@@ -101,18 +103,25 @@ struct CurrentOfferings: View {
                                             .foregroundStyle(.black)
                                     } else {
                                         ForEach(lunchMeals) { meal in
-                                            ProductCard(
-                                                id: meal.id,
-                                                image: Image("waterworks"), // replace with image
-                                                quantity: Int(meal.quantity),
-                                                name: currentRestaurant.name,
-                                                bagType: meal.bagType,
-                                                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                                ranking: currentRestaurant.meanRating,
-                                                distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
-                                                reducedPrice: meal.reducedPrice,
-                                                btnHandler: nil
-                                            )
+                                            Button {
+                                                // Set the selected meal, restaurant, and show the detail sheet
+                                                selectedMeal = meal
+                                                //selectedRestaurant = currentRestaurant
+                                                showMealDetail = true
+                                            } label: {
+                                                ProductCard(
+                                                    id: meal.id,
+                                                    image: Image("waterworks"), // Replace with actual image
+                                                    quantity: Int(meal.quantity),
+                                                    name: currentRestaurant.name,
+                                                    bagType: meal.bagType,
+                                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                                    ranking: currentRestaurant.meanRating,
+                                                    distance: 0.0,
+                                                    reducedPrice: meal.reducedPrice,
+                                                    btnHandler: nil
+                                                )
+                                            }
                                             .frame(width: 185, height: 160)
                                             .foregroundStyle(.black)
                                         }
@@ -185,18 +194,25 @@ struct CurrentOfferings: View {
                                             .foregroundStyle(.black)
                                     } else {
                                         ForEach(dinnerMeals) { meal in
-                                            ProductCard(
-                                                id: meal.id,
-                                                image: Image("waterworks"), // replace with image
-                                                quantity: Int(meal.quantity),
-                                                name: currentRestaurant.name,
-                                                bagType: meal.bagType,
-                                                rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
-                                                ranking: currentRestaurant.meanRating,
-                                                distance: 0.0, // Setting to 0 becuase this is the current restaurant, might change later
-                                                reducedPrice: meal.reducedPrice,
-                                                btnHandler: nil
-                                            )
+                                            Button {
+                                                // Set the selected meal, restaurant, and show the detail sheet
+                                                selectedMeal = meal
+                                                //selectedRestaurant = currentRestaurant
+                                                showMealDetail = true
+                                            } label: {
+                                                ProductCard(
+                                                    id: meal.id,
+                                                    image: Image("waterworks"), // Replace with actual image
+                                                    quantity: Int(meal.quantity),
+                                                    name: currentRestaurant.name,
+                                                    bagType: meal.bagType,
+                                                    rangePickUpTime: "\(meal.rangePickUpTime.start) - \(meal.rangePickUpTime.end)",
+                                                    ranking: currentRestaurant.meanRating,
+                                                    distance: 0.0,
+                                                    reducedPrice: meal.reducedPrice,
+                                                    btnHandler: nil
+                                                )
+                                            }
                                             .frame(width: 185, height: 160)
                                             .foregroundStyle(.black)
                                         }
@@ -220,13 +236,17 @@ struct CurrentOfferings: View {
                             await restaurantViewModel.fetchRestaurants() // Fetch restaurants on view appear
                         }
                     }
-                    // Add back once we have some screen from clicking on product cards
-//                    .onChange(of: showMealDetail) {
-//                        Task {
-//                            await authViewModel.fetchUsers()
-//                            await restaurantViewModel.fetchRestaurants()
-//                        }
-//                    }
+                    .sheet(isPresented: $showMealDetail) {
+                        if let meal = selectedMeal {
+                            RestMealDetailView(meal: meal)
+                        }
+                    }
+                    .onChange(of: showMealDetail) {
+                        Task {
+                            //await authViewModel.fetchUsers()
+                            await restaurantViewModel.fetchRestaurants()
+                        }
+                    }
                 }
                 .refreshable {
                     Task {
