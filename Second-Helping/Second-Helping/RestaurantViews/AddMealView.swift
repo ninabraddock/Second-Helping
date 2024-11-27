@@ -30,6 +30,7 @@ struct AddMeal: View {
     @State private var enteredQuantity = ""
     @State private var startTime = Date()
     @State private var endTime = Date()
+    @State private var hasAddedOrder = false
     
     var bagTypes = ["--select bag--", "Mystery Bag", "Meal Prep"]
     var mealTypes = ["--select meal--", "Lunch", "Dinner"]
@@ -141,6 +142,7 @@ struct AddMeal: View {
             Button {
                 Task {
                     await addNewMeal(newMeal: newMeal, restaurantHandler: restaurantViewModel)
+                    hasAddedOrder = true
                 }
             } label: {
                 HStack {
@@ -151,11 +153,24 @@ struct AddMeal: View {
                 .foregroundStyle(.white)
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
             }
-            .background(Color(.systemBlue))
+            .background(Color.customGreen)
             .disabled(!isValid) // Disable button if form is not valid
             .opacity(isValid ? 1 : 0.5) // Adjust opacity based on form validity
             .cornerRadius(10)
             
+            if hasAddedOrder {
+                Text("You have added the meal")
+                    .font(.custom("StudyClash", size: 16))
+                    .foregroundColor(Color.customGreen)
+                    .padding(.horizontal)
+                    .padding(.bottom)
+            } else {
+                Text("")
+                    .font(.custom("StudyClash", size: 16))
+                    .foregroundColor(Color.customGreen)
+                    .padding(.horizontal)
+                    .padding(.bottom)
+            }
         } //end form
         .background(.white)
         .onAppear {
