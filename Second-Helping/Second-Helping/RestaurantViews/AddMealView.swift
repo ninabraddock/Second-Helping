@@ -170,9 +170,12 @@ struct AddMeal: View {
 @MainActor func addNewMeal(newMeal: Meal, restaurantHandler: RestaurantViewModel) async {
     // adding a meal to a restaurant
     print("ADDING MEAL")
+    var mealToAdd = newMeal
+    // set the UUID for the meal
+    mealToAdd.id = UUID()
     if let curRestaurant = restaurantHandler.currentRestaurant {
         var updatedRestaurant = curRestaurant
-        updatedRestaurant.meals.append(newMeal)
+        updatedRestaurant.meals.append(mealToAdd)
         do {
             try await restaurantHandler.updateRestaurant(updatedRestaurant)
         } catch {
