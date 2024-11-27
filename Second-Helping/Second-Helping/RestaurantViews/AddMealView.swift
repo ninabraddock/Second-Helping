@@ -30,6 +30,7 @@ struct AddMeal: View {
     @State private var enteredQuantity = ""
     @State private var startTime = Date()
     @State private var endTime = Date()
+    @State private var hasAddedMeal = false
     
     var bagTypes = ["--select bag--", "Mystery Bag", "Meal Prep"]
     var mealTypes = ["--select meal--", "Lunch", "Dinner"]
@@ -168,7 +169,7 @@ struct AddMeal: View {
             Button {
                 Task {
                     await addNewMeal(newMeal: newMeal, restaurantHandler: restaurantViewModel)
-                    hasAddedOrder = true
+                    hasAddedMeal = true
                 }
             } label: {
                 HStack {
@@ -187,7 +188,7 @@ struct AddMeal: View {
             .listRowInsets(EdgeInsets())
             .listRowBackground(Color.clear)
             
-            if hasAddedOrder {
+            if hasAddedMeal {
                 Text("You have added the meal")
                     .font(.custom("StudyClash", size: 16))
                     .foregroundColor(Color.customGreen)
