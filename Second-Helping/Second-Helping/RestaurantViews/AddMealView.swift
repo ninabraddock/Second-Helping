@@ -110,6 +110,9 @@ struct AddMeal: View {
                         newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
                     }
             }
+            .onAppear() {
+                newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
+            }
             
             // Pickup End Time Section
             Section(header: Text("Pickup End Time")) {
@@ -118,6 +121,9 @@ struct AddMeal: View {
                     .onChange(of: endTime) {
                         newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
                     }
+            }
+            .onAppear() {
+                newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
             }
             
             
@@ -189,7 +195,7 @@ struct AddMeal: View {
 
 
 func formValid(newMeal: Meal, pickupStartTime: Date, pickupEndTime: Date) -> Bool {
-
+    
     if !["Mystery Bag", "Meal Prep"].contains(newMeal.bagType) {
         return false
     }
