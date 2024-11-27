@@ -65,23 +65,33 @@ struct AddMeal: View {
         Form{
             
             // Bag type Section
-            Section(header: Text("Bag Type")) {
+            Section(header: 
+                Text("Bag Type")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 Picker("Select Bag Type", selection: $newMeal.bagType) {
                     ForEach(bagTypes, id: \.self) { bagType in
                         Text(bagType)
+                            .font(.custom("StudyClash", size: 18))
                     }
                 }
+                .font(.custom("StudyClash", size: 18))
             }
             
             // Price Section
-            Section(header: Text("Price")) {
+            Section(header: 
+                Text("Price")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 ZStack(alignment: .leading) {
                     TextField("", text: $enteredPrice)
+                        .font(.custom("StudyClash", size: 18))
                         .keyboardType(.numberPad).foregroundColor(.clear)
                         .textFieldStyle(PlainTextFieldStyle())
                         .disableAutocorrection(true)
                         .accentColor(.clear)
                     Text("\(enteredPriceFormatted, specifier: "%.2f")")
+                        .font(.custom("StudyClash", size: 18))
                 }
                 .onChange(of: enteredPriceFormatted) {
                     newMeal.price = enteredPriceFormatted
@@ -89,8 +99,12 @@ struct AddMeal: View {
             }
             
             // Quantity Section
-            Section(header: Text("Quantity")) {
+            Section(header: 
+                Text("Quantity")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 TextField("Enter Quantity", text: $enteredQuantity)
+                    .font(.custom("StudyClash", size: 18))
                     .keyboardType(.numberPad)
                     .onChange(of: enteredQuantity) {
                         // Update newMeal.quantity only if enteredQuantity is a valid number
@@ -103,8 +117,12 @@ struct AddMeal: View {
             }
             
             // Pickup Start Time Section
-            Section(header: Text("Pickup Start Time")) {
+            Section(header: 
+                Text("Pickup Start Time")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 DatePicker("Start Time", selection: $startTime, displayedComponents: .hourAndMinute)
+                    .font(.custom("StudyClash", size: 18))
                     .datePickerStyle(WheelDatePickerStyle())
                     .onChange(of: startTime) {
                         newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
@@ -115,8 +133,12 @@ struct AddMeal: View {
             }
             
             // Pickup End Time Section
-            Section(header: Text("Pickup End Time")) {
+            Section(header: 
+                Text("Pickup End Time")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 DatePicker("End Time", selection: $endTime, displayedComponents: .hourAndMinute)
+                    .font(.custom("StudyClash", size: 18))
                     .datePickerStyle(WheelDatePickerStyle())
                     .onChange(of: endTime) {
                         newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
@@ -128,12 +150,17 @@ struct AddMeal: View {
             
             
             // Meal Type Section
-            Section(header: Text("Meal Type")) {
+            Section(header: 
+                Text("Meal Type")
+                    .font(.custom("StudyClash", size: 18))
+            ) {
                 Picker("Select Meal Type", selection: $newMeal.type) {
                     ForEach(mealTypes, id: \.self) { mealType in
                         Text(mealType)
+                            .font(.custom("StudyClash", size: 18))
                     }
                 }
+                .font(.custom("StudyClash", size: 18))
             }
             
             let isValid = formValid(newMeal: newMeal, pickupStartTime: startTime, pickupEndTime: endTime)
@@ -145,16 +172,19 @@ struct AddMeal: View {
             } label: {
                 HStack {
                     Text("Add Meal")
-                        .fontWeight(.semibold)
+                        .font(.custom("StudyClash", size: 24))
                     Image(systemName: "plus")
                 }
                 .foregroundStyle(.white)
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
             }
-            .background(Color(.systemBlue))
-            .disabled(!isValid) // Disable button if form is not valid
-            .opacity(isValid ? 1 : 0.5) // Adjust opacity based on form validity
+            .background(Color.customGreen)
+            .disabled(!isValid)
+            // grayout btn
+            .opacity(isValid ? 1 : 0.5)
             .cornerRadius(10)
+            .listRowInsets(EdgeInsets())
+            .listRowBackground(Color.clear)
             
         } //end form
         .background(.white)
