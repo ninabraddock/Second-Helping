@@ -85,14 +85,19 @@ struct AddMeal: View {
             }
             
             // Original Price Section
-            Section(header: Text("Original Price")) {
+            Section(header:
+                        Text("Original Price")
+                            .font(.custom("StudyClash", size: 18))
+            ) {
                 ZStack(alignment: .leading) {
                     TextField("", text: $enteredOriginalPrice)
+                        .font(.custom("StudyClash", size: 18))
                         .keyboardType(.numberPad).foregroundColor(.clear)
                         .textFieldStyle(PlainTextFieldStyle())
                         .disableAutocorrection(true)
                         .accentColor(.clear)
-                    Text("\(enteredOriginalPriceFormatted, specifier: "%.2f")")
+                    Text("$\(enteredOriginalPriceFormatted, specifier: "%.2f")")
+                        .font(.custom("StudyClash", size: 18))
                 }
                 .onChange(of: enteredOriginalPriceFormatted) {
                     newMeal.originalPrice = enteredOriginalPriceFormatted
@@ -100,14 +105,19 @@ struct AddMeal: View {
             }
             
             // Reduced Price Section
-            Section(header: Text("Reduced Price")) {
+            Section(header:
+                        Text("Reduced Price")
+                            .font(.custom("StudyClash", size: 18))
+            ) {
                 ZStack(alignment: .leading) {
                     TextField("", text: $enteredReducedPrice)
+                        .font(.custom("StudyClash", size: 18))
                         .keyboardType(.numberPad).foregroundColor(.clear)
                         .textFieldStyle(PlainTextFieldStyle())
                         .disableAutocorrection(true)
                         .accentColor(.clear)
-                    Text("\(enteredReducedPriceFormatted, specifier: "%.2f")")
+                    Text("$\(enteredReducedPriceFormatted, specifier: "%.2f")")
+                        .font(.custom("StudyClash", size: 18))
                 }
                 .onChange(of: enteredReducedPriceFormatted) {
                     newMeal.reducedPrice = enteredReducedPriceFormatted
@@ -144,6 +154,7 @@ struct AddMeal: View {
                         newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
                     }
             }
+            
             .onAppear() {
                 newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
             }
@@ -181,26 +192,29 @@ struct AddMeal: View {
             
             let isValid = formValid(newMeal: newMeal, pickupStartTime: startTime, pickupEndTime: endTime)
             
-            Button {
-                Task {
-                    await addNewMeal(newMeal: newMeal, restaurantHandler: restaurantViewModel)
-                    hasAddedMeal = true
+            Section {
+                Button {
+                    Task {
+                        await addNewMeal(newMeal: newMeal, restaurantHandler: restaurantViewModel)
+                        hasAddedMeal = true
+                    }
+                } label: {
+                    HStack {
+                        Text("Add Meal")
+                            .font(.custom("StudyClash", size: 24))
+                        Image(systemName: "plus")
+                    }
+                    .foregroundStyle(.white)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                    .background(Color.customGreen)
+                    .cornerRadius(10)
                 }
-            } label: {
-                HStack {
-                    Text("Add Meal")
-                        .font(.custom("StudyClash", size: 24))
-                    Image(systemName: "plus")
-                }
-                .foregroundStyle(.white)
-                .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                .disabled(!isValid)
+                // grayout btn
+                .opacity(isValid ? 1 : 0.5)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
             }
-            .background(Color.customGreen)
-            .disabled(!isValid)
-            // grayout btn
-            .opacity(isValid ? 1 : 0.5)
-            .cornerRadius(10)
-            .listRowInsets(EdgeInsets())
             .listRowBackground(Color.clear)
             
             if hasAddedMeal {
@@ -209,13 +223,14 @@ struct AddMeal: View {
                     .foregroundColor(Color.customGreen)
                     .padding(.horizontal)
                     .padding(.bottom)
-            } else {
-                Text("")
-                    .font(.custom("StudyClash", size: 16))
-                    .foregroundColor(Color.customGreen)
-                    .padding(.horizontal)
-                    .padding(.bottom)
             }
+//            } else {
+//                Text("")
+//                    .font(.custom("StudyClash", size: 16))
+//                    .foregroundColor(Color.customGreen)
+//                    .padding(.horizontal)
+//                    .padding(.bottom)
+//            }
         } //end form
         .background(.white)
         .onAppear {
