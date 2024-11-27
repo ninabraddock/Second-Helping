@@ -17,23 +17,30 @@ struct MealDetailSheet: View {
 
     var body: some View {
         VStack(spacing: 15) {
-            HStack {
-                Spacer()
-                
-                Button(action: {
-                    toggleFavorite()
-                }) {
-                    Image(systemName: isFavorite ? "heart.fill" : "heart")
-                        .foregroundColor(isFavorite ? .pink : .gray) // Light pink when liked
-                        .font(.system(size: 24))
+            // Show Meal Details and heart on the same line
+            ZStack {
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        toggleFavorite()
+                    }) {
+                        Image(systemName: isFavorite ? "heart.fill" : "heart")
+                            .foregroundColor(isFavorite ? .pink : .gray)
+                            .font(.system(size: 24))
+                    }
+                    .padding(.trailing)
+                    .padding(.top, 40)
                 }
-                .padding([.top, .trailing])
+                
+                Text("Meal Details")
+                    .font(.custom("StudyClash", size: 24))
+                    .foregroundColor(Color.customGreen)
+                    .underline()
+                    .padding(.horizontal)
+                    .padding(.top, 40)
             }
-            Text("Meal Details")
-                .font(.custom("StudyClash", size: 24))
-                .foregroundColor(Color.customGreen)
-                .underline()
-                .padding(.horizontal)
+
 
             Text("Meal Type: \(meal.type)")
                 .font(.custom("StudyClash", size: 20))
@@ -101,13 +108,13 @@ struct MealDetailSheet: View {
             )
             
             if haveOrdered {
-                Text("You have successfully placed your order")
+                Text("You have successfully placed your order!")
                     .font(.custom("StudyClash", size: 16))
                     .foregroundColor(Color.customGreen)
                     .padding(.horizontal)
                     .padding(.bottom)
             } else {
-                Text("")
+                Text(" ")
                     .font(.custom("StudyClash", size: 16))
                     .foregroundColor(Color.customGreen)
                     .padding(.horizontal)
