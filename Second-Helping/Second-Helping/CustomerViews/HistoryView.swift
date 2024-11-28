@@ -49,76 +49,86 @@ struct HistoryView: View {
     @State private var selectedMeal: Meal?
     
     var body: some View {
-        HStack {
-            Spacer()
-            VStack {
-                Text("Order History")
-                    .font(.largeTitle)
-                    .padding([.bottom, .top], 20)
-                
-                
-                // Check if currentUser exists
-                if let currentUser = authViewModel.currentUser {
-                    // Display orders if the user is fetched
-                    VStack(alignment: .leading, spacing: 0) {
-                        ForEach(currentUser.completedOrders) { order in
-                            VStack(alignment: .leading, spacing: 10) {
-                                HStack {
-                                    Text(order.restaurantFrom)
-                                        .font(.title3)
-                                    
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        selectedMeal = order
-                                        showReview = true
-                                    }) {
-                                        Text("Leave a Review")
+        ScrollView {
+            HStack {
+                Spacer()
+                VStack {
+                    Text("Order History")
+                        .font(.custom("StudyClash", size: 40))
+                        .foregroundColor(Color.customGreen)
+                        .padding([.bottom, .top], 20)
+                    
+                    
+                    // Check if currentUser exists
+                    if let currentUser = authViewModel.currentUser {
+                        // Display orders if the user is fetched
+                        VStack(alignment: .leading, spacing: 0) {
+                            ForEach(currentUser.completedOrders) { order in
+                                VStack(alignment: .leading, spacing: 10) {
+                                    HStack {
+                                        Text(order.restaurantFrom)
+                                            .font(.custom("StudyClash", size: 22))
+                                        
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            selectedMeal = order
+                                            showReview = true
+                                        }) {
+                                            Text("Leave a Review")
+                                        }
+                                        .font(.custom("StudyClash", size: 20))
+                                        .background(Color.customGray)
+                                        .cornerRadius(8)
+                                        .padding(.horizontal, 4)
+                                        .padding(.vertical, 2)
+                                        .foregroundColor(Color.customGreen)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .stroke(Color.customGreen, lineWidth: 2)
+                                        )
                                     }
-                                    .font(.custom("StudyClash", size: 20))
-                                    .background(Color.customGray)
-                                    .cornerRadius(8)
-                                    .padding(.horizontal, 4)
-                                    .padding(.vertical, 2)
-                                    .foregroundColor(Color.customGreen)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .stroke(Color.customGreen, lineWidth: 2)
-                                    )
-                                }
-                                
-                                HStack {
+                                    
                                     Text("Type of Bag: \(order.bagType)")
-                                    Spacer()
-                                    Text("Qty: \(order.quantity)")
+                                        .font(.custom("StudyClash", size: 18))
+                                    
+                                    HStack {
+                                        Text("Order Status: \(getOrderStatus(order: order, restaurantArray: restaurantViewModel.restaurants))")
+                                            .font(.custom("StudyClash", size: 18))
+                                        
+                                        Spacer()
+                                        
+                                        Text("Qty: \(order.quantity)")
+                                            .font(.custom("StudyClash", size: 18))
+                                    }
+                                    
+                                    
+                                    Divider()
+                                        .frame(height: 1)
+                                        .background(Color(UIColor.lightGray))
+                                        .padding(.bottom, 5)
                                 }
-                                
-                                Text("Order Status: \(getOrderStatus(order: order, restaurantArray: restaurantViewModel.restaurants))")
-                                
-                                Divider()
-                                    .frame(height: 1)
-                                    .background(Color(UIColor.lightGray))
                             }
+                            Spacer()
                         }
-                        Spacer()
+                        .padding([.leading, .trailing], 25)
+                    } else {
+                        Text("Loading orders...")
                     }
-                    .padding([.leading, .trailing], 25)
-                } else {
-                    Text("Loading orders...")
                 }
-            }
-            .sheet(isPresented: $showReview) {
-                if let meal = selectedMeal {
-                    LeaveReview(meal: meal)
+                .sheet(isPresented: $showReview) {
+                    if let meal = selectedMeal {
+                        LeaveReview(meal: meal)
+                    }
                 }
-            }
-            .onChange(of: showReview) {
-                Task {
-                    await authViewModel.fetchUsers()
-                    await restaurantViewModel.fetchRestaurants()
+                .onChange(of: showReview) {
+                    Task {
+                        await authViewModel.fetchUsers()
+                        await restaurantViewModel.fetchRestaurants()
+                    }
                 }
+                Spacer()
             }
-            Spacer()
         }
         .background(.white)
         .onAppear {

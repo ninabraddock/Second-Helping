@@ -29,33 +29,39 @@ struct StatsView: View {
             Spacer()
             VStack {
                 Text("Stats!")
-                    .font(.largeTitle)
+                    .font(.custom("StudyClash", size: 40))
+                    .foregroundColor(Color.customGreen)
+                    .padding(.top, 20)
                 
                 Spacer()
                 
                 VStack(spacing: 20) {
                     HStack(spacing: 20) {
+                        Spacer()
                         StatBox(text: "Food Saved",
                                 gifName: "food_saved",
-                                value:  "\(Double(restaurantViewModel.totalReviewsSubmitted) * 1.3)",
+                                value:  "\(Double(totalCompletedOrderQuantity) * 1.3)",
                                 subtitle: "pounds")
                         
                         StatBox(text: "CO₂ Avoided",
                                 gifName: "CO2",
-                                value: "\(Double(restaurantViewModel.totalReviewsSubmitted) * 4.5)",
+                                value: "\(Double(totalCompletedOrderQuantity) * 4.5)",
                                 subtitle: "ppm")
+                        Spacer()
                     }
                     
                     HStack(spacing: 20) {
+                        Spacer()
                         StatBox(text: "Money Saved",
                                 gifName: "money_gif",
-                                value: "$\(PriceData.enteredOriginalPriceFormatted - PriceData.enteredReducedPriceFormatted)",
+                                value: "\(moneySavedFormatted)",
                                 subtitle: "Dollars")
                         
                         StatBox(text: "Meals Saved",
                                 gifName: "meal_saved",
-                                value: "\(restaurantViewModel.totalReviewsSubmitted)",
+                                value: "\(totalCompletedOrderQuantity)",
                                 subtitle: "total")
+                        Spacer()
                     }
                 }
                 Spacer()
@@ -70,6 +76,32 @@ struct StatsView: View {
             }
         }
     }
+    
+    var moneySavedFormatted: String {
+        guard let completedOrders = authViewModel.currentUser?.completedOrders else {
+            return "0.00"
+        }
+        
+        var savingsSum = 0.00
+        
+        for order in completedOrders {
+            savingsSum += order.originalPrice - order.reducedPrice
+        }
+        
+        return String(format: "%.2f", savingsSum)
+    }
+    
+    var totalCompletedOrderQuantity: Int {
+        guard let completedOrders = authViewModel.currentUser?.completedOrders else {
+            return 0
+        }
+        
+        var quantitySum = 0
+        for order in completedOrders {
+            quantitySum += order.quantity
+        }
+        return quantitySum
+    }
 }
 
 struct StatBox: View {
@@ -81,27 +113,24 @@ struct StatBox: View {
     var body: some View {
         VStack {
             Text(text)
-                .font(.title3)
-                .bold()
+                .font(.custom("StudyClash", size: 28))
                 .multilineTextAlignment(.center)
             
             GifImageView(gifName)
                 .frame(width: 100, height: 75)
             
             Text(value)
-                .font(.title3)
-                .bold()
+                .font(.custom("StudyClash", size: 26))
             
             Text(subtitle)
-                .font(.title3)
-                .bold()
+                .font(.custom("StudyClash", size: 26))
                 .multilineTextAlignment(.center)
             
         }
         .padding()
         .cornerRadius(10)
         .overlay(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 26)
                 .stroke(theme_color, lineWidth: 3)
         )
     }
@@ -109,5 +138,7 @@ struct StatBox: View {
 
 #Preview {
     StatsView()
-//        .environmentObject(RestaurantViewModel)
+        .environmentObject(AuthViewModel())
+        .environmentObject(RestaurantViewModel())
+        .environmentObject(PriceData())
 }
