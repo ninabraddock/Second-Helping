@@ -296,6 +296,18 @@ func formValid(newMeal: Meal, pickupStartTime: Date, pickupEndTime: Date) -> Boo
         return false
     }
     
+    // make sure user has entered pick up time corrctly
+    if pickupStartTime == pickupEndTime ||
+        pickupStartTime >= pickupEndTime{
+        return false
+    }
+    
+    // at least 30 minute pick up time window
+    let timeDifference = pickupEndTime.timeIntervalSince(pickupStartTime)
+    if timeDifference < 30 * 60 {
+        return false
+    }
+    
     if !["Lunch", "Dinner"].contains(newMeal.type) {
         return false
     }
