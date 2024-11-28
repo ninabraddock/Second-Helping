@@ -71,181 +71,187 @@ struct AddMeal: View {
 
     
     var body: some View {
-        
-        Form{
-            
-            // Bag type Section
-            Section(header: 
-                Text("Bag Type")
+        ZStack {
+            Form{
+                
+                // Bag type Section
+                Section(header:
+                            Text("Bag Type")
                     .font(.custom("StudyClash", size: 18))
-            ) {
-                Picker("Select Bag Type", selection: $newMeal.bagType) {
-                    ForEach(bagTypes, id: \.self) { bagType in
-                        Text(bagType)
-                            .font(.custom("StudyClash", size: 18))
-                    }
-                }
-                .font(.custom("StudyClash", size: 18))
-            }
-            
-            // Original Price Section
-            Section(header:
-                        Text("Original Price")
-                            .font(.custom("StudyClash", size: 18))
-            ) {
-                ZStack(alignment: .leading) {
-                    TextField("", text: $PriceData.enteredOriginalPrice)
-                        .font(.custom("StudyClash", size: 18))
-                        .keyboardType(.numberPad).foregroundColor(.clear)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .disableAutocorrection(true)
-                        .accentColor(.clear)
-                    Text("$\(PriceData.enteredOriginalPriceFormatted, specifier: "%.2f")")
-                        .font(.custom("StudyClash", size: 18))
-                }
-                .onChange(of: PriceData.enteredOriginalPriceFormatted) { newValue in
-                    newMeal.originalPrice = newValue
-                }
-            }
-            
-            // Reduced Price Section
-            Section(header:
-                        Text("Reduced Price")
-                            .font(.custom("StudyClash", size: 18))
-            ) {
-                ZStack(alignment: .leading) {
-                    TextField("", text: $PriceData.enteredReducedPrice)
-                        .font(.custom("StudyClash", size: 18))
-                        .keyboardType(.numberPad).foregroundColor(.clear)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .disableAutocorrection(true)
-                        .accentColor(.clear)
-                    Text("$\(PriceData.enteredReducedPriceFormatted, specifier: "%.2f")")
-                        .font(.custom("StudyClash", size: 18))
-                }
-                .onChange(of: PriceData.enteredReducedPriceFormatted) { newValue in
-                    newMeal.reducedPrice = newValue
-                }
-            }
-            
-            // Quantity Section
-            Section(header: 
-                Text("Quantity")
-                    .font(.custom("StudyClash", size: 18))
-            ) {
-                TextField("Enter Quantity", text: $enteredQuantity)
-                    .font(.custom("StudyClash", size: 18))
-                    .keyboardType(.numberPad)
-                    .onChange(of: enteredQuantity) {
-                        // Update newMeal.quantity only if enteredQuantity is a valid number
-                        if let quantity = Int(enteredQuantity), quantity > 0 {
-                            newMeal.quantity = quantity
-                        } else {
-                            newMeal.quantity = 0 // Reset if invalid input
+                ) {
+                    Picker("Select Bag Type", selection: $newMeal.bagType) {
+                        ForEach(bagTypes, id: \.self) { bagType in
+                            Text(bagType)
+                                .font(.custom("StudyClash", size: 18))
                         }
                     }
-            }
-            
-            // Pickup Start Time Section
-            Section(header: 
-                Text("Pickup Start Time")
                     .font(.custom("StudyClash", size: 18))
-            ) {
-                DatePicker("Start Time", selection: $startTime, displayedComponents: .hourAndMinute)
+                }
+                
+                // Original Price Section
+                Section(header:
+                            Text("Original Price")
                     .font(.custom("StudyClash", size: 18))
-                    .datePickerStyle(WheelDatePickerStyle())
-                    .onChange(of: startTime) {
-                        newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
-                    }
-            }
-            
-            .onAppear() {
-                newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
-            }
-            
-            // Pickup End Time Section
-            Section(header: 
-                Text("Pickup End Time")
-                    .font(.custom("StudyClash", size: 18))
-            ) {
-                DatePicker("End Time", selection: $endTime, displayedComponents: .hourAndMinute)
-                    .font(.custom("StudyClash", size: 18))
-                    .datePickerStyle(WheelDatePickerStyle())
-                    .onChange(of: endTime) {
-                        newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
-                    }
-            }
-            .onAppear() {
-                newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
-            }
-            
-            
-            // Meal Type Section
-            Section(header: 
-                Text("Meal Type")
-                    .font(.custom("StudyClash", size: 18))
-            ) {
-                Picker("Select Meal Type", selection: $newMeal.type) {
-                    ForEach(mealTypes, id: \.self) { mealType in
-                        Text(mealType)
+                ) {
+                    ZStack(alignment: .leading) {
+                        TextField("", text: $PriceData.enteredOriginalPrice)
+                            .font(.custom("StudyClash", size: 18))
+                            .keyboardType(.numberPad).foregroundColor(.clear)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .disableAutocorrection(true)
+                            .accentColor(.clear)
+                        Text("$\(PriceData.enteredOriginalPriceFormatted, specifier: "%.2f")")
                             .font(.custom("StudyClash", size: 18))
                     }
-                }
-                .font(.custom("StudyClash", size: 18))
-            }
-            
-            let isValid = formValid(newMeal: newMeal, pickupStartTime: startTime, pickupEndTime: endTime)
-            
-            Section {
-                Button {
-                    Task {
-                        await addNewMeal(newMeal: newMeal, restaurantHandler: restaurantViewModel)
-                        hasAddedMeal = true
+                    .onChange(of: PriceData.enteredOriginalPriceFormatted) { newValue in
+                        newMeal.originalPrice = newValue
                     }
-                } label: {
-                    HStack {
-                        Text("Add Meal")
-                            .font(.custom("StudyClash", size: 24))
-                        Image(systemName: "plus")
-                    }
-                    .foregroundStyle(.white)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
-                    .background(Color.customGreen)
-                    .cornerRadius(10)
                 }
-                .disabled(!isValid)
-                // grayout btn
-                .opacity(isValid ? 1 : 0.5)
+                
+                // Reduced Price Section
+                Section(header:
+                            Text("Reduced Price")
+                    .font(.custom("StudyClash", size: 18))
+                ) {
+                    ZStack(alignment: .leading) {
+                        TextField("", text: $PriceData.enteredReducedPrice)
+                            .font(.custom("StudyClash", size: 18))
+                            .keyboardType(.numberPad).foregroundColor(.clear)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .disableAutocorrection(true)
+                            .accentColor(.clear)
+                        Text("$\(PriceData.enteredReducedPriceFormatted, specifier: "%.2f")")
+                            .font(.custom("StudyClash", size: 18))
+                    }
+                    .onChange(of: PriceData.enteredReducedPriceFormatted) { newValue in
+                        newMeal.reducedPrice = newValue
+                    }
+                }
+                
+                // Quantity Section
+                Section(header:
+                            Text("Quantity")
+                    .font(.custom("StudyClash", size: 18))
+                ) {
+                    TextField("Enter Quantity", text: $enteredQuantity)
+                        .font(.custom("StudyClash", size: 18))
+                        .keyboardType(.numberPad)
+                        .onChange(of: enteredQuantity) {
+                            // Update newMeal.quantity only if enteredQuantity is a valid number
+                            if let quantity = Int(enteredQuantity), quantity > 0 {
+                                newMeal.quantity = quantity
+                            } else {
+                                newMeal.quantity = 0 // Reset if invalid input
+                            }
+                        }
+                }
+                
+                // Pickup Start Time Section
+                Section(header:
+                            Text("Pickup Start Time")
+                    .font(.custom("StudyClash", size: 18))
+                ) {
+                    DatePicker("Start Time", selection: $startTime, displayedComponents: .hourAndMinute)
+                        .font(.custom("StudyClash", size: 18))
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .onChange(of: startTime) {
+                            newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
+                        }
+                }
+                
+                .onAppear() {
+                    newMeal.rangePickUpTime.start = timeFormatter.string(from: startTime)
+                }
+                
+                // Pickup End Time Section
+                Section(header:
+                            Text("Pickup End Time")
+                    .font(.custom("StudyClash", size: 18))
+                ) {
+                    DatePicker("End Time", selection: $endTime, displayedComponents: .hourAndMinute)
+                        .font(.custom("StudyClash", size: 18))
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .onChange(of: endTime) {
+                            newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
+                        }
+                }
+                .onAppear() {
+                    newMeal.rangePickUpTime.end = timeFormatter.string(from: endTime)
+                }
+                
+                
+                // Meal Type Section
+                Section(header:
+                            Text("Meal Type")
+                    .font(.custom("StudyClash", size: 18))
+                ) {
+                    Picker("Select Meal Type", selection: $newMeal.type) {
+                        ForEach(mealTypes, id: \.self) { mealType in
+                            Text(mealType)
+                                .font(.custom("StudyClash", size: 18))
+                        }
+                    }
+                    .font(.custom("StudyClash", size: 18))
+                }
+                
+                let isValid = formValid(newMeal: newMeal, pickupStartTime: startTime, pickupEndTime: endTime)
+                
+                Section {
+                    Button {
+                        Task {
+                            await addNewMeal(newMeal: newMeal, restaurantHandler: restaurantViewModel)
+                            hasAddedMeal = true
+                        }
+                    } label: {
+                        HStack {
+                            Text("Add Meal")
+                                .font(.custom("StudyClash", size: 24))
+                            Image(systemName: "plus")
+                        }
+                        .foregroundStyle(.white)
+                        .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                        .background(Color.customGreen)
+                        .cornerRadius(10)
+                    }
+                    .disabled(!isValid)
+                    // grayout btn
+                    .opacity(isValid ? 1 : 0.5)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                }
                 .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets())
+            } //end form
+            .background(.white)
+            .onAppear {
+                if let uid = authViewModel.userSession?.uid {
+                    Task {
+                        await restaurantViewModel.fetchCurrentRestaurant(uid: uid)
+                        restaurantName = restaurantViewModel.currentRestaurant?.name ?? "Unknown Restaurant"
+                        newMeal.restaurantFrom = restaurantName.filter {$0 != "\\"}
+                    }
+                } else {
+                    print("Error: No user session available.")
+                }
             }
-            .listRowBackground(Color.clear)
+            
             
             if hasAddedMeal {
-                Text("You have added the meal")
+                Text("Meal Added!")
                     .font(.custom("StudyClash", size: 16))
-                    .foregroundColor(Color.customGreen)
-                    .padding(.horizontal)
-                    .padding(.bottom)
-            }
-//            } else {
-//                Text("")
-//                    .font(.custom("StudyClash", size: 16))
-//                    .foregroundColor(Color.customGreen)
-//                    .padding(.horizontal)
-//                    .padding(.bottom)
-//            }
-        } //end form
-        .background(.white)
-        .onAppear {
-            if let uid = authViewModel.userSession?.uid {
-                Task {
-                    await restaurantViewModel.fetchCurrentRestaurant(uid: uid)
-                    restaurantName = restaurantViewModel.currentRestaurant?.name ?? "Unknown Restaurant"
-                    newMeal.restaurantFrom = restaurantName.filter {$0 != "\\"}
-                }
-            } else {
-                print("Error: No user session available.")
+                    .foregroundColor(Color.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 40)
+                    .background(Color.customGreen)
+                    .cornerRadius(10)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .transition(.opacity)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation {
+                                hasAddedMeal = false
+                            }
+                        }
+                    }
             }
         }
 
