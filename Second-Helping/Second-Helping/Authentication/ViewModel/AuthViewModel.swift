@@ -207,7 +207,7 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func completeOrderForUser(meal: Meal, restaurantArray: [Restaurant]) {
+    func completeOrderForUser(meal: Meal, restaurantArray: [Restaurant], quantity: Int, orderID: UUID) {
         // filter to find the restaurant that the meal belongs to and save that in a variable
         let filteredArray = restaurantArray.filter { $0.name == meal.restaurantFrom }
         var restaurantVar = filteredArray[0]
@@ -218,24 +218,26 @@ class AuthViewModel: ObservableObject {
         }
         
         var newMeal = meal
-        if let matchingMeal = restaurantVar.activeOrders.first(where: { $0.id == newMeal.id }) {
-            newMeal.quantity = matchingMeal.quantity
-        } else {
-            print("Meal not found in active orders.")
-        }
+        newMeal.quantity = quantity
+//        if let matchingMeal = restaurantVar.activeOrders.first(where: { $0.id == newMeal.id }) {
+//            newMeal.quantity = matchingMeal.quantity
+//        } else {
+//            print("Meal not found in active orders.")
+//        }
         
         // Append the meal to the completed orders of the current user
+        newMeal.id = orderID
         currentUser.completedOrders.append(newMeal)
         self.currentUser = currentUser
         Task {
-                    do {
-                        let encoder = try Firestore.Encoder().encode(currentUser)
-                        try await Firestore.firestore().collection("users").document(currentUser.id).setData(encoder)
-                        print("Meal completed successfully.")
-                    } catch {
-                        print("Failed to complete complete meal: \(error.localizedDescription)")
-                    }
-                }
+            do {
+                let encoder = try Firestore.Encoder().encode(currentUser)
+                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encoder)
+                print("Meal completed successfully.")
+            } catch {
+                print("Failed to complete complete meal: \(error.localizedDescription)")
+            }
+        }
     }
     
     func testFetchUsers() async{

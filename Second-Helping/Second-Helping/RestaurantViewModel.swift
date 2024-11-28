@@ -135,7 +135,7 @@ class RestaurantViewModel: ObservableObject {
     }
     
     
-    func addToActiveOrders(meal: Meal, restaurantArray: [Restaurant], quantity: Int, mealOrderUser: String) {
+    func addToActiveOrders(meal: Meal, restaurantArray: [Restaurant], quantity: Int, mealOrderUser: String, orderID: UUID) {
         // filter to find the restaurant that the meal belongs to and save that in a variable
         let filteredArray = restaurantArray.filter { $0.name == meal.restaurantFrom }
         var restaurantVar = filteredArray[0]
@@ -162,6 +162,7 @@ class RestaurantViewModel: ObservableObject {
         }
         
         // add meal to active orders
+        newMeal.id = orderID
         restaurantVar.activeOrders.append(newMeal)
         
         //updateRestaurant(restaurantVar)
