@@ -17,26 +17,50 @@ struct LeaveReview: View {
     @State private var reviewText: String = ""
     @State private var hasLeftReview = false
     
-
+    let highestRating = 5
+    
     var body: some View {
         VStack(spacing: 20) {
-            Text("Leave a Review")
-                .font(.custom("StudyClash", size: 24))
-                .underline()
-                .foregroundColor(Color.customGreen)
-                .padding([.horizontal, .top])
-            
+
             // stepper for picking Rating
-            Stepper("Rating: \(reviewNum)", value: $reviewNum, in: 1...5)
+//            Stepper("Rating: \(reviewNum)", value: $reviewNum, in: 1...5)
+//                .padding(10)
+//                .padding(.horizontal, 15)
+//                .font(.custom("StudyClash", size: 20))
+//                .background(Color.customGray)
+//                .cornerRadius(8)
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 8)
+//                        .stroke(Color.customGreen, lineWidth: 2)
+//                )
+            HStack {
+                Text("Leave a Review")
+                    .font(.custom("StudyClash", size: 24))
+                    .underline()
+                    .foregroundColor(Color.customGreen)
+                    .padding([.horizontal, .top])
+                
+                Spacer()
+                
+                HStack(spacing: 10) {
+                    ForEach(1..<highestRating + 1, id: \.self) { index in
+                        Button(action: {
+                            reviewNum = index
+                        }) {
+                            if reviewNum >= index {
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.yellow)
+                                    .font(.system(size: 20))
+                            } else {
+                                Image(systemName: "star")
+                                    .foregroundColor(.yellow)
+                                    .font(.system(size: 20))
+                            }
+                        }
+                    }
+                }
                 .padding(10)
-                .padding(.horizontal, 15)
-                .font(.custom("StudyClash", size: 20))
-                .background(Color.customGray)
-                .cornerRadius(8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.customGreen, lineWidth: 2)
-                )
+            }
             
             TextField("Write in your review here", text: $reviewText)
                 .font(.custom("StudyClash", size: 20))
