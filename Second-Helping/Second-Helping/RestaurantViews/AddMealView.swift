@@ -12,8 +12,22 @@
 import SwiftUI
 
 
-struct AddMeal: View {
+
+class PriceData: ObservableObject {
+    @Published var enteredOriginalPrice: String = ""
+    @Published var enteredReducedPrice: String = ""
     
+    var enteredOriginalPriceFormatted: Double {
+        return (Double(enteredOriginalPrice) ?? 0) / 100
+    }
+
+    var enteredReducedPriceFormatted: Double {
+        return (Double(enteredReducedPrice) ?? 0) / 100
+    }
+}
+
+struct AddMeal: View {
+    @EnvironmentObject var PriceData: PriceData
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     
@@ -21,16 +35,6 @@ struct AddMeal: View {
 
     // Form Variables
     @State private var newMeal: Meal = Meal(bagType:"", originalPrice:0, reducedPrice:0, quantity:0, rangePickUpTime: PickUpTime(start:"", end:""), type:"", restaurantFrom: "", mealOrderUser: "")
-    
-    @State private var enteredOriginalPrice = ""
-    var enteredOriginalPriceFormatted: Double {
-        return (Double(enteredOriginalPrice) ?? 0) / 100
-    }
-    
-    @State private var enteredReducedPrice = ""
-    var enteredReducedPriceFormatted: Double {
-        return (Double(enteredReducedPrice) ?? 0) / 100
-    }
     
     @State private var enteredQuantity = ""
     @State private var startTime = Date()
@@ -90,17 +94,17 @@ struct AddMeal: View {
                             .font(.custom("StudyClash", size: 18))
             ) {
                 ZStack(alignment: .leading) {
-                    TextField("", text: $enteredOriginalPrice)
+                    TextField("", text: $PriceData.enteredOriginalPrice)
                         .font(.custom("StudyClash", size: 18))
                         .keyboardType(.numberPad).foregroundColor(.clear)
                         .textFieldStyle(PlainTextFieldStyle())
                         .disableAutocorrection(true)
                         .accentColor(.clear)
-                    Text("$\(enteredOriginalPriceFormatted, specifier: "%.2f")")
+                    Text("$\(PriceData.enteredOriginalPriceFormatted, specifier: "%.2f")")
                         .font(.custom("StudyClash", size: 18))
                 }
-                .onChange(of: enteredOriginalPriceFormatted) {
-                    newMeal.originalPrice = enteredOriginalPriceFormatted
+                .onChange(of: PriceData.enteredOriginalPriceFormatted) { newValue in
+                    newMeal.originalPrice = newValue
                 }
             }
             
@@ -110,17 +114,17 @@ struct AddMeal: View {
                             .font(.custom("StudyClash", size: 18))
             ) {
                 ZStack(alignment: .leading) {
-                    TextField("", text: $enteredReducedPrice)
+                    TextField("", text: $PriceData.enteredReducedPrice)
                         .font(.custom("StudyClash", size: 18))
                         .keyboardType(.numberPad).foregroundColor(.clear)
                         .textFieldStyle(PlainTextFieldStyle())
                         .disableAutocorrection(true)
                         .accentColor(.clear)
-                    Text("$\(enteredReducedPriceFormatted, specifier: "%.2f")")
+                    Text("$\(PriceData.enteredReducedPriceFormatted, specifier: "%.2f")")
                         .font(.custom("StudyClash", size: 18))
                 }
-                .onChange(of: enteredReducedPriceFormatted) {
-                    newMeal.reducedPrice = enteredReducedPriceFormatted
+                .onChange(of: PriceData.enteredReducedPriceFormatted) { newValue in
+                    newMeal.reducedPrice = newValue
                 }
             }
             
@@ -278,7 +282,7 @@ func formValid(newMeal: Meal, pickupStartTime: Date, pickupEndTime: Date) -> Boo
     if newMeal.originalPrice <= 0 {
         return false
     }
-    if newMeal.reducedPrice <= 0 && newMeal.reducedPrice >= newMeal.originalPrice {
+    if newMeal.reducedPrice <= 0 && newMeal.reducedPrice <= newMeal.originalPrice {
         return false
     }
     

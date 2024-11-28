@@ -17,6 +17,7 @@ struct Second_HelpingApp: App {
     @StateObject var authViewModel = AuthViewModel()
     @StateObject var restaurantViewModel = RestaurantViewModel()
     @StateObject var loadingState = LoadingState()
+    @StateObject var priceData = PriceData()
     @State var isLoggedIn = false
     @State var isCustomer = true
     @State var isRestaurant = false
@@ -31,6 +32,7 @@ struct Second_HelpingApp: App {
                 .environmentObject(authViewModel)
                 .environmentObject(restaurantViewModel)
                 .environmentObject(loadingState)
+                .environmentObject(priceData)
         }
     }
 }

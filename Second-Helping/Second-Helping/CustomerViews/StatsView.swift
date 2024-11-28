@@ -14,6 +14,15 @@ let theme_color = Color("main_color_theme")
 struct StatsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var restaurantViewModel: RestaurantViewModel
+    @EnvironmentObject var PriceData: PriceData
+    
+//    var enteredOriginalPriceFormatted: Double {
+//        return (Double(enteredOriginalPrice) ?? 0) / 100
+//    }
+//    
+//    var enteredReducedPriceFormatted: Double {
+//        return (Double(enteredReducedPrice) ?? 0) / 100
+//    }
     
     var body: some View {
         HStack {
@@ -38,7 +47,11 @@ struct StatsView: View {
                     }
                     
                     HStack(spacing: 20) {
-                        StatBox(text: "Money Saved", gifName: "money_gif", value: "$20", subtitle: "Dollars")
+                        StatBox(text: "Money Saved",
+                                gifName: "money_gif",
+                                value: "$\(PriceData.enteredOriginalPriceFormatted - PriceData.enteredReducedPriceFormatted)",
+                                subtitle: "Dollars")
+                        
                         StatBox(text: "Meals Saved",
                                 gifName: "meal_saved",
                                 value: "\(restaurantViewModel.totalReviewsSubmitted)",

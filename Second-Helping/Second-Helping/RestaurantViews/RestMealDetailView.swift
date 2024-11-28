@@ -10,6 +10,7 @@ import SwiftUI
 struct RestMealDetailView: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var restaurantViewModel: RestaurantViewModel
+    @EnvironmentObject var priceData: PriceData 
     let meal: Meal
     @State private var enteredQuantity = ""
     @State private var newQuantity = 0
