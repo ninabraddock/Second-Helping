@@ -21,18 +21,6 @@ struct LeaveReview: View {
     
     var body: some View {
         VStack(spacing: 20) {
-
-            // stepper for picking Rating
-//            Stepper("Rating: \(reviewNum)", value: $reviewNum, in: 1...5)
-//                .padding(10)
-//                .padding(.horizontal, 15)
-//                .font(.custom("StudyClash", size: 20))
-//                .background(Color.customGray)
-//                .cornerRadius(8)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 8)
-//                        .stroke(Color.customGreen, lineWidth: 2)
-//                )
             HStack {
                 Text("Leave a Review")
                     .font(.custom("StudyClash", size: 24))
