@@ -28,6 +28,18 @@ func ratingToStars(rating: Double) -> [Image] {
     return starArray
 }
 
+func getOrderStatus(order: Meal, restaurantArray: [Restaurant]) -> String {
+    let filterArray = restaurantArray.filter { $0.name == order.restaurantFrom}
+    var restaurant = filterArray[0]
+    let isActive = restaurant.activeOrders.contains(where: { $0.id == order.id })
+    
+    if isActive {
+        return "In Progress..."
+    } else {
+        return "Completed"
+    }
+}
+
 
 struct HistoryView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -35,6 +47,7 @@ struct HistoryView: View {
     @State private var selectedQuantity: Int = 0
     @State private var showReview = false
     @State private var selectedMeal: Meal?
+    
     var body: some View {
         HStack {
             Spacer()
@@ -51,7 +64,7 @@ struct HistoryView: View {
                         ForEach(currentUser.completedOrders) { order in
                             VStack(alignment: .leading, spacing: 10) {
                                 HStack {
-                                    Text(order.restaurantFrom) // Assuming order has a restaurantName
+                                    Text(order.restaurantFrom)
                                         .font(.title3)
                                     
                                     Spacer()
@@ -75,10 +88,12 @@ struct HistoryView: View {
                                 }
                                 
                                 HStack {
-                                    Text("Type of Bag: \(order.bagType)") // Assuming order has a bagType
+                                    Text("Type of Bag: \(order.bagType)")
                                     Spacer()
-                                    Text("Qty: \(order.quantity)") // Assuming order has a quantity
+                                    Text("Qty: \(order.quantity)")
                                 }
+                                
+                                Text("Order Status: \(getOrderStatus(order: order, restaurantArray: restaurantViewModel.restaurants))")
                                 
                                 Divider()
                                     .frame(height: 1)
@@ -109,6 +124,7 @@ struct HistoryView: View {
         .onAppear {
             Task {
                 await authViewModel.fetchUsers()
+                print("Fetched completed orders: \(authViewModel.currentUser?.completedOrders)")
             }
         }
     }

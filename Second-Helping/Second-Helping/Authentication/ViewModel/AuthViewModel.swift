@@ -207,21 +207,33 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func completeOrderForUser(meal: Meal, userArray: [User]) {
-        let filteredArray = userArray.filter { $0.fullName == meal.mealOrderUser }
-        print("TESTING USER NAME: \(meal.mealOrderUser)")
-        print("TESTING USER ARRAY: \(userArray)")
-        var userVar = filteredArray[0]
+    func completeOrderForUser(meal: Meal, restaurantArray: [Restaurant]) {
+        // filter to find the restaurant that the meal belongs to and save that in a variable
+        let filteredArray = restaurantArray.filter { $0.name == meal.restaurantFrom }
+        var restaurantVar = filteredArray[0]
         
-        userVar.completedOrders.append(meal)
-        self.currentUser = userVar
+        guard var currentUser = self.currentUser else {
+            print("No current user found.")
+            return
+        }
+        
+        var newMeal = meal
+        if let matchingMeal = restaurantVar.activeOrders.first(where: { $0.id == newMeal.id }) {
+            newMeal.quantity = matchingMeal.quantity
+        } else {
+            print("Meal not found in active orders.")
+        }
+        
+        // Append the meal to the completed orders of the current user
+        currentUser.completedOrders.append(newMeal)
+        self.currentUser = currentUser
         Task {
                     do {
-                        let encoder = try Firestore.Encoder().encode(userVar)
-                        try await Firestore.firestore().collection("users").document(userVar.id).setData(encoder)
+                        let encoder = try Firestore.Encoder().encode(currentUser)
+                        try await Firestore.firestore().collection("users").document(currentUser.id).setData(encoder)
                         print("Meal completed successfully.")
                     } catch {
-                        print("Failed to compolete complete meal: \(error.localizedDescription)")
+                        print("Failed to complete complete meal: \(error.localizedDescription)")
                     }
                 }
     }

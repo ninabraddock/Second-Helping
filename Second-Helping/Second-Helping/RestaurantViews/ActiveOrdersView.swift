@@ -39,7 +39,7 @@ struct ActiveOrdersView: View {
                                         Button(action: {
                                             //  move this to active orders view:
                                             
-                                            authViewModel.completeOrderForUser(meal: order, userArray: allUsers)
+                                            //authViewModel.completeOrderForUser(meal: order, userArray: allUsers) ---> moved to mealDetailSheet
                                             restaurantViewModel.completeOrderForRestaurant(meal: order, restaurantArray: restaurantViewModel.restaurants)
                                         }) {
                                             Text("Complete Order")

@@ -189,7 +189,6 @@ class RestaurantViewModel: ObservableObject {
         let filteredArray = restaurantArray.filter { $0.name == meal.restaurantFrom }
         var restaurantVar = filteredArray[0]
         
-
         // remove meal from active orders
         restaurantVar.activeOrders.removeAll { $0.id == meal.id }
         

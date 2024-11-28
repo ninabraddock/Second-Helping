@@ -85,8 +85,8 @@ struct MealDetailSheet: View {
             
             Button(action: {
                 if let currentUser = authViewModel.currentUser {
-                    print(currentUser.fullName)
                     restaurantViewModel.addToActiveOrders(meal: meal, restaurantArray: restaurantViewModel.restaurants, quantity: quantity, mealOrderUser: currentUser.fullName)
+                    authViewModel.completeOrderForUser(meal: meal, restaurantArray: restaurantViewModel.restaurants)
                     haveOrdered = true
                 } else {
                     print("No current user available")
