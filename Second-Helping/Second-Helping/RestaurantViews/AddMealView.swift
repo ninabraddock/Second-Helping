@@ -288,7 +288,7 @@ func formValid(newMeal: Meal, pickupStartTime: Date, pickupEndTime: Date) -> Boo
     if newMeal.originalPrice <= 0 {
         return false
     }
-    if newMeal.reducedPrice <= 0 && newMeal.reducedPrice <= newMeal.originalPrice {
+    if newMeal.reducedPrice <= 0 || newMeal.reducedPrice >= newMeal.originalPrice {
         return false
     }
     
